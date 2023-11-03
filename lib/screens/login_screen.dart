@@ -4,6 +4,8 @@ import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'forgot_password_screen.dart';
+
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
   const LoginPage({super.key, required this.onTap});
@@ -82,10 +84,28 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const ForgotPasswordPage();
+                            },
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ]),
                 ),
                 const SizedBox(
                   height: 25,

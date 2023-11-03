@@ -9,7 +9,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider(
-        create: (context) => AuthService(), child: Farmlinkapp()),
+        create: (context) => AuthService(), child: const Farmlinkapp()),
   );
 }
 

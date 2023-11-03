@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/components/my_button.dart';
 import 'package:farmlink/components/my_text_field.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,16 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmpasswordController = TextEditingController();
   final phoneController = TextEditingController();
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    nameController.dispose();
+    confirmpasswordController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
+
   Future<void> signup() async {
     if (passwordController.text != confirmpasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -36,6 +47,8 @@ class _RegisterPageState extends State<RegisterPage> {
         emailController.text,
         passwordController.text,
       );
+      await authService.addUserDetails(nameController.text.trim(),
+          emailController.text.trim(), phoneController.text.trim());
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
@@ -54,11 +67,6 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //const Icon(
-                // Icons.message,
-                //size: 80,
-                // color: Colors.green,
-                // ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -123,7 +131,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 25,
                 ),
-
                 MyButton(onTap: signup, text: "Register"),
                 const SizedBox(
                   height: 20,
