@@ -3,7 +3,7 @@ import 'package:farmlink/components/my_text_field.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:farmlink/farmlink_themes.dart';
 import 'forgot_password_screen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      //backgroundColor: Colors.green,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -42,19 +42,12 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //const Icon(
-                // Icons.message,
-                //size: 80,
-                // color: Colors.green,
-                // ),
                 const SizedBox(
                   height: 40,
                 ),
-                const Text(
+                Text(
                   "FARMLINK",
-                  style: TextStyle(
-                    fontSize: 32,
-                  ),
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(
                   height: 40,
@@ -110,7 +103,6 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 25,
                 ),
-
                 MyButton(onTap: signin, text: "Sign In"),
                 const SizedBox(
                   height: 20,

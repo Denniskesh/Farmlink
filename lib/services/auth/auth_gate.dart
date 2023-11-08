@@ -1,8 +1,7 @@
 import 'package:farmlink/services/auth/login_or_register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../../screens/home_page.dart';
+import 'package:farmlink/main_screen.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -14,7 +13,7 @@ class AuthGate extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const HomePage();
+              return const MainScreen();
             } else {
               return const LoginOrRegister();
             }

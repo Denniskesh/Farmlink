@@ -48,14 +48,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         elevation: 10,
-        title: const Text(
+        title: Text(
           "Forgot Password",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
       body: Column(
@@ -64,9 +63,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0),
           ),
-          const Text(
+          Text(
             'Enter your email and phone number and we will send a password reset code',
-            style: TextStyle(fontSize: 16),
+            style: Theme.of(context).textTheme.displaySmall,
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -86,7 +85,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     borderSide: const BorderSide(color: Colors.deepPurple),
                   ),
                   hintText: "Enter Email",
-                  fillColor: Colors.grey,
+                  fillColor: Colors.grey[400],
                   filled: true),
             ),
           ),
@@ -107,7 +106,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     borderSide: const BorderSide(color: Colors.deepPurple),
                   ),
                   hintText: "Enter Phone Number",
-                  fillColor: Colors.grey,
+                  fillColor: Colors.grey[400],
                   filled: true),
             ),
           ),

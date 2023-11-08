@@ -18,9 +18,64 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late GoogleMapController googleMapController;
+
+  static const String prefSearchKey = 'previousSearches';
+
+  late TextEditingController searchTextController;
+  final ScrollController _scrollController = ScrollController();
+  //List<APIHits> currentSearchList = [];
+  int currentCount = 0;
+  int currentStartPosition = 0;
+  int currentEndPosition = 20;
+  int pageCount = 20;
+  bool hasMore = false;
+  bool loading = false;
+  bool inErrorState = false;
+  List<String> previousSearches = <String>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getPreviousSearches();
+
+    searchTextController = TextEditingController(text: '');
+    _scrollController.addListener(() {
+      final triggerFetchMoreSize =
+          0.7 * _scrollController.position.maxScrollExtent;
+
+      if (_scrollController.position.pixels > triggerFetchMoreSize) {
+        if (hasMore &&
+            currentEndPosition < currentCount &&
+            !loading &&
+            !inErrorState) {
+          setState(() {
+            loading = true;
+            currentStartPosition = currentEndPosition;
+          });
+        }
+      }
+    });
+  }
+
   void signOut() {
     final authService = Provider.of<AuthService>(context, listen: false);
     authService.signOut();
+  }
+
+  void savePreviousSearches() async {
+    //final prefs = await SharedPreferences.getInstance();
+    // prefs.setStringList(prefSearchKey, previousSearches);
+  }
+
+  void getPreviousSearches() async {
+    // final prefs = await SharedPreferences.getInstance();
+    // if (prefs.containsKey(prefSearchKey)) {
+    //// final searches = prefs.getStringList(prefSearchKey);
+    //  if (searches != null) {
+    //   previousSearches = searches;
+    //  } else {
+    ////   previousSearches = <String>[];
+//}
   }
 
   //set an initial location of the Map
@@ -39,8 +94,8 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Welcome Back: ${user.email!}',
-            style: const TextStyle(fontSize: 16, color: Colors.white),
+            'Welcome Back',
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           actions: [
             IconButton(
@@ -63,35 +118,8 @@ class _HomePageState extends State<HomePage> {
                 googleMapController = c;
               },
             ),
-          ],
-        ),
-        //body: IndexedStack(index: widget.currentTab, children: pages),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor:
-              Theme.of(context).textSelectionTheme.selectionColor,
-          //currentIndex: widget.currentTab,
-          onTap: (index) {
-            //Provider.of<AppStateManager>(context, listen: false).goToTab(index);
-            // context.goNamed(
-            // 'home',
-            //  pathParameters: {
-            //  'tab': '$index',
-            // },
-            // );
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.book),
-              label: 'Bookings',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: 'My Equipment',
-            ),
+            _buildSearchCard(),
+            _buildEquipmentLoader(context),
           ],
         ),
       ),
@@ -116,5 +144,90 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  Widget _buildSearchCard() {
+    return Card(
+      elevation: 4,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(8.0),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                startSearch(searchTextController.text);
+                final currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+            ),
+            const SizedBox(
+              width: 6.0,
+            ),
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: TextField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                    ),
+                    autofocus: false,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) {
+                      startSearch(searchTextController.text);
+                    },
+                    controller: searchTextController,
+                  )),
+                  PopupMenuButton<String>(
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.grey,
+                    ),
+                    onSelected: (String value) {
+                      searchTextController.text = value;
+                      startSearch(searchTextController.text);
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return List.empty();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void startSearch(String value) {
+    setState(() {
+      //currentSearchList.clear();
+      currentCount = 0;
+      currentEndPosition = pageCount;
+      currentStartPosition = 0;
+      hasMore = true;
+      value = value.trim();
+      if (!previousSearches.contains(value)) {
+        previousSearches.add(value);
+        savePreviousSearches();
+      }
+    });
+  }
+
+  Widget _buildEquipmentLoader(BuildContext context) {
+    if (searchTextController.text.length < 3) {
+      return Container();
+    }
+    return const Placeholder();
   }
 }
