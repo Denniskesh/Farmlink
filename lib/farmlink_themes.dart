@@ -21,7 +21,7 @@ class FarmlinkTheme {
     ),
     displaySmall: GoogleFonts.openSans(
       fontSize: 16.0,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w100,
       color: Colors.black,
     ),
     titleLarge: GoogleFonts.openSans(

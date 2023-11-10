@@ -18,12 +18,12 @@ class MyEquipmentPage extends StatelessWidget {
               ),
             ),
             Text(
-              'No Equipment',
+              'Do you have an idle Equipment?',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16.0),
             Text(
-              'Tap the + button to add your equipment to the platform',
+              'Tap the + button to add your equipment to our platform and hire it out to farmers near you',
               style: Theme.of(context).textTheme.displaySmall,
               textAlign: TextAlign.center,
             ),

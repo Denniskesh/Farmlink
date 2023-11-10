@@ -3,7 +3,6 @@ import 'package:farmlink/components/my_text_field.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:farmlink/farmlink_themes.dart';
 import 'forgot_password_screen.dart';
 
 class LoginPage extends StatefulWidget {
