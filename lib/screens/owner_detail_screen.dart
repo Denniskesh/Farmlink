@@ -169,46 +169,7 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Stack(
-                    children: [
-                      Text(
-                        'Upload a Photo of your',
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
-                      Positioned(
-                        top: 20,
-                        child: Text(
-                          'ID or Operator\'s Licence',
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            FilePickerResult? result =
-                                await FilePicker.platform.pickFiles();
-
-                            if (result != null) {
-                              final file = File(result.files.single.name);
-                              selectedFile = file;
-                              setState(() {});
-                            } else {
-                              // User canceled the picker
-                              // You can show snackbar or fluttertoast
-                              // here like this to show warning to user
-
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text('Please select file'),
-                              ));
-                            }
-                          },
-                          child: const Text('Upload File'),
-                        ),
-                      ),
-                    ],
-                  ),
+                  buildUploadCard(),
                   Text(
                     selectedFile != null
                         ? "Selected File: ${selectedFile!}"
@@ -237,6 +198,42 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildUploadCard() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          'Upload a Photo of your ID or \nOperator\'s Licence',
+          // style: Theme.of(context).textTheme.displaySmall,
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: ElevatedButton(
+            onPressed: () async {
+              FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+              if (result != null) {
+                final file = File(result.files.single.name);
+                selectedFile = file;
+                setState(() {});
+              } else {
+                // User canceled the picker
+                // You can show snackbar or fluttertoast
+                // here like this to show warning to user
+
+                ScaffoldMessenger.of(context as BuildContext)
+                    .showSnackBar(const SnackBar(
+                  content: Text('Please select file'),
+                ));
+              }
+            },
+            child: const Text('Upload File'),
+          ),
+        ),
+      ],
     );
   }
 }
