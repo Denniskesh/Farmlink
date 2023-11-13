@@ -1,6 +1,6 @@
-import 'package:farmlink/services/equipment_manager.dart';
+import 'package:farmlink/services/owner_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import '../components/my_button.dart';
 import 'equipment_detail_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
@@ -28,9 +28,7 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
   final _formKey = GlobalKey<FormState>();
   File? selectedFile;
 
-  String selectedGender = 'Male'; // Initialize the selected gender
-
-  List<String> genderOptions = ['Male', 'Female', 'Other'];
+  final OwnerManager _userManager = OwnerManager();
 
   Future<void> _saveOwnerDetails() async {
     if (_formKey.currentState!.validate()) {
@@ -40,17 +38,14 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
           builder: (context) => const EquipmentDetailPage(),
         ),
       );
-      return;
     }
-    final equipmentOwnerService =
-        Provider.of<EquipmentManager>(context, listen: false);
+
     try {
-      await equipmentOwnerService.uploadOwnerDetails(
+      await _userManager.uploadUserDetails(
         nameController.text.trim(),
         emailController.text.trim(),
         phoneController.text.trim(),
         dobController.text.trim(),
-        locationController.text.trim(),
         idnoController.text.trim(),
         locationController.text.trim(),
         townController.text.trim(),
@@ -58,10 +53,14 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
         selectedFile != null ? selectedFile!.path : '',
       );
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to upload user details: $e')),
+      );
     }
   }
+
+  String selectedGender = 'Male'; // Initialize the selected gender
+  List<String> genderOptions = ['Male', 'Female', 'Other'];
 
   @override
   Widget build(BuildContext context) {

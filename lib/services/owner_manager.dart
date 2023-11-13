@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
-class EquipmentManager extends ChangeNotifier {
+class OwnerManager extends ChangeNotifier {
   final CollectionReference _usersCollection =
       FirebaseFirestore.instance.collection('EquipmentOwners');
 
@@ -15,7 +15,6 @@ class EquipmentManager extends ChangeNotifier {
     String town,
     String gender,
     String imageUrl,
-    String s,
   ) async {
     try {
       await _usersCollection.add({
@@ -33,8 +32,6 @@ class EquipmentManager extends ChangeNotifier {
       throw Exception('Failed to upload user details: $e');
     }
   }
-
-  void addItem(item) {}
 
   // Add other user-related methods as needed
 }

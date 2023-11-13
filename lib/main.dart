@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'farmlink_themes.dart';
+import 'services/owner_manager.dart';
 import 'services/tab_manager.dart';
 
 void main() async {
@@ -27,7 +28,8 @@ class Farmlinkapp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (context) => TabManager()),
           ChangeNotifierProvider(create: (context) => AuthService()),
-          ChangeNotifierProvider(create: (context) => EquipmentManager())
+          ChangeNotifierProvider(create: (context) => EquipmentManager()),
+          ChangeNotifierProvider(create: (context) => OwnerManager())
         ],
         child: const AuthGate(),
       ),
