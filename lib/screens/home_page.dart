@@ -1,3 +1,4 @@
+import 'package:farmlink/components/my_button.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -80,13 +81,25 @@ class _HomePageState extends State<HomePage> {
 
   //set an initial location of the Map
   final CameraPosition _initialCameraPosition =
-      const CameraPosition(target: LatLng(20.5937, 78.9629));
+      const CameraPosition(target: LatLng(-1.286389, 36.817223));
+
+  // Add a Set to hold markers on the map
+  Set<Marker> _markers = Set();
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final user = FirebaseAuth.instance.currentUser!;
+
+    _markers.add(
+      const Marker(
+        markerId: MarkerId("Nairobi"),
+        position: LatLng(-1.286389, 36.817223),
+        infoWindow: InfoWindow(title: "Nairobi, Kenya"),
+        icon: BitmapDescriptor.defaultMarker,
+      ),
+    );
 
     return Container(
       height: height,
@@ -106,20 +119,25 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Stack(
           children: <Widget>[
-            GoogleMap(
-              initialCameraPosition: _initialCameraPosition,
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-              mapType: MapType.normal,
-              zoomGesturesEnabled: true,
-              zoomControlsEnabled: true,
-              onMapCreated: (GoogleMapController c) {
-                // to control the camera position of the map
-                googleMapController = c;
-              },
+            Expanded(
+              child: GoogleMap(
+                initialCameraPosition: _initialCameraPosition,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: true,
+                mapType: MapType.normal,
+                zoomGesturesEnabled: true,
+                markers: _markers,
+                zoomControlsEnabled: true,
+                onMapCreated: (GoogleMapController c) {
+                  // to control the camera position of the map
+                  googleMapController = c;
+                },
+              ),
             ),
             _buildSearchCard(),
             _buildEquipmentLoader(context),
+            Positioned(
+                top: 250, right: 30, left: 30, child: _buildHireButton()),
           ],
         ),
       ),
@@ -142,6 +160,33 @@ class _HomePageState extends State<HomePage> {
           // pathParameters: {
           // 'tab': '$currentTab',
         },
+      ),
+    );
+  }
+
+  Widget _buildHireButton() {
+    var width = MediaQuery.of(context).size.width;
+    return Center(
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          width: width,
+          padding: const EdgeInsets.all(10),
+          // height: 50,
+          decoration: BoxDecoration(
+            color: Colors.deepPurple,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: const Center(
+            child: Text(
+              'Hire Equipment',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24),
+            ),
+          ),
+        ),
       ),
     );
   }
