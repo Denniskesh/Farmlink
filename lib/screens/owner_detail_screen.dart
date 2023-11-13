@@ -1,4 +1,6 @@
+import 'package:farmlink/services/equipment_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'equipment_detail_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
@@ -18,15 +20,46 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final dobController = TextEditingController();
-  final idnoControler = TextEditingController();
+  final idnoController = TextEditingController();
   final locationController = TextEditingController();
-  final townControler = TextEditingController();
+  final townController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   File? selectedFile;
 
   String selectedGender = 'Male'; // Initialize the selected gender
 
   List<String> genderOptions = ['Male', 'Female', 'Other'];
+
+  Future<void> _saveOwnerDetails() async {
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const EquipmentDetailPage(),
+        ),
+      );
+      return;
+    }
+    final equipmentOwnerService =
+        Provider.of<EquipmentManager>(context, listen: false);
+    try {
+      await equipmentOwnerService.uploadOwnerDetails(
+        nameController.text.trim(),
+        emailController.text.trim(),
+        phoneController.text.trim(),
+        dobController.text.trim(),
+        locationController.text.trim(),
+        idnoController.text.trim(),
+        locationController.text.trim(),
+        townController.text.trim(),
+        selectedGender,
+        selectedFile != null ? selectedFile!.path : '',
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +140,7 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
                     },
                   ),
                   TextFormField(
-                    controller: idnoControler,
+                    controller: idnoController,
                     decoration: const InputDecoration(
                       icon: Icon(Icons.privacy_tip),
                       hintText: 'Enter ID Number',
@@ -152,7 +185,7 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
                     },
                   ),
                   TextFormField(
-                    controller: townControler,
+                    controller: townController,
                     decoration: const InputDecoration(
                       icon: Icon(Icons.add_location),
                       hintText: 'Enter Nearest Town',
@@ -178,16 +211,7 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      onPressed: () {
-                        //if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EquipmentDetailPage(),
-                          ),
-                        );
-                        // }
-                      },
+                      onPressed: () => _saveOwnerDetails(),
                       child: const Text('Continue'),
                     ),
                   ),

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/components/my_button.dart';
 import 'package:farmlink/components/my_text_field.dart';
 import 'package:flutter/material.dart';
