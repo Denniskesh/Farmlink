@@ -30,39 +30,6 @@ class _ConfirmListingPageState extends State<ConfirmListingPage> {
         padding: const EdgeInsets.all(10.0),
         child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(1.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Label
-                  Text(
-                    'Package:',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  // Text Input Field
-                  Expanded(
-                    child: DropdownButtonFormField(
-                      value: selectedPackage,
-                      items: packageOptions.map((fuelType) {
-                        return DropdownMenuItem(
-                          value: fuelType,
-                          child: Text(fuelType),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          selectedPackage = value!;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
             const SizedBox(height: 20.0),
             const Text(
               'You are required to pay a one time fee of Kes 1000 for your equipent to be listed on our platform. Read and Accept the Terms and Conditions then click on the Make Payment Button below to proceed with Payment. You will be redirected to Sim ToolKit to completed the transaction ',

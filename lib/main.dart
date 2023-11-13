@@ -23,6 +23,7 @@ class Farmlinkapp extends StatelessWidget {
     final theme = FarmlinkTheme.light();
     return MaterialApp(
       theme: theme,
+      title: 'Farmlink',
       debugShowCheckedModeBanner: false,
       home: MultiProvider(
         providers: [
