@@ -2,10 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 
 class EquipmentManager extends ChangeNotifier {
-  final CollectionReference _usersCollection =
-      FirebaseFirestore.instance.collection('EquipmentOwner');
-
-  Future<void> uploadOwnerDetails(
+  Future uploadOwnerDetails(
     String name,
     String email,
     String phone,
@@ -18,7 +15,7 @@ class EquipmentManager extends ChangeNotifier {
     String s,
   ) async {
     try {
-      await _usersCollection.add({
+      await FirebaseFirestore.instance.collection('OwnerDetails').add({
         'name': name,
         'email': email,
         'phone': phone,

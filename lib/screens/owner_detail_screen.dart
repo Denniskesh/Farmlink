@@ -6,10 +6,12 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 class OwnerDetailPage extends StatefulWidget {
+  final void Function()? onPressed;
   const OwnerDetailPage(
       {super.key,
       required Null Function(dynamic item) onCreate,
-      required Null Function(dynamic item) onUpdate});
+      required Null Function(dynamic item) onUpdate,
+      this.onPressed});
 
   @override
   State<OwnerDetailPage> createState() => _OwnerDetailPageState();
