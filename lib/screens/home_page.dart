@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
             _buildSearchCard(),
             _buildEquipmentLoader(context),
             Positioned(
-                top: 250, right: 30, left: 30, child: _buildHireButton()),
+                top: 250, right: 10, left: 10, child: _buildHireButton()),
           ],
         ),
       ),
