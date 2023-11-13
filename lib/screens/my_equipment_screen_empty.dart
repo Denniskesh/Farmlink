@@ -20,6 +20,7 @@ class MyEquipmentPage extends StatelessWidget {
             Text(
               'Do you have an idle Equipment?',
               style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16.0),
             Text(

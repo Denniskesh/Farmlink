@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'equipment_detail_screen.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:path/path.dart';
 import 'dart:io';
 
 class OwnerDetailPage extends StatefulWidget {
@@ -180,16 +179,16 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EquipmentDetailPage(),
-                            ),
-                          );
-                        }
+                        //if (_formKey.currentState!.validate()) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EquipmentDetailPage(),
+                          ),
+                        );
+                        // }
                       },
-                      child: const Text('Next'),
+                      child: const Text('Continue'),
                     ),
                   ),
                 ],
@@ -206,7 +205,7 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
-          'Upload a Photo of your ID or \nOperator\'s Licence',
+          'Upload a Photo of your ID or \nOperator\'s License',
           // style: Theme.of(context).textTheme.displaySmall,
         ),
         Align(
