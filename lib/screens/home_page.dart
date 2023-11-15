@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _initializeKommunicate();
     getPreviousSearches();
 
     searchTextController = TextEditingController(text: '');
@@ -60,12 +59,6 @@ class _HomePageState extends State<HomePage> {
         }
       }
     });
-  }
-
-  _initializeKommunicate() async {
-    dynamic result = await KommunicateFlutterPlugin.init(
-        appId: "1fb033be681109b15377676f20730a3c9");
-    print(result);
   }
 
   void signOut() {
@@ -94,7 +87,7 @@ class _HomePageState extends State<HomePage> {
       const CameraPosition(target: LatLng(-1.286389, 36.817223));
 
   // Add a Set to hold markers on the map
-  Set<Marker> _markers = Set();
+  final Set<Marker> _markers = {};
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +124,18 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.green,
           child: const Icon(Icons.message),
           onPressed: () {
-            KommunicateFlutterPlugin.launchConversation();
+            dynamic conversationObject = {
+              'appId':
+                  '1fb033be681109b15377676f20730a3c9', // The [APP_ID](https://dashboard.kommunicate.io/settings/install) obtained from kommunicate dashboard.
+            };
+
+            KommunicateFlutterPlugin.buildConversation(conversationObject)
+                .then((clientConversationId) {
+              print("Conversation builder success : " +
+                  clientConversationId.toString());
+            }).catchError((error) {
+              print("Conversation builder error : " + error.toString());
+            });
           },
         ),
         body: Stack(
