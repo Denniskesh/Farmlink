@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -33,4 +34,21 @@ class EquipmentManager with ChangeNotifier {
   }
 
   void addItem(item) {}
+}
+
+Future<List> getEquipments() async {
+  CollectionReference collectionRef =
+      FirebaseFirestore.instance.collection('equipment');
+  CollectionReference collectionRef1 =
+      FirebaseFirestore.instance.collection('equipmentowner');
+  QuerySnapshot one = await collectionRef1.get();
+  final allData1 = one.docs.map((doc) => doc.data()).toList();
+  debugPrint(allData1.toString());
+
+  QuerySnapshot querySnapshot = await collectionRef.get();
+
+  // Get data from docs and convert map to List
+  final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+  return allData;
 }

@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'package:kommunicate_flutter/kommunicate_flutter.dart';
-import 'package:http/http.dart' as http;
-import 'package:farmlink/components/my_button.dart';
+import 'package:farmlink/screens/equipment_list_screen.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +134,7 @@ class _HomePageState extends State<HomePage> {
             }).catchError((error) {
               print("Conversation builder error : " + error.toString());
             });
+            // KommunicateFlutterPlugin.launchConversation();
           },
         ),
         body: Stack(
@@ -159,6 +158,19 @@ class _HomePageState extends State<HomePage> {
             _buildEquipmentLoader(context),
             Positioned(
                 top: 280, right: 10, left: 10, child: _buildHireButton()),
+            Positioned(
+              top: 330,
+              left: 10,
+              right: 10,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const EquipmentListPage();
+                    }));
+                  },
+                  child: const Text('explore')),
+            )
           ],
         ),
       ),
