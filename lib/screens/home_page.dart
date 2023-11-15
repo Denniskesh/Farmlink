@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:kommunicate_flutter/kommunicate_flutter.dart';
+// import 'package:kommunicate_flutter/kommunicate_flutter.dart';
+import 'package:farmlink/screens/equipment_list_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:farmlink/components/my_button.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _initializeKommunicate();
+    // _initializeKommunicate();
     getPreviousSearches();
 
     searchTextController = TextEditingController(text: '');
@@ -62,11 +63,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  _initializeKommunicate() async {
-    dynamic result = await KommunicateFlutterPlugin.init(
-        appId: "1fb033be681109b15377676f20730a3c9");
-    print(result);
-  }
+  // _initializeKommunicate() async {
+  //   dynamic result = await KommunicateFlutterPlugin.init(
+  //       appId: "1fb033be681109b15377676f20730a3c9");
+  //   print(result);
+  // }
 
   void signOut() {
     final authService = Provider.of<AuthService>(context, listen: false);
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.green,
           child: const Icon(Icons.message),
           onPressed: () {
-            KommunicateFlutterPlugin.launchConversation();
+            // KommunicateFlutterPlugin.launchConversation();
           },
         ),
         body: Stack(
@@ -155,6 +156,19 @@ class _HomePageState extends State<HomePage> {
             _buildEquipmentLoader(context),
             Positioned(
                 top: 280, right: 10, left: 10, child: _buildHireButton()),
+            Positioned(
+              top: 330,
+              left: 10,
+              right: 10,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const EquipmentListPage();
+                    }));
+                  },
+                  child: const Text('explore')),
+            )
           ],
         ),
       ),

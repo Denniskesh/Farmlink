@@ -1,4 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
+
+List<EquipmentDetails> equipmentFromJson(String str) =>
+    List<EquipmentDetails>.from(
+        json.decode(str).map((x) => EquipmentDetails.fromJson(x)));
 
 class EquipmentDetails {
   final String mechanizationType;
@@ -8,7 +13,7 @@ class EquipmentDetails {
   final String rate;
   final String fuelType;
   final String consumptionRate;
-  final String packageType;
+  final String? packageType;
   final File? imageFile;
 
   EquipmentDetails({
@@ -20,6 +25,33 @@ class EquipmentDetails {
     required this.fuelType,
     required this.consumptionRate,
     this.imageFile,
-    required this.packageType,
+    this.packageType,
   });
+
+  factory EquipmentDetails.fromJson(Map<String, dynamic> json) {
+    return EquipmentDetails(
+        mechanizationType: json['mechanizationType'],
+        equipmentType: json['equipmentType'],
+        name: json['name'],
+        model: json['model'],
+        rate: json['rate'],
+        fuelType: json['fuelType'],
+        consumptionRate: json['consumptionRate']
+        // packageType: json['packageType'],
+        // imageFile: json['imageFile']);
+        );
+  }
+
+  @override
+  String toString() {
+    return """{mechanizationType:$mechanizationType,
+        equipmentType:$equipmentType,
+        name:$name,
+        model:$model,
+        rate:$rate,
+        fuelType:$fuelType,
+        consumptionRate:$consumptionRate,
+        packageType:$packageType
+    }""";
+  }
 }
