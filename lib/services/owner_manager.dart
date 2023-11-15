@@ -1,37 +1,40 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+
+import '../models/user_model.dart';
 
 class OwnerManager extends ChangeNotifier {
   final CollectionReference _usersCollection =
-      FirebaseFirestore.instance.collection('EquipmentOwners');
+      FirebaseFirestore.instance.collection('equipmentOwners');
 
-  Future<void> uploadUserDetails(
-    String name,
-    String email,
-    String phone,
-    String dob,
-    String idNumber,
-    String location,
-    String town,
-    String gender,
-    String imageUrl,
-  ) async {
+  Future<void> saveUserData(UserModel user, String imageFilePath) async {
     try {
+      // Upload image to Firebase Storage
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('user_images/${user.name}');
+      UploadTask uploadTask = storageReference.putFile(File(imageFilePath));
+      await uploadTask.whenComplete(() {});
+
+      // Get the image URL
+      String imageUrl = await storageReference.getDownloadURL();
+
+      // Save user data to Firestore
       await _usersCollection.add({
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'dob': dob,
-        'idNumber': idNumber,
-        'location': location,
-        'town': town,
-        'gender': gender,
+        'name': user.name,
+        'email': user.email,
+        'phone': user.phone,
+        'dob': user.dob,
+        'idNumber': user.idNumber,
+        'gender': user.gender,
+        'location': user.location,
+        'town': user.town,
         'imageUrl': imageUrl,
       });
     } catch (e) {
-      throw Exception('Failed to upload user details: $e');
+      print("Error saving user data: $e");
     }
   }
-
-  // Add other user-related methods as needed
 }

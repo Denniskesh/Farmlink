@@ -1,9 +1,11 @@
 import 'package:farmlink/services/owner_manager.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import '../components/my_button.dart';
+import '../models/user_model.dart';
 import 'equipment_detail_screen.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OwnerDetailPage extends StatefulWidget {
   final void Function()? onPressed;
@@ -26,12 +28,25 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
   final locationController = TextEditingController();
   final townController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  File? selectedFile;
+  File? imageFile;
 
-  final OwnerManager _userManager = OwnerManager();
-
-  Future<void> _saveOwnerDetails() async {
+  void _saveOwnerDetails() {
     if (_formKey.currentState!.validate()) {
+      UserModel user = UserModel(
+        name: nameController.text,
+        email: emailController.text,
+        phone: phoneController.text,
+        dob: dobController.text,
+        idNumber: idnoController.text,
+        gender: selectedGender,
+        location: locationController.text,
+        town: townController.text,
+        imageUrl: imageFile != null ? imageFile!.path : '',
+      );
+
+      OwnerManager userManager = OwnerManager();
+      userManager.saveUserData(user, imageFile!.path);
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -39,24 +54,17 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
         ),
       );
     }
+  }
 
-    try {
-      await _userManager.uploadUserDetails(
-        nameController.text.trim(),
-        emailController.text.trim(),
-        phoneController.text.trim(),
-        dobController.text.trim(),
-        idnoController.text.trim(),
-        locationController.text.trim(),
-        townController.text.trim(),
-        selectedGender,
-        selectedFile != null ? selectedFile!.path : '',
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to upload user details: $e')),
-      );
-    }
+  Future<void> uploadImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        imageFile = File(pickedFile.path);
+      }
+    });
   }
 
   String selectedGender = 'Male'; // Initialize the selected gender
@@ -204,8 +212,8 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
                   ),
                   buildUploadCard(),
                   Text(
-                    selectedFile != null
-                        ? "Selected File: ${selectedFile!}"
+                    imageFile != null
+                        ? "Selected File: ${imageFile!}"
                         : 'No file selected',
                   ),
                   const SizedBox(height: 20.0),
@@ -236,24 +244,7 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
         Align(
           alignment: Alignment.centerRight,
           child: ElevatedButton(
-            onPressed: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-              if (result != null) {
-                final file = File(result.files.single.name);
-                selectedFile = file;
-                setState(() {});
-              } else {
-                // User canceled the picker
-                // You can show snackbar or fluttertoast
-                // here like this to show warning to user
-
-                ScaffoldMessenger.of(context as BuildContext)
-                    .showSnackBar(const SnackBar(
-                  content: Text('Please select file'),
-                ));
-              }
-            },
+            onPressed: () => uploadImage(),
             child: const Text('Upload File'),
           ),
         ),

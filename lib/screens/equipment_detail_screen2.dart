@@ -14,8 +14,6 @@ class ConfirmListingPage extends StatefulWidget {
 class _ConfirmListingPageState extends State<ConfirmListingPage> {
   bool acceptTerms = false;
   bool tickMpesa = false;
-  String selectedPackage = 'With Operator'; // Initialize the selected gender
-  List<String> packageOptions = ['With Operator', 'Without Operator'];
 
   @override
   Widget build(BuildContext context) {

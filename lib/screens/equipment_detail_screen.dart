@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/screens/equipment_detail_screen2.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:farmlink/services/equipment_manager.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import '../models/equipment_model.dart';
 
 class EquipmentDetailPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
   final _formKey = GlobalKey<FormState>();
   final EquipmentManager _equipmentProvider =
       EquipmentManager(); // Create an instance of the provider
-  File? selectedFile;
+  File? imageFile;
 
   Future<void> _saveEquipmentDetails() async {
     if (_formKey.currentState!.validate()) {
@@ -37,7 +38,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
         fuelType: selectedFuelType,
         consumptionRate:
             consumpionRateController.text.trim(), // Replace with actual value
-        imageFile: selectedFile,
+        imageFile: imageFile,
         packageType: selectedPackage,
       );
 
@@ -54,6 +55,35 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
           builder: (context) => const ConfirmListingPage(),
         ),
       );
+    }
+  }
+
+  Future<void> uploadImage() async {
+    final FirebaseStorage storage = FirebaseStorage.instance;
+    final Reference storageRef = storage.ref().child('images');
+    // Pick an image
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // Get the file from the picked image
+      File imageFile = File(pickedFile.path);
+
+      // Upload the image to Firebase Storage
+      TaskSnapshot storageUploadTask =
+          await storageRef.child('image.jpg').putFile(imageFile);
+
+      // Get the download URL of the uploaded image
+      String downloadURL = await storageUploadTask.ref.getDownloadURL();
+
+      // Save the download URL to Firestore
+      await FirebaseFirestore.instance
+          .collection('images')
+          .add({'url': downloadURL});
+
+      print('Image uploaded successfully!');
+    } else {
+      print('No image selected.');
     }
   }
 
@@ -370,11 +400,11 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
             ),
           ),
           buildUploadCard(),
-          // Text(
-          //  fileName != null
-          //     ? "Selected File: ${fileName!}"
-          //     : 'No file selected',
-          // ),
+          Text(
+            imageFile != null
+                ? "Selected File: ${imageFile!}"
+                : 'No file selected',
+          ),
           const SizedBox(height: 20.0),
           Align(
             alignment: Alignment.bottomRight,
@@ -399,38 +429,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
         Align(
           alignment: Alignment.centerRight,
           child: ElevatedButton(
-            onPressed: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-              if (result != null) {
-                final file = File(result.files.single.name);
-
-                // Create a unique filename for the storage
-                String fileName =
-                    DateTime.now().millisecondsSinceEpoch.toString();
-                firebase_storage.Reference reference = firebase_storage
-                    .FirebaseStorage.instance
-                    .ref()
-                    .child(fileName);
-
-                // Upload file to Firebase Storage
-                await reference.putFile(file);
-
-                // Get download URL
-                String downloadURL = await reference.getDownloadURL();
-
-                // Update UI or save the URL to Firestore as needed
-                setState(() {
-                  selectedFile = file;
-                  // You can use the downloadURL as needed
-                  print("File uploaded. Download URL: $downloadURL");
-                });
-                ScaffoldMessenger.of(context as BuildContext)
-                    .showSnackBar(const SnackBar(
-                  content: Text('Please select file'),
-                ));
-              }
-            },
+            onPressed: () => uploadImage(),
             child: const Text('Upload File'),
           ),
         ),

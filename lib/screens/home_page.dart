@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:kommunicate_flutter/kommunicate_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:farmlink/components/my_button.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _initializeKommunicate();
     getPreviousSearches();
 
     searchTextController = TextEditingController(text: '');
@@ -56,6 +60,12 @@ class _HomePageState extends State<HomePage> {
         }
       }
     });
+  }
+
+  _initializeKommunicate() async {
+    dynamic result = await KommunicateFlutterPlugin.init(
+        appId: "1fb033be681109b15377676f20730a3c9");
+    print(result);
   }
 
   void signOut() {
@@ -116,6 +126,13 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.account_circle_rounded),
             )
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.green,
+          child: const Icon(Icons.message),
+          onPressed: () {
+            KommunicateFlutterPlugin.launchConversation();
+          },
         ),
         body: Stack(
           children: <Widget>[
