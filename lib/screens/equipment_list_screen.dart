@@ -207,17 +207,18 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: height / 20,
+                        height: height / 25,
                         child: Stack(
                           alignment: Alignment.topCenter,
                           children: <Widget>[
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                head.value.text,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ),
+                            FittedBox(
+                                fit: BoxFit.fill,
+                                child: Flexible(
+                                    fit: FlexFit.loose,
+                                    child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(head.value.text,
+                                            style: TextStyle(fontSize: 70))))),
                             Align(
                               alignment: FractionalOffset.topRight,
                               child: SizedBox(
@@ -247,6 +248,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                         child: DataTable(
                           // ignore: deprecated_member_use
                           dataRowHeight: height / 4,
+
                           columns: const [
                             DataColumn(
                               label: Text(''),
@@ -272,19 +274,21 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                           Container(
                                               alignment: Alignment.topCenter,
                                               child: Container(
-                                                  height: height * 0.05,
+                                                  height: height * 0.038,
                                                   width: width * 0.5,
                                                   child: FittedBox(
                                                       fit: BoxFit.contain,
-                                                      child: Center(
-                                                        child: Text(
-                                                          e.equipmentType,
-                                                          style:
-                                                              Theme.of(context)
+                                                      child: Flexible(
+                                                          fit: FlexFit.loose,
+                                                          child: Center(
+                                                            child: Text(
+                                                              e.equipmentType,
+                                                              style: Theme.of(
+                                                                      context)
                                                                   .textTheme
                                                                   .titleLarge,
-                                                        ),
-                                                      )))),
+                                                            ),
+                                                          ))))),
 
                                           //alignment at veritically center, and at left horizontally
                                           Align(

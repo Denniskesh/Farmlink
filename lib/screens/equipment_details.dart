@@ -26,7 +26,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
       return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            title: Text('${height}Equipment Details'),
+            title: Text('Equipment Details'),
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
