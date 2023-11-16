@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    return Container(
+    return SizedBox(
       height: height,
       width: width,
       child: Scaffold(

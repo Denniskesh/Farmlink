@@ -1,7 +1,5 @@
-import 'dart:convert';
 
 import 'package:farmlink/models/equipment_model.dart';
-import 'package:farmlink/screens/equipment_detail_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +24,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
       return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            title: Text('Equipment Details'),
+            title: const Text('Equipment Details'),
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -35,7 +33,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                   width: width,
                   height: height / 2,
                   child: Container(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Center(
                         child: Image.network(
                       //equipment.imageFile
@@ -59,7 +57,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                     Align(
                         alignment: FractionalOffset.topRight,
                         child: Padding(
-                          padding: EdgeInsets.only(right: 16.0),
+                          padding: const EdgeInsets.only(right: 16.0),
                           child: Text(
                             'Kes ${equipment.rate}',
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -68,7 +66,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                     Align(
                         alignment: FractionalOffset.bottomRight,
                         child: Padding(
-                            padding: EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: RatingBar.builder(
                               initialRating: 3,
                               minRating: 1,
@@ -76,7 +74,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                               allowHalfRating: true,
                               itemCount: 4,
                               itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 1.0),
+                                  const EdgeInsets.symmetric(horizontal: 1.0),
                               itemBuilder: (context, _) => const Icon(
                                 Icons.star,
                                 color: Colors.amber,
@@ -99,7 +97,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 1, top: 8.0),
+                      padding: const EdgeInsets.only(left: 1, top: 8.0),
                       child: Text(
                         'Equipment specification',
                         style: Theme.of(context).textTheme.titleMedium,
@@ -205,7 +203,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                         ),
                         FittedBox(
                             fit: BoxFit.contain,
-                            child: Container(
+                            child: SizedBox(
                               width: width / 2,
                               child: Flexible(
                                   fit: FlexFit.loose,
@@ -245,8 +243,8 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
               Icons.chat_bubble_outline,
               size: width / 10,
             ),
-            label: Text('Chat'),
-            style: ButtonStyle(),
+            label: const Text('Chat'),
+            style: const ButtonStyle(),
           ),
         ),
       );
@@ -254,7 +252,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
       return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            title: Text('${height}Equipment Details'),
+            title: const Text('Equipment Details'),
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -263,7 +261,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                   width: width,
                   height: height / 2,
                   child: Container(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Center(
                         child: Image.network(
                       //equipment.imageFile
@@ -287,7 +285,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                     Align(
                         alignment: FractionalOffset.topRight,
                         child: Padding(
-                          padding: EdgeInsets.only(right: 16.0),
+                          padding: const EdgeInsets.only(right: 16.0),
                           child: Text(
                             'Kes ${equipment.rate}',
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -296,7 +294,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                     Align(
                         alignment: FractionalOffset.bottomRight,
                         child: Padding(
-                            padding: EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.all(16.0),
                             child: RatingBar.builder(
                               initialRating: 3,
                               minRating: 1,
@@ -304,7 +302,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                               allowHalfRating: true,
                               itemCount: 4,
                               itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 1.0),
+                                  const EdgeInsets.symmetric(horizontal: 1.0),
                               itemBuilder: (context, _) => const Icon(
                                 Icons.star,
                                 color: Colors.amber,
@@ -327,7 +325,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                 child: Column(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 1, top: 8.0),
+                      padding: const EdgeInsets.only(left: 1, top: 8.0),
                       child: Text(
                         'Equipment specification',
                         style: Theme.of(context).textTheme.titleMedium,
@@ -433,7 +431,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                         ),
                         FittedBox(
                             fit: BoxFit.contain,
-                            child: Container(
+                            child: SizedBox(
                               width: width / 2,
                               child: Flexible(
                                   fit: FlexFit.loose,
@@ -473,8 +471,8 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
               Icons.chat_bubble_outline,
               size: width / 10,
             ),
-            label: Text('Chat'),
-            style: ButtonStyle(),
+            label: const Text('Chat'),
+            style: const ButtonStyle(),
           ),
         ),
       );
