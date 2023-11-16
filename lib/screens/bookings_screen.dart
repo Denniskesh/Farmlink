@@ -1,6 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'package:farmlink/screens/equipment_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -17,9 +16,9 @@ class _BookingsPageState extends State<BookingsPage> {
     final _formKey = GlobalKey<FormState>();
     late GoogleMapController googleMapController;
 
-    final TextEditingController equipment_type = TextEditingController();
-    final TextEditingController county_location = TextEditingController();
-    final TextEditingController nearest_town = TextEditingController();
+    final TextEditingController equipmentType = TextEditingController();
+    final TextEditingController countyLocation = TextEditingController();
+    final TextEditingController nearestTown = TextEditingController();
 
     const CameraPosition _initialCameraPosition =
         CameraPosition(target: LatLng(20.5937, 78.9629));
@@ -71,7 +70,7 @@ class _BookingsPageState extends State<BookingsPage> {
                                   padding: const EdgeInsets.only(
                                       top: 10, left: 15, right: 15, bottom: 0),
                                   child: TextFormField(
-                                    controller: equipment_type,
+                                    controller: equipmentType,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'please enter the type of equipment';
@@ -99,7 +98,7 @@ class _BookingsPageState extends State<BookingsPage> {
                                   padding: const EdgeInsets.only(
                                       top: 10, left: 15, right: 15, bottom: 0),
                                   child: TextFormField(
-                                    controller: county_location,
+                                    controller: countyLocation,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'please enter the county location';
@@ -127,7 +126,7 @@ class _BookingsPageState extends State<BookingsPage> {
                                   padding: const EdgeInsets.only(
                                       top: 10, left: 15, right: 15, bottom: 0),
                                   child: TextFormField(
-                                    controller: nearest_town,
+                                    controller: nearestTown,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'please enter nearest town';

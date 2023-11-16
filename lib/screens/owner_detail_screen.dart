@@ -1,11 +1,9 @@
 import 'package:farmlink/services/owner_manager.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import '../models/user_model.dart';
 import 'equipment_detail_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OwnerDetailPage extends StatefulWidget {
   final void Function()? onPressed;

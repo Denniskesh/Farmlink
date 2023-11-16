@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/bookings_screen.dart';
-import 'screens/equipment_list_screen.dart';
 import 'screens/equipment_screen.dart';
 import 'services/tab_manager.dart';
-import 'services/equipment_manager.dart';
 import 'screens/home_page.dart';
-import 'screens/my_equipment_screen_empty.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {

@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:farmlink/models/equipment_model.dart';
-import 'package:farmlink/screens/equipment_detail_screen.dart';
 import 'package:farmlink/screens/equipment_details.dart';
 import 'package:farmlink/services/equipment_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class EquipmentListPage extends StatefulWidget {
   const EquipmentListPage({super.key});
@@ -155,7 +153,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                             onPressed: () async {
                               Navigator.pop(context);
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.search,
                               size: 40,
                             ),
@@ -218,7 +216,8 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                     child: Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(head.value.text,
-                                            style: TextStyle(fontSize: 70))))),
+                                            style: const TextStyle(
+                                                fontSize: 70))))),
                             Align(
                               alignment: FractionalOffset.topRight,
                               child: SizedBox(
@@ -273,7 +272,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                           //Alignment at Center
                                           Container(
                                               alignment: Alignment.topCenter,
-                                              child: Container(
+                                              child: SizedBox(
                                                   height: height * 0.038,
                                                   width: width * 0.5,
                                                   child: FittedBox(
@@ -293,14 +292,14 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                           //alignment at veritically center, and at left horizontally
                                           Align(
                                               alignment: Alignment.centerLeft,
-                                              child: Container(
+                                              child: SizedBox(
                                                   height: height * 0.2,
                                                   width: width * 0.5,
                                                   child: Center(
                                                       child: FittedBox(
                                                           fit: BoxFit.contain,
-                                                          child: Container(
-                                                            width: width / 2,
+                                                          child: SizedBox(
+                                                            width: width,
                                                             child: Flexible(
                                                                 fit: FlexFit
                                                                     .loose,
@@ -310,7 +309,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                                   style: Theme.of(
                                                                           context)
                                                                       .textTheme
-                                                                      .displaySmall,
+                                                                      .displayMedium,
                                                                 )),
                                                           ))))),
 
@@ -350,10 +349,9 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                             ),
                                                             Padding(
                                                                 padding:
-                                                                    EdgeInsets
+                                                                    const EdgeInsets
                                                                         .only(),
-                                                                child:
-                                                                    Container(
+                                                                child: SizedBox(
                                                                   width: width *
                                                                       0.18,
                                                                   child:
@@ -369,7 +367,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                                             await Navigator.push(context,
                                                                                 MaterialPageRoute(builder: (_) => EquipmentDetailsPage(equipment: e)));
                                                                           },
-                                                                          child: Text(
+                                                                          child: const Text(
                                                                             'View details',
                                                                             style:
                                                                                 TextStyle(fontSize: 30),

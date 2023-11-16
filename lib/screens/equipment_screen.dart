@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'my_equipment_screen_empty.dart';
-import 'equipment_list_screen.dart';
 import 'owner_detail_screen.dart';
 import 'package:farmlink/services/equipment_manager.dart';
 
