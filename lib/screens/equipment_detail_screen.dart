@@ -25,7 +25,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
       EquipmentManager(); // Create an instance of the provider
   File? imageFile;
 
-  Future<void> _saveEquipmentDetails() async {
+  void _saveEquipmentDetails() {
     if (_formKey.currentState!.validate()) {
       // Create EquipmentDetails object with form data
       EquipmentDetails equipment = EquipmentDetails(
@@ -396,9 +396,9 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
+        const Text(
           'Upload a clear Photo of the \nEquipment showing the Plate No.',
-          style: Theme.of(context).textTheme.displaySmall,
+          //style: Theme.of(context).textTheme.displaySmall,
         ),
         Align(
           alignment: Alignment.centerRight,
