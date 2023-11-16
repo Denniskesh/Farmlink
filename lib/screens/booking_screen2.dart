@@ -38,10 +38,10 @@ class _BookingsPage2State extends State<BookingsPage2> {
               actions: [
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return const EquipmentListPage();
-                    }));
+                    // Navigator.of(context)
+                    //  .push(MaterialPageRoute(builder: (context) {
+                    //return const EquipmentListPage();
+                    // }));
                   },
                   icon: const Icon(
                     Icons.account_circle_rounded,

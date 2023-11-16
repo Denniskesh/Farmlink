@@ -58,32 +58,14 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
   }
 
   Future<void> uploadImage() async {
-    final FirebaseStorage storage = FirebaseStorage.instance;
-    final Reference storageRef = storage.ref().child('images');
-    // Pick an image
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      // Get the file from the picked image
-      File imageFile = File(pickedFile.path);
-
-      // Upload the image to Firebase Storage
-      TaskSnapshot storageUploadTask =
-          await storageRef.child('image.jpg').putFile(imageFile);
-
-      // Get the download URL of the uploaded image
-      String downloadURL = await storageUploadTask.ref.getDownloadURL();
-
-      // Save the download URL to Firestore
-      await FirebaseFirestore.instance
-          .collection('images')
-          .add({'url': downloadURL});
-
-      print('Image uploaded successfully!');
-    } else {
-      print('No image selected.');
-    }
+    setState(() {
+      if (pickedFile != null) {
+        imageFile = File(pickedFile.path);
+      }
+    });
   }
 
   String selectedFuelType = 'Diesel'; // Initialize the selected gender

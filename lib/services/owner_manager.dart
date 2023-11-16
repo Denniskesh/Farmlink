@@ -14,7 +14,7 @@ class OwnerManager extends ChangeNotifier {
     try {
       // Upload image to Firebase Storage
       Reference storageReference =
-          FirebaseStorage.instance.ref().child('user_images/${user.name}');
+          FirebaseStorage.instance.ref().child('user_images/${user.name}.jpg');
       UploadTask uploadTask = storageReference.putFile(File(imageFilePath));
       await uploadTask.whenComplete(() {});
 
