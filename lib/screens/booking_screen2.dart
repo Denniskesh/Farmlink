@@ -12,27 +12,10 @@ class BookingsPage2 extends StatefulWidget {
 }
 
 class _BookingsPage2State extends State<BookingsPage2> {
-  double width = 0.0;
-  double height = 0.0;
-  final _formKey = GlobalKey<FormState>();
-
-  final _formKey1 = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    height = MediaQuery.of(context).size.height -
-        AppBar().preferredSize.height -
-        MediaQuery.of(context).padding.top -
-        50;
-    // final _formKey = GlobalKey<FormState>();
-
-    // final _formKey1 = GlobalKey<FormState>();
+    final _formKey = GlobalKey<FormState>();
+    final _formKey1 = GlobalKey<FormState>();
     late GoogleMapController googleMapController;
 
     final TextEditingController equipmentType = TextEditingController();
@@ -89,118 +72,108 @@ class _BookingsPage2State extends State<BookingsPage2> {
                 ),
               ),
               Positioned(
-                child: Align(
-                    alignment: FractionalOffset.topCenter,
-                    child: Container(
-                        child: SingleChildScrollView(
-                            child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Form(
-                              key: _formKey,
-                              child: Column(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10,
-                                        left: 15,
-                                        right: 15,
-                                        bottom: 0),
-                                    child: TextFormField(
-                                      controller: equipmentType,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'please enter the type of equipment';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Equipment Type',
-                                        hintText: 'Enter Equipment Name',
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 236, 197, 197)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 202, 178, 178)),
-                                        ),
-                                      ),
+                // alignment: FractionalOffset.topCenter,
+                child: Container(
+                    child: SingleChildScrollView(
+                        child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Form(
+                          key: _formKey,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, left: 15, right: 15, bottom: 0),
+                                child: TextFormField(
+                                  controller: equipmentType,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'please enter the type of equipment';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Equipment Type',
+                                    hintText: 'Enter Equipment Name',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 236, 197, 197)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 202, 178, 178)),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10,
-                                        left: 15,
-                                        right: 15,
-                                        bottom: 0),
-                                    child: TextFormField(
-                                      controller: countyLocation,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'please enter the county location';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'County Location',
-                                        hintText: 'Set County Location',
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 236, 197, 197)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 202, 178, 178)),
-                                        ),
-                                      ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, left: 15, right: 15, bottom: 0),
+                                child: TextFormField(
+                                  controller: countyLocation,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'please enter the county location';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'County Location',
+                                    hintText: 'Set County Location',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 236, 197, 197)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 202, 178, 178)),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10,
-                                        left: 15,
-                                        right: 15,
-                                        bottom: 16),
-                                    child: TextFormField(
-                                      controller: nearestTown,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'please enter nearest town';
-                                        }
-                                        return null;
-                                      },
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Nearest Town',
-                                        hintText: 'Set Nearest Town',
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 236, 197, 197)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color.fromARGB(
-                                                  255, 202, 178, 178)),
-                                        ),
-                                      ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, left: 15, right: 15, bottom: 16),
+                                child: TextFormField(
+                                  controller: nearestTown,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'please enter nearest town';
+                                    }
+                                    return null;
+                                  },
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Nearest Town',
+                                    hintText: 'Set Nearest Town',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 236, 197, 197)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color.fromARGB(
+                                              255, 202, 178, 178)),
                                     ),
                                   ),
-                                ],
-                              ))
-                        ],
-                      ),
-                    )))),
+                                ),
+                              ),
+                            ],
+                          ))
+                    ],
+                  ),
+                ))),
               ),
               Positioned(
                 child: Align(
@@ -213,144 +186,123 @@ class _BookingsPage2State extends State<BookingsPage2> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          SizedBox(
-                            // height: height / 1.5,
-                            child: Container(
-                              // fit: BoxFit.contain,
-                              child: Flexible(
-                                  // fit: FlexFit.loose,
-                                  child: Form(
-                                      key: _formKey1,
-                                      child: Column(
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10,
-                                                left: 15,
-                                                right: 15,
-                                                bottom: 0),
-                                            child: TextFormField(
-                                                controller: durationDate,
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'please enter the type of equipment';
-                                                  }
-                                                  return null;
-                                                },
-                                                decoration:
-                                                    const InputDecoration(
-                                                  border: OutlineInputBorder(),
-                                                  labelText: 'Duration Date',
-                                                  hintText: 'Select Date',
-                                                  // enabledBorder:
-                                                  //     OutlineInputBorder(
-                                                  //   borderSide: BorderSide(
-                                                  //       color: Color.fromARGB(
-                                                  //           255,
-                                                  //           236,
-                                                  //           197,
-                                                  //           197)),
-                                                  // ),
-                                                  //   focusedBorder:
-                                                  //       OutlineInputBorder(
-                                                  //     borderSide: BorderSide(
-                                                  //         color: Color.fromARGB(
-                                                  //             255, 202, 178, 178)),
-                                                  //   ),
-                                                  // ),
-                                                )),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10,
-                                                left: 15,
-                                                right: 15,
-                                                bottom: 0),
-                                            child: TextFormField(
-                                              controller: pickUpTime,
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'please enter the county location';
-                                                }
-                                                return null;
-                                              },
-                                              decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText: 'Pick Up Time',
-                                                hintText: '00:00',
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color.fromARGB(
-                                                          255, 236, 197, 197)),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color.fromARGB(
-                                                          255, 202, 178, 178)),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10,
-                                                left: 15,
-                                                right: 15,
-                                                bottom: 0),
-                                            child: TextFormField(
-                                              controller: package,
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'please enter nearest town';
-                                                }
-                                                return null;
-                                              },
-                                              decoration: const InputDecoration(
-                                                border: OutlineInputBorder(),
-                                                labelText: 'Package',
-                                                hintText: 'With Operator',
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color.fromARGB(
-                                                          255, 236, 197, 197)),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: Color.fromARGB(
-                                                          255, 202, 178, 178)),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            height: 70,
-                                            padding: const EdgeInsets.only(
-                                                top: 10,
-                                                left: 15,
-                                                right: 15,
-                                                bottom: 8),
-                                            child: ElevatedButton(
-                                              onPressed: () async {
-                                                if (_formKey1.currentState!
-                                                    .validate()) {}
-                                              },
-                                              child: const Text(
-                                                "Continue",
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ))),
-                            ),
-                          ),
+                          Form(
+                              key: _formKey1,
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10,
+                                        left: 15,
+                                        right: 15,
+                                        bottom: 0),
+                                    child: TextFormField(
+                                      controller: durationDate,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'please enter the type of equipment';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Duration Date',
+                                        hintText: 'Select Date',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 236, 197, 197)),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 202, 178, 178)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10,
+                                        left: 15,
+                                        right: 15,
+                                        bottom: 0),
+                                    child: TextFormField(
+                                      controller: pickUpTime,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'please enter the county location';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Pick Up Time',
+                                        hintText: '00:00',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 236, 197, 197)),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 202, 178, 178)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10,
+                                        left: 15,
+                                        right: 15,
+                                        bottom: 0),
+                                    child: TextFormField(
+                                      controller: package,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'please enter nearest town';
+                                        }
+                                        return null;
+                                      },
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: 'Package',
+                                        hintText: 'With Operator',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 236, 197, 197)),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 202, 178, 178)),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 70,
+                                    padding: const EdgeInsets.only(
+                                        top: 10,
+                                        left: 15,
+                                        right: 15,
+                                        bottom: 8),
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        if (_formKey1.currentState!
+                                            .validate()) {}
+                                      },
+                                      child: const Text(
+                                        "Continue",
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ))
                         ],
                       ),
                     )))),
