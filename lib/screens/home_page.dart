@@ -1,4 +1,4 @@
-// import 'package:kommunicate_flutter/kommunicate_flutter.dart';
+import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 import 'package:farmlink/screens/equipment_list_screen.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -122,19 +122,19 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.green,
           child: const Icon(Icons.message),
           onPressed: () {
-            //   dynamic conversationObject = {
-            //     'appId':
-            //         '1fb033be681109b15377676f20730a3c9', // The [APP_ID](https://dashboard.kommunicate.io/settings/install) obtained from kommunicate dashboard.
-            //   };
+            dynamic conversationObject = {
+              'appId':
+                  '1fb033be681109b15377676f20730a3c9', // The [APP_ID](https://dashboard.kommunicate.io/settings/install) obtained from kommunicate dashboard.
+            };
 
-            //   KommunicateFlutterPlugin.buildConversation(conversationObject)
-            //       .then((clientConversationId) {
-            //     print("Conversation builder success : " +
-            //         clientConversationId.toString());
-            //   }).catchError((error) {
-            //     print("Conversation builder error : " + error.toString());
-            //   });
-            //   // KommunicateFlutterPlugin.launchConversation();
+            KommunicateFlutterPlugin.buildConversation(conversationObject)
+                .then((clientConversationId) {
+              print("Conversation builder success : " +
+                  clientConversationId.toString());
+            }).catchError((error) {
+              print("Conversation builder error : " + error.toString());
+            });
+            // KommunicateFlutterPlugin.launchConversation();
           },
         ),
         body: Stack(
