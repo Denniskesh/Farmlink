@@ -22,24 +22,24 @@ class EquipmentManager with ChangeNotifier {
       EquipmentDetails equipment, String imageFilePath) async {
     try {
       // Upload image to Firebase Storage
-      Reference storageReference = FirebaseStorage.instance
+      Reference storageReference1 = FirebaseStorage.instance
           .ref()
           .child('equipment_images/${equipment.name}.jpg');
-      UploadTask uploadTask = storageReference.putFile(File(imageFilePath));
+      UploadTask uploadTask = storageReference1.putFile(File(imageFilePath));
       await uploadTask.whenComplete(() {});
 
       // Get the image URL
-      String imageUrl = await storageReference.getDownloadURL();
+      String imageUrl = await storageReference1.getDownloadURL();
 
       await _equipmentsCollection.add({
-        'mechanizationType': _equipmentDetails?.mechanizationType,
-        'equipmentType': _equipmentDetails?.equipmentType,
-        'name': _equipmentDetails?.name,
-        'model': _equipmentDetails?.model,
-        'rate': _equipmentDetails?.rate,
-        'fuelType': _equipmentDetails?.fuelType,
-        'consumptionRate': _equipmentDetails?.consumptionRate,
-        'package': _equipmentDetails?.packageType,
+        'mechanizationType': equipment.mechanizationType,
+        'equipmentType': equipment.equipmentType,
+        'name': equipment.name,
+        'model': equipment.model,
+        'rate': equipment.rate,
+        'fuelType': equipment.fuelType,
+        'consumptionRate': equipment.consumptionRate,
+        'package': equipment.packageType,
         'imageUrl':
             imageUrl, // You need to upload the image to storage and store the URL
       });
@@ -55,7 +55,7 @@ Future<List> getEquipments() async {
   CollectionReference collectionRef =
       FirebaseFirestore.instance.collection('equipment');
   CollectionReference collectionRef1 =
-      FirebaseFirestore.instance.collection('equipmentowners');
+      FirebaseFirestore.instance.collection('equipmentOwners');
   QuerySnapshot one = await collectionRef1.get();
   final allData1 = one.docs.map((doc) => doc.data()).toList();
   debugPrint(allData1.toString());
