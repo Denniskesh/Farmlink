@@ -196,7 +196,10 @@ class _EquipmentListPage extends State<EquipmentListPage> {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-              title: Text('Equipment List'),
+              title: Text(
+                'Equipment List',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
             ),
             body: Container(
               child: SingleChildScrollView(
@@ -212,7 +215,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 head.value.text,
-                                style: TextStyle(fontSize: 30),
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ),
                             Align(
@@ -220,7 +223,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                               child: SizedBox(
                                 width: width * 0.2,
                                 child: PopupMenuButton<String>(
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.filter_list,
                                     size: 30,
                                   ),
@@ -271,15 +274,17 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                               child: Container(
                                                   height: height * 0.05,
                                                   width: width * 0.5,
-                                                  child: Center(
-                                                    child: Text(
-                                                      e.equipmentType,
-                                                      style: const TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 20),
-                                                    ),
-                                                  ))),
+                                                  child: FittedBox(
+                                                      fit: BoxFit.contain,
+                                                      child: Center(
+                                                        child: Text(
+                                                          e.equipmentType,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleLarge,
+                                                        ),
+                                                      )))),
 
                                           //alignment at veritically center, and at left horizontally
                                           Align(
@@ -288,55 +293,88 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                   height: height * 0.2,
                                                   width: width * 0.5,
                                                   child: Center(
-                                                    child: Text(
-                                                      e.mechanizationType,
-                                                      style: const TextStyle(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color: Colors.grey),
-                                                    ),
-                                                  ))),
+                                                      child: FittedBox(
+                                                          fit: BoxFit.contain,
+                                                          child: Container(
+                                                            width: width / 2,
+                                                            child: Flexible(
+                                                                fit: FlexFit
+                                                                    .loose,
+                                                                child: Text(
+                                                                  'widget empowers developers to create adaptive and user-friendly interfaces, enabling a smooth and consistent user experience across devices',
+                                                                  // style: Theme.of(context).textTheme.displaySmall,
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .displaySmall,
+                                                                )),
+                                                          ))))),
 
-                                          //alignment at veritically center, and at right horizontally
-
-                                          //manual position with left, top, right, bottom
                                           Positioned(
+                                            // alignment:
+                                            //     FractionalOffset.bottomLeft,
                                             bottom: 0,
                                             left: 0,
-                                            child: (Container(
-                                                width: width * 0.25,
-                                                height: height * 0.05,
-                                                child: Center(
-                                                    child: Text(
-                                                  'ksh. ${e.rate}',
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 15),
-                                                )))),
-                                          ),
-                                          Positioned(
-                                            bottom: 0,
-                                            right: 0,
-                                            child: (Container(
-                                                width: width * 0.25,
-                                                height: height * 0.05,
-                                                child: Positioned(
-                                                  left: 0,
-                                                  child: TextButton(
-                                                      onPressed: () async {
-                                                        await Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (_) =>
-                                                                    EquipmentDetailsPage(
-                                                                        equipment:
-                                                                            e)));
-                                                      },
-                                                      child: const Text(
-                                                          'View details')),
-                                                ))),
+                                            child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Flexible(
+                                                  fit: FlexFit.tight,
+                                                  child: SizedBox(
+                                                      width: width * 0.45,
+                                                      height: height * 0.038,
+                                                      child: Row(
+                                                          children: <Widget>[
+                                                            SizedBox(
+                                                                width:
+                                                                    width * .18,
+                                                                child:
+                                                                    FittedBox(
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                  child: Flexible(
+                                                                      fit: FlexFit
+                                                                          .loose,
+                                                                      child: Text(
+                                                                          'ksh. ${e.rate}',
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyLarge)),
+                                                                )),
+                                                            SizedBox(
+                                                              width:
+                                                                  width * .042,
+                                                            ),
+                                                            Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .only(),
+                                                                child:
+                                                                    Container(
+                                                                  width: width *
+                                                                      0.18,
+                                                                  child:
+                                                                      FittedBox(
+                                                                    fit: BoxFit
+                                                                        .contain,
+                                                                    child:
+                                                                        Flexible(
+                                                                      fit: FlexFit
+                                                                          .loose,
+                                                                      child: TextButton(
+                                                                          onPressed: () async {
+                                                                            await Navigator.push(context,
+                                                                                MaterialPageRoute(builder: (_) => EquipmentDetailsPage(equipment: e)));
+                                                                          },
+                                                                          child: Text(
+                                                                            'View details',
+                                                                            style:
+                                                                                TextStyle(fontSize: 30),
+                                                                          )),
+                                                                    ),
+                                                                  ),
+                                                                ))
+                                                          ]))),
+                                            ),
                                           )
                                         ])))
                                   ]))
