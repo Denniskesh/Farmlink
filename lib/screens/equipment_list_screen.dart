@@ -294,7 +294,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                               alignment: Alignment.centerLeft,
                                               child: SizedBox(
                                                   height: height * 0.2,
-                                                  width: width * 0.5,
+                                                  width: width * 0.40,
                                                   child: Center(
                                                       child: FittedBox(
                                                           fit: BoxFit.contain,
@@ -302,14 +302,19 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                             width: width,
                                                             child: Flexible(
                                                                 fit: FlexFit
-                                                                    .loose,
-                                                                child: Text(
-                                                                  'widget empowers developers to create adaptive and user-friendly interfaces, enabling a smooth and consistent user experience across devices',
-                                                                  // style: Theme.of(context).textTheme.displaySmall,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .displayMedium,
+                                                                    .tight,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .only(),
+                                                                  child: Text(
+                                                                    'widget empowers developers to create adaptive and user-friendly interfaces, enabling a smooth and consistent user experience across devices',
+                                                                    // style: Theme.of(context).textTheme.displaySmall,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .displayMedium,
+                                                                  ),
                                                                 )),
                                                           ))))),
 
