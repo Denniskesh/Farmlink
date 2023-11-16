@@ -41,12 +41,10 @@ Future<List> getEquipments() async {
       FirebaseFirestore.instance.collection('equipmentowner');
   QuerySnapshot one = await collectionRef1.get();
   final allData1 = one.docs.map((doc) => doc.data()).toList();
-  debugPrint(allData1.toString());
 
   QuerySnapshot querySnapshot = await collectionRef.get();
 
   // Get data from docs and convert map to List
   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-
   return allData;
 }

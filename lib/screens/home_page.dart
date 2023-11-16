@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'profile_screen.dart';
+
 class HomePage extends StatefulWidget {
   //final GoogleMapController googleMapController;
   const HomePage({
@@ -20,7 +22,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late GoogleMapController googleMapController;
-
+  static const List<String> choices = <String>[
+    'Profile',
+    'Logout',
+  ];
   static const String prefSearchKey = 'previousSearches';
 
   late TextEditingController searchTextController;
@@ -112,10 +117,20 @@ class _HomePageState extends State<HomePage> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           actions: [
-            IconButton(
-              onPressed: signOut,
-              icon: const Icon(Icons.account_circle_rounded),
-            )
+            PopupMenuButton<String>(
+                icon: const Icon(
+                  Icons.account_circle_rounded,
+                  size: 30,
+                ),
+                onSelected: choiceAction,
+                itemBuilder: (BuildContext context) {
+                  return choices.map((String choice) {
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                    );
+                  }).toList();
+                })
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -307,5 +322,15 @@ class _HomePageState extends State<HomePage> {
       return Container();
     }
     return const Placeholder();
+  }
+
+  void choiceAction(String value) async {
+    if (value == 'Logout') {
+      signOut();
+    } else if (value == 'Profile') {
+      await Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return const Profile();
+      }));
+    }
   }
 }
