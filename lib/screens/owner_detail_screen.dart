@@ -1,7 +1,7 @@
 import 'package:farmlink/services/owner_manager.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import '../models/user_model.dart';
+import '../models/owner_model.dart';
 import 'equipment_detail_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -32,7 +32,8 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
 
   void _saveOwnerDetails() {
     if (_formKey.currentState!.validate()) {
-      UserModel user = UserModel(
+      OwnerModel user = OwnerModel(
+        //ownerID: ownerID,
         name: nameController.text,
         email: emailController.text,
         phone: phoneController.text,

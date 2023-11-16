@@ -1,37 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
-  String name;
-  String email;
-  String phone;
-  String dob;
-  String idNumber;
-  String gender;
-  String location;
-  String town;
-  String imageUrl; // Firebase Storage URL for the uploaded image
+  late String userID;
+  late String name;
+  late String email;
+  late String phone;
 
   UserModel({
+    required this.userID,
     required this.name,
     required this.email,
     required this.phone,
-    required this.dob,
-    required this.idNumber,
-    required this.gender,
-    required this.location,
-    required this.town,
-    required this.imageUrl,
   });
 
   Map<String, dynamic> toMap() {
     return {
+      'userID': userID,
       'name': name,
       'email': email,
       'phone': phone,
-      'dob': dob,
-      'idNumber': idNumber,
-      'gender': gender,
-      'location': location,
-      'town': town,
-      'imageUrl': imageUrl,
     };
+  }
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      userID: map['userID'],
+      name: map['name'],
+      email: map['email'],
+      phone: map['phone'],
+    );
   }
 }
