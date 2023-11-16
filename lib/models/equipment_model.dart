@@ -14,7 +14,7 @@ class EquipmentDetails {
   final String fuelType;
   final String consumptionRate;
   final String? packageType;
-  final File? imageFile;
+  final String imageUrl;
 
   EquipmentDetails({
     required this.mechanizationType,
@@ -24,7 +24,7 @@ class EquipmentDetails {
     required this.rate,
     required this.fuelType,
     required this.consumptionRate,
-    this.imageFile,
+    required this.imageUrl,
     this.packageType,
   });
 
@@ -36,10 +36,9 @@ class EquipmentDetails {
         model: json['model'],
         rate: json['rate'],
         fuelType: json['fuelType'],
-        consumptionRate: json['consumptionRate']
+        consumptionRate: json['consumptionRate'],
         // packageType: json['packageType'],
-        // imageFile: json['imageFile']);
-        );
+        imageUrl: json['imageURL']);
   }
 
   @override

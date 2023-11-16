@@ -28,26 +28,19 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
   Future<void> _saveEquipmentDetails() async {
     if (_formKey.currentState!.validate()) {
       // Create EquipmentDetails object with form data
-      EquipmentDetails equipmentDetails = EquipmentDetails(
+      EquipmentDetails equipment = EquipmentDetails(
         mechanizationType: selectedMechanizationType,
         equipmentType: selectedEquipmentType,
         name: nameController.text.trim(), // Replace with actual value
         model: modelController.text.trim(), // Replace with actual value
         rate: costController.text.trim(), // Replace with actual value
         fuelType: selectedFuelType,
-        consumptionRate:
-            consumpionRateController.text.trim(), // Replace with actual value
-        imageFile: imageFile,
+        consumptionRate: consumpionRateController.text.trim(),
+        imageUrl: imageFile != null ? imageFile!.path : '',
         packageType: selectedPackage,
       );
-
-      // Set equipment details in the provider
-      _equipmentProvider.setEquipmentDetails(equipmentDetails);
-
-      // Save to Firestore
-      _equipmentProvider.saveToFirestore();
-
-      // Navigate to ConfirmListingPage
+      EquipmentManager equipmentManager = EquipmentManager();
+      equipmentManager.saveEquipmentData(equipment, imageFile!.path);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -403,9 +396,9 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
+        Text(
           'Upload a clear Photo of the \nEquipment showing the Plate No.',
-          // style: Theme.of(context).textTheme.displaySmall,
+          style: Theme.of(context).textTheme.displaySmall,
         ),
         Align(
           alignment: Alignment.centerRight,
