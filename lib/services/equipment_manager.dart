@@ -9,12 +9,12 @@ import '../models/equipment_model.dart';
 class EquipmentManager with ChangeNotifier {
   final CollectionReference _equipmentsCollection =
       FirebaseFirestore.instance.collection('equipment');
-  EquipmentDetails? _equipmentDetails;
+  EquipmentDetails? equipment;
 
-  EquipmentDetails? get equipmentDetails => _equipmentDetails;
+  EquipmentDetails? get equipmentDetails => equipment;
 
   void setEquipmentDetails(EquipmentDetails details) {
-    _equipmentDetails = details;
+    equipment = details;
     notifyListeners();
   }
 
@@ -55,7 +55,7 @@ Future<List> getEquipments() async {
   CollectionReference collectionRef =
       FirebaseFirestore.instance.collection('equipment');
   CollectionReference collectionRef1 =
-      FirebaseFirestore.instance.collection('equipmentOwners');
+      FirebaseFirestore.instance.collection('equipmentowner');
   QuerySnapshot one = await collectionRef1.get();
   final allData1 = one.docs.map((doc) => doc.data()).toList();
 
@@ -63,5 +63,7 @@ Future<List> getEquipments() async {
 
   // Get data from docs and convert map to List
   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+  debugPrint(allData.toString());
+
   return allData;
 }
