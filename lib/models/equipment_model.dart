@@ -38,7 +38,7 @@ class EquipmentDetails {
         fuelType: json['fuelType'],
         consumptionRate: json['consumptionRate'],
         // packageType: json['packageType'],
-        imageUrl: json['imageURL']);
+        imageUrl: json['imageURL'].toString());
   }
 
   @override
