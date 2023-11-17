@@ -172,24 +172,24 @@ class _EquipmentListPage extends State<EquipmentListPage> {
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top -
         50;
-    if (equipments!.isEmpty) {
-      equipment();
-      debugPrint(equipments.toString());
+    // if (equipments!.isEmpty) {
+    //   equipment();
+    //   debugPrint(equipments.toString());
 
-      return Dialog(
-        child: SizedBox(
-            height: height / 5,
-            child: const Center(
-              child: Stack(
-                alignment: FractionalOffset.center,
-                children: [
-                  CircularProgressIndicator(),
-                  Text("Loading"),
-                ],
-              ),
-            )),
-      );
-    }
+    //   return Dialog(
+    //     child: SizedBox(
+    //         height: height / 5,
+    //         child: const Center(
+    //           child: Stack(
+    //             alignment: FractionalOffset.center,
+    //             children: [
+    //               CircularProgressIndicator(),
+    //               Text("Loading"),
+    //             ],
+    //           ),
+    //         )),
+    //   );
+    // }
 
     return MaterialApp(
         home: Scaffold(
