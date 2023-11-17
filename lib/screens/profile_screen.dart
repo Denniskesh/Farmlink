@@ -76,7 +76,7 @@ class ProfilePage extends State<Profile> {
                                 user!.displayName.toString(),
                                 style: Theme.of(context).textTheme.displayLarge,
                               ),
-                              Text(user!.phoneNumber.toString(),
+                              Text(user!.email.toString(),
                                   style:
                                       Theme.of(context).textTheme.displayMedium)
                             ]),
