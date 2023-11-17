@@ -304,9 +304,10 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                                 fit: FlexFit
                                                                     .tight,
                                                                 child: Padding(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .only(),
+                                                                  padding: EdgeInsets.only(
+                                                                      right:
+                                                                          width /
+                                                                              5),
                                                                   child: Text(
                                                                     'widget empowers developers to create adaptive and user-friendly interfaces, enabling a smooth and consistent user experience across devices',
                                                                     // style: Theme.of(context).textTheme.displaySmall,
@@ -343,7 +344,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                                       fit: FlexFit
                                                                           .loose,
                                                                       child: Text(
-                                                                          'ksh. ${e.rate}',
+                                                                          'ksh. ${e.rate.toString()}',
                                                                           style: Theme.of(context)
                                                                               .textTheme
                                                                               .bodyLarge)),

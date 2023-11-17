@@ -1,4 +1,3 @@
-
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
