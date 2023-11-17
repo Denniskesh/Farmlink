@@ -4,17 +4,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../models/user_model.dart';
+import '../models/owner_model.dart';
 
 class OwnerManager extends ChangeNotifier {
   final CollectionReference _usersCollection =
       FirebaseFirestore.instance.collection('equipmentOwners');
 
-  Future<void> saveUserData(UserModel user, String imageFilePath) async {
+  Future<void> saveUserData(OwnerModel user, String imageFilePath) async {
     try {
       // Upload image to Firebase Storage
       Reference storageReference =
-          FirebaseStorage.instance.ref().child('user_images/${user.name}');
+          FirebaseStorage.instance.ref().child('user_images/${user.name}.jpg');
       UploadTask uploadTask = storageReference.putFile(File(imageFilePath));
       await uploadTask.whenComplete(() {});
 

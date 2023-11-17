@@ -138,10 +138,8 @@ class _HomePageState extends State<HomePage> {
           child: const Icon(Icons.message),
           onPressed: () {
             dynamic conversationObject = {
-              'appId':
-                  '1fb033be681109b15377676f20730a3c9', // The [APP_ID](https://dashboard.kommunicate.io/settings/install) obtained from kommunicate dashboard.
+              'appId': '1fb033be681109b15377676f20730a3c9',
             };
-
             KommunicateFlutterPlugin.buildConversation(conversationObject)
                 .then((clientConversationId) {
               print("Conversation builder success : " +
@@ -149,7 +147,6 @@ class _HomePageState extends State<HomePage> {
             }).catchError((error) {
               print("Conversation builder error : " + error.toString());
             });
-            // KommunicateFlutterPlugin.launchConversation();
           },
         ),
         body: Stack(

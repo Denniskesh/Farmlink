@@ -25,29 +25,22 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
       EquipmentManager(); // Create an instance of the provider
   File? imageFile;
 
-  Future<void> _saveEquipmentDetails() async {
+  void _saveEquipmentDetails() {
     if (_formKey.currentState!.validate()) {
       // Create EquipmentDetails object with form data
-      EquipmentDetails equipmentDetails = EquipmentDetails(
+      EquipmentDetails equipment = EquipmentDetails(
         mechanizationType: selectedMechanizationType,
         equipmentType: selectedEquipmentType,
         name: nameController.text.trim(), // Replace with actual value
         model: modelController.text.trim(), // Replace with actual value
         rate: costController.text.trim(), // Replace with actual value
         fuelType: selectedFuelType,
-        consumptionRate:
-            consumpionRateController.text.trim(), // Replace with actual value
-        imageFile: imageFile,
+        consumptionRate: consumpionRateController.text.trim(),
+        imageUrl: imageFile != null ? imageFile!.path : '',
         packageType: selectedPackage,
       );
-
-      // Set equipment details in the provider
-      _equipmentProvider.setEquipmentDetails(equipmentDetails);
-
-      // Save to Firestore
-      _equipmentProvider.saveToFirestore();
-
-      // Navigate to ConfirmListingPage
+      EquipmentManager equipmentManager = EquipmentManager();
+      equipmentManager.saveEquipmentData(equipment, imageFile!.path);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -58,32 +51,14 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
   }
 
   Future<void> uploadImage() async {
-    final FirebaseStorage storage = FirebaseStorage.instance;
-    final Reference storageRef = storage.ref().child('images');
-    // Pick an image
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      // Get the file from the picked image
-      File imageFile = File(pickedFile.path);
-
-      // Upload the image to Firebase Storage
-      TaskSnapshot storageUploadTask =
-          await storageRef.child('image.jpg').putFile(imageFile);
-
-      // Get the download URL of the uploaded image
-      String downloadURL = await storageUploadTask.ref.getDownloadURL();
-
-      // Save the download URL to Firestore
-      await FirebaseFirestore.instance
-          .collection('images')
-          .add({'url': downloadURL});
-
-      print('Image uploaded successfully!');
-    } else {
-      print('No image selected.');
-    }
+    setState(() {
+      if (pickedFile != null) {
+        imageFile = File(pickedFile.path);
+      }
+    });
   }
 
   String selectedFuelType = 'Diesel'; // Initialize the selected gender
@@ -423,7 +398,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
       children: [
         const Text(
           'Upload a clear Photo of the \nEquipment showing the Plate No.',
-          // style: Theme.of(context).textTheme.displaySmall,
+          //style: Theme.of(context).textTheme.displaySmall,
         ),
         Align(
           alignment: Alignment.centerRight,
