@@ -56,6 +56,8 @@ dependencies:
   http: ^1.1.0
   flutter_rating_bar: ^4.0.1
   kommunicate_flutter: ^1.7.5
+  phone_form_field: ^8.1.0
+  email_validator: ^2.1.17
 
 dev_dependencies:
   flutter_test:

@@ -44,8 +44,15 @@ class AuthService extends ChangeNotifier {
   Future<void> signOut() async {
     return await FirebaseAuth.instance.signOut();
   }
+}
 
-  Future<void> updateDetails(String displayName) async {
-    // await
+Future<bool> updateDetails({required String displayName}) async {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    await user.updateDisplayName(displayName);
+    debugPrint(displayName);
+
+    return true;
   }
+  return false;
 }
