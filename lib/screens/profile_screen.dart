@@ -49,8 +49,8 @@ class ProfilePage extends State<Profile> {
             IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
           ],
         ),
-        body: Container(
-          // scrollDirection: Axis.vertical,
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
               Padding(

@@ -364,21 +364,20 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                                       FittedBox(
                                                                     fit: BoxFit
                                                                         .contain,
-                                                                    child:
-                                                                        Flexible(
-                                                                      fit: FlexFit
-                                                                          .loose,
-                                                                      child: TextButton(
-                                                                          onPressed: () async {
-                                                                            await Navigator.push(context,
-                                                                                MaterialPageRoute(builder: (_) => EquipmentDetailsPage(equipment: e)));
-                                                                          },
-                                                                          child: const Text(
-                                                                            'View details',
-                                                                            style:
-                                                                                TextStyle(fontSize: 30),
-                                                                          )),
-                                                                    ),
+                                                                    child: Flexible(
+                                                                        fit: FlexFit.loose,
+                                                                        child: Container(
+                                                                          padding:
+                                                                              EdgeInsets.only(right: width / 10),
+                                                                          child: TextButton(
+                                                                              onPressed: () async {
+                                                                                await Navigator.push(context, MaterialPageRoute(builder: (_) => EquipmentDetailsPage(equipment: e)));
+                                                                              },
+                                                                              child: const Text(
+                                                                                'View details',
+                                                                                style: TextStyle(fontSize: 30),
+                                                                              )),
+                                                                        )),
                                                                   ),
                                                                 ))
                                                           ]))),
