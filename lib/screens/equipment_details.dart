@@ -1,4 +1,5 @@
 import 'package:farmlink/models/equipment_model.dart';
+import 'package:farmlink/screens/checkout_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -451,7 +452,14 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 30.0),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return CheckoutScreenPage(
+                                      e: equipment,
+                                    );
+                                  }));
+                                },
                                 style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all(Colors.blue)),
