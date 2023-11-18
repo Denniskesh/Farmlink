@@ -47,7 +47,7 @@ class CheckOut extends State<CheckoutScreenPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Equipment Details'),
+          title: const Text('Checkout'),
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
