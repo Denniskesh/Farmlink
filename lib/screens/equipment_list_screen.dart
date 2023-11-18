@@ -47,6 +47,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
     List<EquipmentDetails> equipment1 = result
         .map<EquipmentDetails>((json) => EquipmentDetails.fromJson(json))
         .toList();
+    debugPrint(data2.toString());
 
     setState(() {
       equipments = equipment1;
@@ -61,7 +62,6 @@ class _EquipmentListPage extends State<EquipmentListPage> {
   }
 
   filterResults(String filter, String value) async {
-    debugPrint(equipments.toString());
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     if (filter.isNotEmpty && value.isNotEmpty) {
       late List<EquipmentDetails> equipmentsSorted = [];
@@ -173,9 +173,6 @@ class _EquipmentListPage extends State<EquipmentListPage> {
         MediaQuery.of(context).padding.top -
         50;
     if (equipments!.isEmpty) {
-      equipment();
-      debugPrint(equipments.toString());
-
       return Dialog(
         child: SizedBox(
             height: height / 5,
