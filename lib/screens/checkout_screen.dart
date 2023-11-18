@@ -21,7 +21,7 @@ class CheckOut extends State<CheckoutScreenPage> {
     if (value.isNotEmpty) {
       var str = rate.split('per Ha');
 
-      total.text = ((double.parse(duration) / double.parse(value)) *
+      total.text = ((double.parse(duration) * double.parse(value)) *
               double.parse(str[0]))
           .toString();
       // setState(() {
