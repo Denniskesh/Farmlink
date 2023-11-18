@@ -19,97 +19,107 @@ class Confirmation extends State<ConfirmationPage> {
     double height = MediaQuery.of(context).size.height;
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Successful',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-      ),
-      body: SizedBox(
-        height: height,
-        child: Column(
-          children: [
-            SizedBox(
-              child: Text(
-                'Booking Details',
-                style: Theme.of(context).textTheme.displayLarge,
+            appBar: AppBar(
+              title: Text(
+                'Successful',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            Container(
-              height: height / 2,
-              padding: EdgeInsets.only(left: width * .04, top: height * .03),
-              child: RichText(
-                text: TextSpan(
-                  text: 'Hello ',
-                  style: Theme.of(context).textTheme.titleLarge,
-                  children: <TextSpan>[
-                    TextSpan(
-                        text:
-                            '''Your booking of the ${equipment.model}, \n${equipment.equipmentType} for Kes $price has been \nplaced successfully. \nOnly pay the Equipment \nowner/Operator after \nCompletion of Work. \nThank you for using our services. \n\nFor any queries contact us at +254793613719''')
+            body: SingleChildScrollView(
+              child: SizedBox(
+                height: height,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      child: Text(
+                        'Booking Details',
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                    ),
+                    Container(
+                        height: height / 2,
+                        padding: EdgeInsets.only(
+                            left: width * .04, top: height * .03),
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Flexible(
+                            fit: FlexFit.loose,
+                            child: RichText(
+                              text: TextSpan(
+                                text: 'Hello ',
+                                style: Theme.of(context).textTheme.titleLarge,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                          '''Your booking of the ${equipment.model}, \n${equipment.equipmentType} for Kes $price has been \nplaced successfully. \nOnly pay the Equipment \nowner/Operator after \nCompletion of Work. \nThank you for using our services. \n\nFor any queries contact us at \n+254793613719''')
+                                ],
+                              ),
+                            ),
+                          ),
+                        )),
+                    SizedBox(
+                      height: height / 10,
+                    ),
+                    Container(
+                      height: height / 10,
+                      width: width * .42,
+                      // padding: EdgeInsets.all(),
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: Flexible(
+                            fit: FlexFit.loose,
+                            child: SizedBox(
+                              width: width * 0.60,
+                              height: height / 12,
+                              child: ElevatedButton(
+                                onPressed: () async {},
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  backgroundColor: const Color.fromARGB(
+                                      255, 111, 95, 180), // Background color
+                                ),
+                                child: const Text(
+                                  'Back To Home',
+                                  style: TextStyle(fontSize: 26),
+                                ),
+                              ),
+                            )),
+                      ),
+                    ),
+                    Container(
+                      height: height / 10,
+                      width: width * .42,
+                      // padding: EdgeInsets.all(),
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: Flexible(
+                            fit: FlexFit.loose,
+                            child: SizedBox(
+                              width: width * 0.60,
+                              height: height / 12,
+                              child: ElevatedButton(
+                                onPressed: () async {},
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  backgroundColor: Color.fromARGB(
+                                      255, 236, 235, 238), // Background color
+                                ),
+                                child: const Text(
+                                  'View Bookings',
+                                  style: TextStyle(
+                                      fontSize: 26, color: Colors.blue),
+                                ),
+                              ),
+                            )),
+                      ),
+                    )
                   ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: height / 10,
-            ),
-            Container(
-              height: height / 10,
-              width: width * .42,
-              // padding: EdgeInsets.all(),
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: Flexible(
-                    fit: FlexFit.loose,
-                    child: SizedBox(
-                      width: width * 0.60,
-                      height: height / 12,
-                      child: ElevatedButton(
-                        onPressed: () async {},
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          backgroundColor: const Color.fromARGB(
-                              255, 111, 95, 180), // Background color
-                        ),
-                        child: const Text(
-                          'Back To Home',
-                          style: TextStyle(fontSize: 26),
-                        ),
-                      ),
-                    )),
-              ),
-            ),
-            Container(
-              height: height / 10,
-              width: width * .42,
-              // padding: EdgeInsets.all(),
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: Flexible(
-                    fit: FlexFit.loose,
-                    child: SizedBox(
-                      width: width * 0.60,
-                      height: height / 12,
-                      child: ElevatedButton(
-                        onPressed: () async {},
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          backgroundColor: Color.fromARGB(
-                              255, 236, 235, 238), // Background color
-                        ),
-                        child: const Text(
-                          'View Bookings',
-                          style: TextStyle(fontSize: 26, color: Colors.blue),
-                        ),
-                      ),
-                    )),
-              ),
-            )
-          ],
-        ),
-      ),
-    ));
+            )));
   }
 }
