@@ -1,5 +1,6 @@
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/checkout_screen.dart';
+import 'package:farmlink/screens/in_app_chat_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -280,7 +281,13 @@ class CheckOut extends State<CheckoutScreenPage> {
           ]),
         ),
         floatingActionButton: TextButton.icon(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return const InAppChatPage(
+                  //equipment: equipment,
+                  );
+            }));
+          },
           icon: const Icon(
             Icons.chat_bubble_outline,
             // size: width / 10,
