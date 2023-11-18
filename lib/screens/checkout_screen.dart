@@ -1,5 +1,9 @@
+import 'dart:ffi';
+
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/checkout_screen.dart';
+import 'package:farmlink/screens/confirmation.dart';
+import 'package:farmlink/screens/equipment_detail_screen2.dart';
 import 'package:farmlink/screens/in_app_chat_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -264,12 +268,13 @@ class CheckOut extends State<CheckoutScreenPage> {
                   width: width * .4,
                   child: ElevatedButton(
                     onPressed: () async {
-                      // await Navigator.push(context,
-                      //     MaterialPageRoute(builder: (_) {
-                      //   return CheckoutScreenPage(
-                      //     equipment: equipment,
-                      //   );
-                      // }));
+                      await Navigator.push(context,
+                          MaterialPageRoute(builder: (_) {
+                        return ConfirmationPage(
+                          e: equipment,
+                          price: total.value.text,
+                        );
+                      }));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromARGB(255, 111, 95, 180),

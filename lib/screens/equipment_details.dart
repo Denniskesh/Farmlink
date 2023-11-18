@@ -210,7 +210,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                               child: Flexible(
                                   fit: FlexFit.loose,
                                   child: Text(
-                                    'widget empowers developers to create adaptive and user-friendly interfaces, enabling a smooth and consistent user experience across devices',
+                                    equipment.description.toString(),
                                     // style: Theme.of(context).textTheme.displaySmall,
                                     style: Theme.of(context)
                                         .textTheme
@@ -438,7 +438,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                               child: Flexible(
                                   fit: FlexFit.loose,
                                   child: Text(
-                                    'widget empowers developers to create adaptive and user-friendly interfaces, enabling a smooth and consistent user experience across devices',
+                                    equipment.description.toString(),
                                     // style: Theme.of(context).textTheme.displaySmall,
                                     style: Theme.of(context)
                                         .textTheme

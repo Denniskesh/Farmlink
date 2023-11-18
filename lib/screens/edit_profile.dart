@@ -377,7 +377,7 @@ class EditProfile extends State<EditProfilePage> {
                                                   BorderRadius.circular(12))),
                                       onPressed: () async {
                                         if (formKey.currentState!.validate()) {
-                                          _cancelChanges();
+                                          _cancelChanges;
                                           //bool success = await updateDetails(
                                           //  displayName:
                                           // displayName.value.text);
@@ -413,7 +413,7 @@ class EditProfile extends State<EditProfilePage> {
                                                   BorderRadius.circular(12.0))),
                                       onPressed: () async {
                                         if (formKey.currentState!.validate()) {
-                                          _updateUserProfile();
+                                          _updateUserProfile;
                                           //bool success = await updateDetails(
                                           // displayName:
                                           //   displayName.value.text);

@@ -43,6 +43,7 @@ class EquipmentDetails {
         fuelType: json['fuelType'],
         consumptionRate: json['consumptionRate'],
         packageType: json['packageType'],
+        description: json['description'],
         imageUrl: json['imageURL'].toString());
   }
 

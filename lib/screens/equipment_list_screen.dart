@@ -306,7 +306,8 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                                           width /
                                                                               5),
                                                                   child: Text(
-                                                                    'widget empowers developers to create adaptive and user-friendly interfaces, enabling a smooth and consistent user experience across devices',
+                                                                    e.description
+                                                                        .toString(),
                                                                     // style: Theme.of(context).textTheme.displaySmall,
                                                                     style: Theme.of(
                                                                             context)

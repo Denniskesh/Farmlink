@@ -33,14 +33,6 @@ class ProfilePage extends State<Profile> {
   }
 
   getUserInfo() async {
-    // final FirebaseAuth auth = FirebaseAuth.instance;
-
-    //final User? user1 = auth.currentUser;
-    //debugPrint(user1.toString());
-    //setState(() {
-    // user = user1!;
-    // });
-    // return user;
     user = _auth.currentUser!;
     DocumentSnapshot userDoc =
         await _firestore.collection('users').doc(user.uid).get();
