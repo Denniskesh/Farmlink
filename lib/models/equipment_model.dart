@@ -6,6 +6,8 @@ List<EquipmentDetails> equipmentFromJson(String str) =>
         json.decode(str).map((x) => EquipmentDetails.fromJson(x)));
 
 class EquipmentDetails {
+  String? userId;
+  String? description;
   final String mechanizationType;
   final String equipmentType;
   final String name;
@@ -17,6 +19,7 @@ class EquipmentDetails {
   final String imageUrl;
 
   EquipmentDetails({
+    this.userId,
     required this.mechanizationType,
     required this.equipmentType,
     required this.name,
@@ -26,10 +29,12 @@ class EquipmentDetails {
     required this.consumptionRate,
     required this.imageUrl,
     this.packageType,
+    this.description,
   });
 
   factory EquipmentDetails.fromJson(Map<String, dynamic> json) {
     return EquipmentDetails(
+        //userId: json['userId'],
         mechanizationType: json['mechanizationType'],
         equipmentType: json['equipmentType'],
         name: json['name'],

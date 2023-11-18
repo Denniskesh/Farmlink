@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:farmlink/screens/profile_screen.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,22 +17,79 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class EditProfile extends State<EditProfilePage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  late User _user;
+  TextEditingController _nameController = TextEditingController();
+  PhoneController phoneNumber =
+      PhoneController(const PhoneNumber(isoCode: IsoCode.KE, nsn: ''));
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _locationController = TextEditingController();
+  TextEditingController _categoryController = TextEditingController();
+  TextEditingController _farmingTypeController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    _user = _auth.currentUser!;
+    DocumentSnapshot userDoc =
+        await _firestore.collection('users').doc(_user.uid).get();
+
+    if (userDoc.exists) {
+      setState(() {
+        _nameController.text = userDoc['name'] ?? '';
+        _emailController.text = _user.email!;
+        _categoryController.text = userDoc['category'] ?? '';
+        _farmingTypeController.text = userDoc['farmingType'] ?? '';
+        _locationController.text = userDoc['location'] ?? '';
+        phoneNumber = userDoc['phonenumber'] ?? '';
+      });
+    }
+  }
+
+  Future<void> _updateUserProfile() async {
+    try {
+      await _firestore.collection('users').doc(_user.uid).update({
+        'name': _nameController.text,
+        'phonenumber': phoneNumber,
+        'email': _emailController.text,
+        'location': _locationController.text,
+        'category': _categoryController.text,
+        'farmingType': _farmingTypeController.text,
+      });
+
+      print("User profile updated successfully!");
+    } catch (e) {
+      print("Error updating user profile: $e");
+    }
+  }
+
+  void _cancelChanges() {
+    // Reset controllers to the original values
+    _loadUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     // double height = MediaQuery.of(context).size.height;
     // double width = MediaQuery.of(context).size.width;
-    User user = widget.user;
-    final TextEditingController displayName =
-        TextEditingController(text: user.displayName);
+    //User user = widget.user;
+    //final TextEditingController displayName =
+    //  TextEditingController(text: user.displayName);
 
-    final TextEditingController email = TextEditingController(text: user.email);
-    final TextEditingController phone =
-        TextEditingController(text: user.phoneNumber);
-    final TextEditingController maizeFarming = TextEditingController();
-    final TextEditingController farmer = TextEditingController();
-    final TextEditingController location = TextEditingController();
-    PhoneController phoneNumber =
-        PhoneController(const PhoneNumber(isoCode: IsoCode.KE, nsn: ''));
+    //final TextEditingController email = TextEditingController(text: user.email);
+    //final TextEditingController phone =
+    //    TextEditingController(text: user.phoneNumber);
+    //final TextEditingController maizeFarming = TextEditingController();
+    //final TextEditingController farmer = TextEditingController();
+    //final TextEditingController location = TextEditingController();
+    // PhoneController phoneNumber =
+    // PhoneController(const PhoneNumber(isoCode: IsoCode.KE, nsn: ''));
 
     final formKey = GlobalKey<FormState>();
     bool outlineBorder = true;
@@ -76,11 +135,11 @@ class EditProfile extends State<EditProfilePage> {
                     Container(
                       child: Column(
                         children: <Widget>[
-                          Text(
-                            user.displayName.toString(),
-                            style: Theme.of(context).textTheme.displayMedium,
-                          ),
-                          Text(user.phoneNumber.toString())
+                          //Text(
+                          // user.displayName.toString(),
+                          //  style: Theme.of(context).textTheme.displayMedium,
+                          //),
+                          //Text(user.phoneNumber.toString())
                         ],
                       ),
                     )
@@ -96,7 +155,7 @@ class EditProfile extends State<EditProfilePage> {
                                     top: 10, left: 15, right: 15, bottom: 0),
                                 child: SizedBox(
                                   child: TextFormField(
-                                    controller: displayName,
+                                    controller: _nameController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'please enter Your Name';
@@ -128,7 +187,7 @@ class EditProfile extends State<EditProfilePage> {
                                     top: 10, left: 15, right: 15, bottom: 0),
                                 child: SizedBox(
                                   child: TextFormField(
-                                    controller: email,
+                                    controller: _emailController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'please enter the email';
@@ -144,7 +203,7 @@ class EditProfile extends State<EditProfilePage> {
                                         borderRadius:
                                             BorderRadius.circular(20.0),
                                       ),
-                                      labelText: 'enter your email',
+                                      labelText: 'Email',
                                       hintText: 'enter email',
                                       enabledBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -193,7 +252,7 @@ class EditProfile extends State<EditProfilePage> {
                                     onChanged: (p) {
                                       phoneNumber = PhoneController(PhoneNumber(
                                           isoCode: p!.isoCode, nsn: p.nsn));
-                                      phone.text = '0${p.nsn}';
+                                      //phone.text = '0${p.nsn}';
                                       print(p.nsn);
                                     },
                                     isCountryChipPersistent:
@@ -205,10 +264,10 @@ class EditProfile extends State<EditProfilePage> {
                                     top: 10, left: 15, right: 15, bottom: 0),
                                 child: SizedBox(
                                   child: TextFormField(
-                                    controller: location,
+                                    controller: _locationController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'please enter location';
+                                        return 'please enter nearest town';
                                       }
                                       return null;
                                     },
@@ -218,7 +277,7 @@ class EditProfile extends State<EditProfilePage> {
                                             BorderRadius.circular(10.0),
                                       ),
                                       labelText: 'location',
-                                      hintText: 'enter the location',
+                                      hintText: 'Nearest town',
                                       enabledBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color.fromARGB(
@@ -237,10 +296,10 @@ class EditProfile extends State<EditProfilePage> {
                                     top: 10, left: 15, right: 15, bottom: 0),
                                 child: SizedBox(
                                   child: TextFormField(
-                                    controller: farmer,
+                                    controller: _categoryController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'please enter farmer';
+                                        return 'please enter category';
                                       }
                                       return null;
                                     },
@@ -249,8 +308,8 @@ class EditProfile extends State<EditProfilePage> {
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),
-                                      labelText: 'farmer',
-                                      hintText: 'enter the farmer',
+                                      labelText: 'Category',
+                                      hintText: 'eg. Farmer/ Equipment Owner',
                                       enabledBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color.fromARGB(
@@ -269,10 +328,10 @@ class EditProfile extends State<EditProfilePage> {
                                     top: 10, left: 15, right: 15, bottom: 0),
                                 child: SizedBox(
                                   child: TextFormField(
-                                    controller: maizeFarming,
+                                    controller: _farmingTypeController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return 'please enter maize  farming';
+                                        return 'please enter farming type';
                                       }
                                       return null;
                                     },
@@ -281,8 +340,8 @@ class EditProfile extends State<EditProfilePage> {
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),
-                                      labelText: 'maize  farming',
-                                      hintText: 'enter the maize  farming',
+                                      labelText: 'Farming Type',
+                                      hintText: 'eg maize farming',
                                       enabledBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color.fromARGB(
@@ -318,18 +377,25 @@ class EditProfile extends State<EditProfilePage> {
                                                   BorderRadius.circular(12))),
                                       onPressed: () async {
                                         if (formKey.currentState!.validate()) {
-                                          bool success = await updateDetails(
-                                              displayName:
-                                                  displayName.value.text);
+                                          _cancelChanges;
+                                          //bool success = await updateDetails(
+                                          //  displayName:
+                                          // displayName.value.text);
 
-                                          if (success) {
-                                            user = FirebaseAuth
-                                                .instance.currentUser!;
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    content: Text(
-                                                        'successfully updated')));
-                                          }
+                                          // if (success) {
+                                          //  _user = FirebaseAuth
+                                          //  .instance.currentUser!;
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Profile(),
+                                            ),
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      'successfully updated')));
                                         }
                                       },
                                       child: Text(
@@ -347,18 +413,25 @@ class EditProfile extends State<EditProfilePage> {
                                                   BorderRadius.circular(12.0))),
                                       onPressed: () async {
                                         if (formKey.currentState!.validate()) {
-                                          bool success = await updateDetails(
-                                              displayName:
-                                                  displayName.value.text);
+                                          _updateUserProfile;
+                                          //bool success = await updateDetails(
+                                          // displayName:
+                                          //   displayName.value.text);
 
-                                          if (success) {
-                                            user = FirebaseAuth
-                                                .instance.currentUser!;
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                                    content: Text(
-                                                        'successfully updated')));
-                                          }
+                                          //if (success) {
+                                          // user = FirebaseAuth
+                                          //   .instance.currentUser!;
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Profile(),
+                                            ),
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      'successfully updated')));
                                         }
                                       },
                                       child: const Text(

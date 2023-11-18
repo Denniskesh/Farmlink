@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,7 @@ class EquipmentManager with ChangeNotifier {
       String imageUrl = await storageReference1.getDownloadURL();
 
       await _equipmentsCollection.add({
+        'userId': equipment.userId,
         'mechanizationType': equipment.mechanizationType,
         'equipmentType': equipment.equipmentType,
         'name': equipment.name,
@@ -39,6 +41,7 @@ class EquipmentManager with ChangeNotifier {
         'rate': equipment.rate,
         'fuelType': equipment.fuelType,
         'consumptionRate': equipment.consumptionRate,
+        'description': equipment.description,
         'package': equipment.packageType,
         'imageUrl':
             imageUrl, // You need to upload the image to storage and store the URL

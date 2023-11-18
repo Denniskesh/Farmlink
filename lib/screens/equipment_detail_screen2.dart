@@ -1,5 +1,5 @@
 import 'package:farmlink/screens/confirm_listing.dart';
-import 'package:farmlink/screens/equipment_detail_screen.dart';
+import 'package:farmlink/screens/add_equipment_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../components/my_button.dart';

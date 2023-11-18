@@ -19,6 +19,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final nameController = TextEditingController();
   final confirmpasswordController = TextEditingController();
   final phoneController = TextEditingController();
+  final catogoryController = TextEditingController();
+  final farmingTypeController = TextEditingController();
+  final locationController = TextEditingController();
 
   @override
   void dispose() {
@@ -45,9 +48,14 @@ class _RegisterPageState extends State<RegisterPage> {
       await authService.signUpWithEmailandPassword(
         emailController.text,
         passwordController.text,
+        nameController.text,
+        phoneController.text,
+        locationController.text,
+        catogoryController.text,
+        farmingTypeController.text,
       );
-      await authService.addUserDetails(nameController.text.trim(),
-          emailController.text.trim(), phoneController.text.trim());
+      //await authService.addUserDetails(nameController.text.trim(),
+      //  emailController.text.trim(), phoneController.text.trim());
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
