@@ -311,7 +311,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                                     style: Theme.of(
                                                                             context)
                                                                         .textTheme
-                                                                        .bodyMedium,
+                                                                        .displaySmall,
                                                                   ),
                                                                 )),
                                                           ))))),

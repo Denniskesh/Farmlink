@@ -3,6 +3,8 @@ import 'package:farmlink/screens/checkout_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 
+import 'in_app_chat_screen.dart';
+
 class EquipmentDetailsPage extends StatefulWidget {
   const EquipmentDetailsPage({super.key, required this.equipment});
   final EquipmentDetails equipment;
@@ -473,7 +475,14 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
             ]),
           ),
           floatingActionButton: TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const InAppChatPage(),
+                ),
+              );
+            },
             icon: Icon(
               Icons.chat_bubble_outline,
               size: width / 10,
