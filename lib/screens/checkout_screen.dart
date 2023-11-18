@@ -15,7 +15,7 @@ class CheckoutScreenPage extends StatefulWidget {
 class CheckOut extends State<CheckoutScreenPage> {
   TextEditingController landSize = TextEditingController();
   TextEditingController total = TextEditingController();
-  TextEditingController duration = TextEditingController();
+  TextEditingController duration = TextEditingController(text: '1');
 
   void set(String value, String rate, String duration) {
     if (value.isNotEmpty) {
@@ -127,52 +127,53 @@ class CheckOut extends State<CheckoutScreenPage> {
                             style: Theme.of(context).textTheme.titleSmall)
                       ],
                     ))),
-            SizedBox(
-              height: height / 25,
-            ),
-            Container(
-                child: Padding(
-                    padding:
-                        EdgeInsets.only(left: width / 30, right: width / 30),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Duration:",
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        SizedBox(
-                          width: width / 10,
-                        ),
-                        SizedBox(
-                            width: width / 5,
-                            child: Center(
-                              child: TextFormField(
-                                controller: duration,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp('[0-9]'))
-                                ],
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter Duration';
-                                  }
-                                  return null;
-                                },
-                                onChanged: (String value) {
-                                  set(landSize.value.text, equipment.rate,
-                                      value);
-                                },
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: height / 70,
-                                        horizontal: width / 30),
-                                    border: const OutlineInputBorder(),
-                                    labelText: 'Duration (hours)',
-                                    hintText: 'Enter Duration in hours'),
-                              ),
-                            ))
-                      ],
-                    ))),
+            // SizedBox(
+            //   height: height / 25,
+            // ),
+            // Container(
+            //     child: Padding(
+            //         padding:
+            //             EdgeInsets.only(left: width / 30, right: width / 30),
+            //         child: Row(
+            //           children: [
+            //             Text(
+            //               "Duration:",
+            //               style: Theme.of(context).textTheme.titleLarge,
+            //             ),
+            //             SizedBox(
+            //               width: width / 10,
+            //             ),
+            //             SizedBox(
+            //                 width: width / 5,
+            //                 child: Center(
+            //                   child: TextFormField(
+            //                     controller: duration,
+            //                     inputFormatters: [
+            //                       FilteringTextInputFormatter.allow(
+            //                           RegExp('[0-9]'))
+            //                     ],
+            //                     validator: (value) {
+            //                       if (value == null || value.isEmpty) {
+            //                         return 'Please enter Duration';
+            //                       }
+            //                       return null;
+            //                     },
+            //                     onChanged: (String value) {
+
+            //                       set(landSize.value.text, equipment.rate,
+            //                           value);
+            //                     },
+            //                     decoration: InputDecoration(
+            //                         contentPadding: EdgeInsets.symmetric(
+            //                             vertical: height / 70,
+            //                             horizontal: width / 30),
+            //                         border: const OutlineInputBorder(),
+            //                         labelText: 'Duration (hours)',
+            //                         hintText: 'Enter Duration in hours'),
+            //                   ),
+            //                 ))
+            //           ],
+            //         ))),
             SizedBox(
               height: height / 25,
             ),
