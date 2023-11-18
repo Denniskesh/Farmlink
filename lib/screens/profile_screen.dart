@@ -5,6 +5,7 @@ import 'package:farmlink/screens/edit_profile.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,15 @@ class Profile extends StatefulWidget {
 }
 
 class ProfilePage extends State<Profile> {
-  final User? user = FirebaseAuth.instance.currentUser;
+  //final User? user = FirebaseAuth.instance.currentUser;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  late User user;
+  String name = '';
+  String phone = '';
+
   @override
   void initState() {
     super.initState();
@@ -24,14 +33,25 @@ class ProfilePage extends State<Profile> {
   }
 
   getUserInfo() async {
-    final FirebaseAuth auth = FirebaseAuth.instance;
+    // final FirebaseAuth auth = FirebaseAuth.instance;
 
-    final User? user1 = auth.currentUser;
-    debugPrint(user1.toString());
-    setState(() {
-      // user = user1!;
-    });
-    return user;
+    //final User? user1 = auth.currentUser;
+    //debugPrint(user1.toString());
+    //setState(() {
+    // user = user1!;
+    // });
+    // return user;
+    user = _auth.currentUser!;
+    DocumentSnapshot userDoc =
+        await _firestore.collection('users').doc(user.uid).get();
+
+    if (userDoc.exists) {
+      setState(() {
+        name = userDoc['name'];
+        phone = userDoc['phonenumber'];
+      });
+      return user;
+    }
   }
 
   @override
@@ -82,11 +102,13 @@ class ProfilePage extends State<Profile> {
                           fit: FlexFit.loose,
                           child: Column(children: [
                             Text(
-                              user!.displayName.toString(),
-                              style: Theme.of(context).textTheme.displayMedium,
+                              ' $name',
+                              style: Theme.of(context).textTheme.displaySmall,
                             ),
-                            Text('254712345678',
-                                style: Theme.of(context).textTheme.displaySmall)
+                            Text(
+                              ' $phone',
+                              style: Theme.of(context).textTheme.displaySmall,
+                            )
                           ]),
                         ),
                       ),

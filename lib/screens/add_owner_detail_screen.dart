@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/services/owner_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../models/owner_model.dart';
-import 'equipment_detail_screen.dart';
+import 'add_equipment_detail_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -18,15 +20,40 @@ class OwnerDetailPage extends StatefulWidget {
 }
 
 class _OwnerDetailPageState extends State<OwnerDetailPage> {
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final phoneController = TextEditingController();
-  final dobController = TextEditingController();
-  final idnoController = TextEditingController();
-  final locationController = TextEditingController();
-  final townController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  late User user;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  TextEditingController idnoController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController townController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   File? imageFile;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    user = _auth.currentUser!;
+    DocumentSnapshot userDoc =
+        await _firestore.collection('users').doc(user.uid).get();
+
+    if (userDoc.exists) {
+      setState(() {
+        nameController.text = userDoc['name'];
+        emailController.text = user.email!;
+        phoneController.text = userDoc['phonenumber'];
+      });
+    }
+  }
 
   void _saveOwnerDetails() {
     if (_formKey.currentState!.validate()) {
@@ -182,7 +209,7 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
                     controller: locationController,
                     decoration: const InputDecoration(
                       icon: Icon(Icons.add_location),
-                      hintText: 'Enter Locationr',
+                      hintText: 'Enter Location',
                       labelText: 'County',
                     ),
                     validator: (value) {

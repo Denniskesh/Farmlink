@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<UserCredential> signInWithEmailandPassword(
       String email, String password) async {
@@ -20,26 +21,40 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<UserCredential> signUpWithEmailandPassword(
-      String email, String password) async {
+      String email,
+      String password,
+      String name,
+      String phonenumber,
+      String category,
+      String farmingType,
+      String location) async {
     try {
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await _firestore.collection('users').doc(userCredential.user!.uid).set({
+        'name': name,
+        'email': email,
+        'phonenumber': phonenumber,
+        'category': category,
+        'farmingType': farmingType,
+        'location': location,
+      });
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }
   }
 
-  Future addUserDetails(String name, String email, String phonenumber) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'name': name,
-      'email': email,
-      'phonenumber': phonenumber,
-    });
-  }
+  //Future addUserDetails(String name, String email, String phonenumber) async {
+  //await FirebaseFirestore.instance.collection('users').add({
+  //'name': name,
+  //'email': email,
+  // 'phonenumber': phonenumber,
+  //  });
+//  }
 
   Future<void> signOut() async {
     return await FirebaseAuth.instance.signOut();

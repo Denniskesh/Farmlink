@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/screens/equipment_detail_screen2.dart';
 import 'package:farmlink/services/equipment_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -16,24 +17,37 @@ class EquipmentDetailPage extends StatefulWidget {
 }
 
 class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
-  final nameController = TextEditingController();
-  final modelController = TextEditingController();
-  final costController = TextEditingController();
-  final consumpionRateController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  late User user;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController modelController = TextEditingController();
+  TextEditingController costController = TextEditingController();
+  TextEditingController consumpionRateController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final EquipmentManager _equipmentProvider =
       EquipmentManager(); // Create an instance of the provider
   File? imageFile;
 
+  @override
+  void initState() {
+    super.initState();
+    user = _auth.currentUser!;
+  }
+
   void _saveEquipmentDetails() {
     if (_formKey.currentState!.validate()) {
       // Create EquipmentDetails object with form data
       EquipmentDetails equipment = EquipmentDetails(
+        userId: user.uid,
         mechanizationType: selectedMechanizationType,
         equipmentType: selectedEquipmentType,
         name: nameController.text.trim(), // Replace with actual value
         model: modelController.text.trim(), // Replace with actual value
-        rate: costController.text.trim(), // Replace with actual value
+        rate: costController.text.trim(),
+        description:
+            descriptionController.text.trim(), // Replace with actual value
         fuelType: selectedFuelType,
         consumptionRate: consumpionRateController.text.trim(),
         imageUrl: imageFile != null ? imageFile!.path : '',
@@ -114,6 +128,8 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
             'Equipment Details',
             style: Theme.of(context).textTheme.displayMedium,
           ),
+          const SizedBox(height: 16),
+          Text('Owner ID: ${user.email}'),
           Form(
             key: _formKey,
             child: Padding(
@@ -328,6 +344,37 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
                     controller: consumpionRateController,
                     decoration: const InputDecoration(
                       hintText: 'Liters per Ha/Hour',
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'This Field is required';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Label
+                Text(
+                  'Description:',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(
+                  width: 6,
+                ),
+                // Text Input Field
+                Expanded(
+                  child: TextFormField(
+                    controller: descriptionController,
+                    decoration: const InputDecoration(
+                      hintText: 'write something about your equipment',
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
