@@ -15,12 +15,15 @@ class CheckoutScreenPage extends StatefulWidget {
 class CheckOut extends State<CheckoutScreenPage> {
   TextEditingController landSize = TextEditingController();
   TextEditingController total = TextEditingController();
+  TextEditingController duration = TextEditingController();
 
-  void set(String value, String rate) {
+  void set(String value, String rate, String duration) {
     if (value.isNotEmpty) {
       var str = rate.split('per Ha');
 
-      total.text = (double.parse(value) * double.parse(str[0])).toString();
+      total.text = ((double.parse(duration) / double.parse(value)) *
+              double.parse(str[0]))
+          .toString();
       // setState(() {
       //   total.text = text;
       // });
@@ -140,8 +143,34 @@ class CheckOut extends State<CheckoutScreenPage> {
                         SizedBox(
                           width: width / 10,
                         ),
-                        Text('Duration',
-                            style: Theme.of(context).textTheme.displaySmall)
+                        SizedBox(
+                            width: width / 5,
+                            child: Center(
+                              child: TextFormField(
+                                controller: duration,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[0-9]'))
+                                ],
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter Duration';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (String value) {
+                                  set(landSize.value.text, equipment.rate,
+                                      value);
+                                },
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: height / 70,
+                                        horizontal: width / 30),
+                                    border: const OutlineInputBorder(),
+                                    labelText: 'Duration (hours)',
+                                    hintText: 'Enter Duration in hours'),
+                              ),
+                            ))
                       ],
                     ))),
             SizedBox(
@@ -171,12 +200,13 @@ class CheckOut extends State<CheckoutScreenPage> {
                                 ],
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter amount';
+                                    return 'Please enter land size';
                                   }
                                   return null;
                                 },
                                 onChanged: (String value) {
-                                  set(value, equipment.rate);
+                                  set(value, equipment.rate,
+                                      duration.value.text);
                                 },
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(
