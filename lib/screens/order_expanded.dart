@@ -15,14 +15,16 @@ class OrderExpanded extends State<OrderExpandedPage> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-            title: Text(
-          'Bookings',
-          style: Theme.of(context).textTheme.titleLarge,
-        )),
-        body: Container(
-          padding: EdgeInsets.all(8.0),
+        home: Scaffold(
+      appBar: AppBar(
+          title: Text(
+        'Bookings',
+        style: Theme.of(context).textTheme.titleLarge,
+      )),
+      body: Container(
+        padding: EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Column(children: [
             SizedBox(
               height: height / 2.5,
@@ -32,26 +34,32 @@ class OrderExpanded extends State<OrderExpandedPage> {
               ),
             ),
             SizedBox(
-              height: height / 2.5,
+              height: height / 70,
+            ),
+            SizedBox(
+              height: height / 1.5,
               child: Column(
                 children: [
                   Row(
                     children: [
                       SizedBox(
-                        width: width / 3,
+                        width: width / 2.8,
                         child: Text(
                           'Equipment Name',
                           style: Theme.of(context).textTheme.displayMedium,
                         ),
                       ),
                       SizedBox(
-                        width: width / 7,
+                        width: width / 9,
                       ),
                       Text(
                         order['name'],
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
+                  ),
+                  SizedBox(
+                    height: height / 70,
                   ),
                   Row(
                     children: [
@@ -71,6 +79,9 @@ class OrderExpanded extends State<OrderExpandedPage> {
                       )
                     ],
                   ),
+                  SizedBox(
+                    height: height / 70,
+                  ),
                   Row(
                     children: [
                       SizedBox(
@@ -88,6 +99,9 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
+                  ),
+                  SizedBox(
+                    height: height / 70,
                   ),
                   Row(
                     children: [
@@ -107,6 +121,9 @@ class OrderExpanded extends State<OrderExpandedPage> {
                       )
                     ],
                   ),
+                  SizedBox(
+                    height: height / 70,
+                  ),
                   Row(
                     children: [
                       SizedBox(
@@ -124,6 +141,9 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
+                  ),
+                  SizedBox(
+                    height: height / 70,
                   ),
                   Row(
                     children: [
@@ -163,6 +183,9 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
+                  ),
+                  SizedBox(
+                    height: height / 70,
                   ),
                   Center(
                     child: Row(
@@ -207,6 +230,6 @@ class OrderExpanded extends State<OrderExpandedPage> {
           ]),
         ),
       ),
-    );
+    ));
   }
 }
