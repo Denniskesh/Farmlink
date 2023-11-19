@@ -47,14 +47,11 @@ class Confirmation extends State<ConfirmationPage> {
                             fit: FlexFit.loose,
                             child: RichText(
                               text: TextSpan(
-                                text: 'Hello ',
-                                style: Theme.of(context).textTheme.titleLarge,
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text:
-                                          '''Your booking of the ${equipment.model}, \n${equipment.equipmentType} for Kes $price has been \nplaced successfully. \nOnly pay the Equipment \nowner/Operator after \nCompletion of Work. \nThank you for using our services. \n\nFor any queries contact us at \n+254793613719''')
-                                ],
-                              ),
+                                  // text: '',
+                                  style:
+                                      Theme.of(context).textTheme.displaySmall,
+                                  text:
+                                      '''Your booking of the ${equipment.model}, \n${equipment.equipmentType} for Kes $price has been \nplaced successfully. \nOnly pay the Equipment \nowner/Operator after \nCompletion of Work. \nThank you for using our services. \n\nFor any queries contact us at \n+254793613719'''),
                             ),
                           ),
                         )),
