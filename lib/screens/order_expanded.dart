@@ -112,24 +112,6 @@ class OrderExpanded extends State<OrderExpandedPage> {
                       SizedBox(
                         width: width / 3,
                         child: Text(
-                          'Duration',
-                          style: Theme.of(context).textTheme.displayMedium,
-                        ),
-                      ),
-                      SizedBox(
-                        width: width / 7,
-                      ),
-                      Text(
-                        order['Duration'],
-                        style: Theme.of(context).textTheme.titleLarge,
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: width / 3,
-                        child: Text(
                           'Fee Rate',
                           style: Theme.of(context).textTheme.displayMedium,
                         ),
