@@ -34,7 +34,7 @@ class Confirmation extends State<ConfirmationPage> {
                     SizedBox(
                       child: Text(
                         'Booking Details',
-                        style: Theme.of(context).textTheme.displayLarge,
+                        style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ),
                     Container(
