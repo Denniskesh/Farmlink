@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class OrderPage extends StatefulWidget {
+  const OrderPage({super.key});
+
   @override
   Order createState() => Order();
 }

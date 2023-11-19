@@ -1,3 +1,4 @@
+import 'package:farmlink/screens/bookings_screen.dart';
 import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 import 'package:farmlink/screens/equipment_list_screen.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
@@ -213,7 +214,11 @@ class _HomePageState extends State<HomePage> {
     var width = MediaQuery.of(context).size.width;
     return Center(
       child: GestureDetector(
-        onTap: () {},
+        onTap: () async {
+          await Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return const BookingsPage();
+          }));
+        },
         child: Container(
           width: width,
           padding: const EdgeInsets.all(10),

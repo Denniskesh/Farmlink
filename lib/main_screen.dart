@@ -1,5 +1,5 @@
+import 'package:farmlink/screens/order_screen.dart';
 import 'package:flutter/material.dart';
-import 'screens/bookings_screen.dart';
 import 'screens/equipment_screen.dart';
 import 'services/tab_manager.dart';
 import 'screens/home_page.dart';
@@ -15,7 +15,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   static List<Widget> pages = <Widget>[
     const HomePage(),
-    const BookingsPage(),
+    const OrderPage(),
     const EquipmentPage(),
   ];
   @override
