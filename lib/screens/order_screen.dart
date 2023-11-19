@@ -183,7 +183,7 @@ class Order extends State<OrderPage> {
                     // Text('Today'),
                     ListTile(title: Text('Today')),
                     SizedBox(
-                        height: height * .1,
+                        height: height * .2,
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(context,
@@ -198,53 +198,59 @@ class Order extends State<OrderPage> {
                                 width: width * .3,
                                 child: Image.network(
                                   image,
+                                  alignment: Alignment.center,
+                                  height: double.infinity,
+                                  width: double.infinity,
                                   fit: BoxFit.fill,
                                 ),
                               ),
                               Spacer(),
                               SizedBox(
-                                width: width * .6,
-                                child: Column(children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        name,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge,
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.watch_later_outlined),
-                                      Text(
-                                        DateFormat('E, d MMM yyy h:mm a')
-                                            .format(date),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text('Pick Up   ${pickUp}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text('Pick Up   ${dropOff}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium)
-                                    ],
-                                  )
-                                ]),
-                              )
+                                  width: width * .6,
+                                  child: Container(
+                                    child: Center(
+                                      child: Column(children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              name,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge,
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(Icons.watch_later_outlined),
+                                            Text(
+                                              DateFormat('E, d MMM yyy h:mm a')
+                                                  .format(date),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text('Pick Up   ${pickUp}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text('Pick Up   ${dropOff}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium)
+                                          ],
+                                        )
+                                      ]),
+                                    ),
+                                  ))
                             ],
                           ),
                         )),
@@ -261,7 +267,7 @@ class Order extends State<OrderPage> {
                     // Text('Yesterday'),
                     ListTile(title: Text('Yesterday')),
                     SizedBox(
-                      height: height * .1,
+                      height: height * .2,
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(context,
@@ -276,6 +282,9 @@ class Order extends State<OrderPage> {
                               width: width * .3,
                               child: Image.network(
                                 image,
+                                alignment: Alignment.center,
+                                height: double.infinity,
+                                width: double.infinity,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -337,7 +346,7 @@ class Order extends State<OrderPage> {
                     // Text(date.formatDate()),
                     ListTile(title: Text(date.formatDate())),
                     SizedBox(
-                        height: height * .1,
+                        height: height * .2,
                         child: GestureDetector(
                             onTap: () {
                               Navigator.push(context,
@@ -360,6 +369,9 @@ class Order extends State<OrderPage> {
                                     width: width * .3,
                                     child: Image.network(
                                       image,
+                                      alignment: Alignment.center,
+                                      height: double.infinity,
+                                      width: double.infinity,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -421,7 +433,7 @@ class Order extends State<OrderPage> {
                   ),
                   // ListTile(title: Text('item $index')),
                   SizedBox(
-                      height: height * .1,
+                      height: height * .2,
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(context,
@@ -436,11 +448,14 @@ class Order extends State<OrderPage> {
                               width: width * .3,
                               child: Image.network(
                                 image,
+                                alignment: Alignment.center,
+                                height: double.infinity,
+                                width: double.infinity,
                                 fit: BoxFit.fill,
                               ),
                             ),
                             Spacer(),
-                            SizedBox(
+                            Container(
                               width: width * .6,
                               child: Column(children: [
                                 Row(
