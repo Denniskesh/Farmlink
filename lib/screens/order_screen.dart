@@ -154,7 +154,8 @@ class Order extends State<OrderPage> {
       appBar: AppBar(
         title: const Text('Bookings'),
       ),
-      body: Center(
+      body: Container(
+        padding: EdgeInsets.only(left: 8.0),
         child: ListView.builder(
             itemCount: sorted.length,
             itemBuilder: (_, index) {
@@ -195,7 +196,7 @@ class Order extends State<OrderPage> {
                           child: Row(
                             children: [
                               SizedBox(
-                                width: width * .3,
+                                width: width * .4,
                                 child: Image.network(
                                   image,
                                   alignment: Alignment.center,
@@ -206,7 +207,7 @@ class Order extends State<OrderPage> {
                               ),
                               Spacer(),
                               SizedBox(
-                                  width: width * .6,
+                                  width: width * .5,
                                   child: Container(
                                     child: Center(
                                       child: Column(children: [
@@ -279,7 +280,7 @@ class Order extends State<OrderPage> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: width * .3,
+                              width: width * .4,
                               child: Image.network(
                                 image,
                                 alignment: Alignment.center,
@@ -290,7 +291,7 @@ class Order extends State<OrderPage> {
                             ),
                             Spacer(),
                             SizedBox(
-                              width: width * .6,
+                              width: width * .5,
                               child: Column(children: [
                                 Row(
                                   children: [
@@ -366,7 +367,7 @@ class Order extends State<OrderPage> {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                    width: width * .3,
+                                    width: width * .4,
                                     child: Image.network(
                                       image,
                                       alignment: Alignment.center,
@@ -377,7 +378,7 @@ class Order extends State<OrderPage> {
                                   ),
                                   Spacer(),
                                   SizedBox(
-                                    width: width * .6,
+                                    width: width * .5,
                                     child: Column(children: [
                                       Row(
                                         children: [
@@ -445,7 +446,7 @@ class Order extends State<OrderPage> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: width * .3,
+                              width: width * .4,
                               child: Image.network(
                                 image,
                                 alignment: Alignment.center,
@@ -456,7 +457,7 @@ class Order extends State<OrderPage> {
                             ),
                             Spacer(),
                             Container(
-                              width: width * .6,
+                              width: width * .5,
                               child: Column(children: [
                                 Row(
                                   children: [
