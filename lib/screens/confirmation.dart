@@ -1,4 +1,5 @@
 import 'package:farmlink/models/equipment_model.dart';
+import 'package:farmlink/screens/order_screen.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmationPage extends StatefulWidget {
@@ -100,12 +101,17 @@ class Confirmation extends State<ConfirmationPage> {
                               width: width * 0.60,
                               height: height / 12,
                               child: ElevatedButton(
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  await Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return OrderPage();
+                                  }));
+                                },
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(20.0)),
-                                  backgroundColor: Color.fromARGB(
+                                  backgroundColor: const Color.fromARGB(
                                       255, 236, 235, 238), // Background color
                                 ),
                                 child: const Text(
