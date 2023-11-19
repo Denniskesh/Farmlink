@@ -48,8 +48,7 @@ class Confirmation extends State<ConfirmationPage> {
                             child: RichText(
                               text: TextSpan(
                                   // text: '',
-                                  style:
-                                      Theme.of(context).textTheme.displaySmall,
+                                  style: Theme.of(context).textTheme.bodySmall,
                                   text:
                                       '''Your booking of the ${equipment.model}, \n${equipment.equipmentType} for Kes $price has been \nplaced successfully. \nOnly pay the Equipment \nowner/Operator after \nCompletion of Work. \nThank you for using our services. \n\nFor any queries contact us at \n+254793613719'''),
                             ),
