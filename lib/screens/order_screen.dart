@@ -155,7 +155,7 @@ class Order extends State<OrderPage> {
         title: const Text('Bookings'),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 8.0),
+        padding: EdgeInsets.only(left: width / 50),
         child: ListView.builder(
             itemCount: sorted.length,
             itemBuilder: (_, index) {
@@ -196,7 +196,7 @@ class Order extends State<OrderPage> {
                           child: Row(
                             children: [
                               SizedBox(
-                                width: width * .4,
+                                width: width * .38,
                                 child: Image.network(
                                   image,
                                   alignment: Alignment.center,
@@ -207,7 +207,7 @@ class Order extends State<OrderPage> {
                               ),
                               Spacer(),
                               SizedBox(
-                                  width: width * .5,
+                                  width: width * .55,
                                   child: Container(
                                     child: Center(
                                       child: Column(children: [
@@ -223,14 +223,21 @@ class Order extends State<OrderPage> {
                                         ),
                                         Row(
                                           children: [
-                                            Icon(Icons.watch_later_outlined),
-                                            Text(
-                                              DateFormat('E, d MMM yyy h:mm a')
-                                                  .format(date),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
+                                            FittedBox(
+                                              child: Icon(
+                                                  Icons.watch_later_outlined),
                                             ),
+                                            FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Text(
+                                                DateFormat(
+                                                        'E, d MMM yyy h:mm a')
+                                                    .format(date),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                              ),
+                                            )
                                           ],
                                         ),
                                         Row(
@@ -280,7 +287,7 @@ class Order extends State<OrderPage> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: width * .4,
+                              width: width * .38,
                               child: Image.network(
                                 image,
                                 alignment: Alignment.center,
@@ -291,7 +298,7 @@ class Order extends State<OrderPage> {
                             ),
                             Spacer(),
                             SizedBox(
-                              width: width * .5,
+                              width: width * .55,
                               child: Column(children: [
                                 Row(
                                   children: [
@@ -306,13 +313,15 @@ class Order extends State<OrderPage> {
                                 Row(
                                   children: [
                                     Icon(Icons.watch_later_outlined),
-                                    Text(
-                                      DateFormat('E, d MMM yyy h:mm a')
-                                          .format(date),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
+                                    FittedBox(
+                                      child: Text(
+                                        DateFormat('E, d MMM yyy h:mm a')
+                                            .format(date),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                    )
                                   ],
                                 ),
                                 Row(
@@ -367,7 +376,7 @@ class Order extends State<OrderPage> {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                    width: width * .4,
+                                    width: width * .38,
                                     child: Image.network(
                                       image,
                                       alignment: Alignment.center,
@@ -378,7 +387,7 @@ class Order extends State<OrderPage> {
                                   ),
                                   Spacer(),
                                   SizedBox(
-                                    width: width * .5,
+                                    width: width * .55,
                                     child: Column(children: [
                                       Row(
                                         children: [
@@ -393,13 +402,15 @@ class Order extends State<OrderPage> {
                                       Row(
                                         children: [
                                           Icon(Icons.watch_later_outlined),
-                                          Text(
-                                            DateFormat('E, d MMM yyy h:mm a')
-                                                .format(date),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium,
-                                          ),
+                                          FittedBox(
+                                            child: Text(
+                                              DateFormat('E, d MMM yyy h:mm a')
+                                                  .format(date),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                            ),
+                                          )
                                         ],
                                       ),
                                       Row(
@@ -446,7 +457,7 @@ class Order extends State<OrderPage> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: width * .4,
+                              width: width * .38,
                               child: Image.network(
                                 image,
                                 alignment: Alignment.center,
@@ -457,7 +468,7 @@ class Order extends State<OrderPage> {
                             ),
                             Spacer(),
                             Container(
-                              width: width * .5,
+                              width: width * .55,
                               child: Column(children: [
                                 Row(
                                   children: [
@@ -472,13 +483,15 @@ class Order extends State<OrderPage> {
                                 Row(
                                   children: [
                                     Icon(Icons.watch_later_outlined),
-                                    Text(
-                                      DateFormat('E, d MMM yyy h:mm a')
-                                          .format(date),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
+                                    FittedBox(
+                                      child: Text(
+                                        DateFormat('E, d MMM yyy h:mm a')
+                                            .format(date),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
+                                    )
                                   ],
                                 ),
                                 Row(

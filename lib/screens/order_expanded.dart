@@ -30,6 +30,9 @@ class OrderExpanded extends State<OrderExpandedPage> {
               height: height / 2.5,
               child: Image.network(
                 order['image'],
+                alignment: Alignment.center,
+                height: double.infinity,
+                width: double.infinity,
                 fit: BoxFit.fill,
               ),
             ),

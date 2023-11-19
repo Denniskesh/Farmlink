@@ -40,6 +40,9 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                         child: Image.network(
                       //equipment.imageFile
                       'https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                      alignment: Alignment.center,
+                      height: double.infinity,
+                      width: double.infinity,
                       fit: BoxFit.fill,
                     )),
                   )),
