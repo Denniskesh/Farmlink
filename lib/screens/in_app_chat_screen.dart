@@ -6,12 +6,11 @@ import 'package:flutter/material.dart';
 
 class InAppChatPage extends StatefulWidget {
   final String receiverUserEmail;
-//  final String receiverUserId;
-  const InAppChatPage({
-    super.key,
-    required this.receiverUserEmail,
-    //required this.receiverUserId
-  });
+  final String receiverUserId;
+  const InAppChatPage(
+      {super.key,
+      required this.receiverUserEmail,
+      required this.receiverUserId});
 
   @override
   State<InAppChatPage> createState() => _InAppChatPageState();

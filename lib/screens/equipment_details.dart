@@ -486,8 +486,8 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => InAppChatPage(
-                    receiverUserEmail: widget.equipment.userId.toString(),
-                    receiverUserId: widget.equipment.creatorId.toString(),
+                    receiverUserEmail: widget.equipment.user_email.toString(),
+                    receiverUserId: widget.equipment.userId.toString(),
                   ),
                 ),
               );

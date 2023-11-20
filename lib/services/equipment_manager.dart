@@ -33,7 +33,8 @@ class EquipmentManager with ChangeNotifier {
       String imageUrl = await storageReference1.getDownloadURL();
 
       await _equipmentsCollection.add({
-        'Owner Id': equipment.userId,
+        'user_email': equipment.user_email,
+        'Owner_Id': equipment.userId,
         'mechanizationType': equipment.mechanizationType,
         'equipmentType': equipment.equipmentType,
         'name': equipment.name,
