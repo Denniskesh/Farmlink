@@ -1,8 +1,13 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
+import 'package:farmlink/models/owner_model.dart';
 import 'package:farmlink/screens/equipment_details.dart';
 import 'package:farmlink/services/equipment_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 
 class EquipmentListPage extends StatefulWidget {
@@ -27,10 +32,6 @@ class _EquipmentListPage extends State<EquipmentListPage> {
     'County'
   ];
 
-  // late var equipment = jsonDecode(equipments) as List;
-
-  // late List<EquipmentDetails> s =
-  //     equipment.map((e) => EquipmentDetails.fromJson(e)).toList();
   @override
   void initState() {
     super.initState();
@@ -47,7 +48,6 @@ class _EquipmentListPage extends State<EquipmentListPage> {
     List<EquipmentDetails> equipment1 = result
         .map<EquipmentDetails>((json) => EquipmentDetails.fromJson(json))
         .toList();
-    debugPrint(data2.toString());
 
     setState(() {
       equipments = equipment1;
@@ -62,16 +62,86 @@ class _EquipmentListPage extends State<EquipmentListPage> {
   }
 
   filterResults(String filter, String value) async {
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    List list = [];
     if (filter.isNotEmpty && value.isNotEmpty) {
       late List<EquipmentDetails> equipmentsSorted = [];
-      equipmentsSorted = equipments!
-          .where((equipment) => (equipment.equipmentType
-              .toLowerCase()
-              .contains(value.toLowerCase())))
-          .toList();
+      var eq = [];
 
-      head.text = '${equipmentsSorted.length.toString()} $value found';
+      //
+      if (filter.toLowerCase() == 'equipmenttype') {
+        equipmentsSorted = equipments!
+            .where((equipment) => (equipment.equipmentType
+                .toLowerCase()
+                .contains(value.toLowerCase())))
+            .toList();
+
+        head.text = '${equipmentsSorted.length.toString()} $value found';
+      } else if (filter.toLowerCase() == 'nearesttown') {
+        var data = await FirebaseFirestore.instance
+            .collection('equipment')
+            .get()
+            .then((value) => value.docs.map((e) => e.data()).toList());
+        var data2 = await FirebaseFirestore.instance
+            .collection('equipmentOwners')
+            .get()
+            .then((value) => value.docs.map((e) => e.data()).toList());
+
+        data.forEach((e) {
+          data2.forEach((element) {
+            var owner = element;
+            if (owner['town']
+                    .toString()
+                    .toLowerCase()
+                    .contains(value.toLowerCase()) &&
+                e['Owner Id'] == owner['email']) {
+              eq.add(e);
+            }
+          });
+        });
+
+        var data3 = jsonEncode((eq));
+
+        var result = await jsonDecode((data3));
+
+        List<EquipmentDetails> equipment3 = result
+            .map<EquipmentDetails>((json) => EquipmentDetails.fromJson(json))
+            .toList();
+        equipmentsSorted = equipment3;
+        head.text = '${equipmentsSorted.length.toString()} found in  ${value}';
+      } else if (filter.toLowerCase() == 'county') {
+        var data = await FirebaseFirestore.instance
+            .collection('equipment')
+            .get()
+            .then((value) => value.docs.map((e) => e.data()).toList());
+        var data2 = await FirebaseFirestore.instance
+            .collection('equipmentOwners')
+            .get()
+            .then((value) => value.docs.map((e) => e.data()).toList());
+        debugPrint(data2.toString());
+        data.forEach((e) {
+          data2.forEach((element) {
+            var owner = element;
+            if (owner['location']
+                    .toString()
+                    .toLowerCase()
+                    .contains(value.toLowerCase()) &&
+                e['Owner Id'] == owner['email']) {
+              eq.add(e);
+            }
+          });
+        });
+
+        var data3 = jsonEncode((eq));
+
+        var result = await jsonDecode((data3));
+
+        List<EquipmentDetails> equipment3 = result
+            .map<EquipmentDetails>((json) => EquipmentDetails.fromJson(json))
+            .toList();
+        equipmentsSorted = equipment3;
+        head.text =
+            '${equipmentsSorted.length.toString()} found in  ${value} county';
+      }
 
       setState(() {
         sortedEquipments = equipmentsSorted;

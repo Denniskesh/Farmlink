@@ -151,6 +151,9 @@ class Order extends State<OrderPage> {
     double height = MediaQuery.of(context).size.height;
     final sorted = list1.map((e) => (e)).toList()
       ..sort((a, b) => b['time'].compareTo(a['time']));
+    if (list1.isEmpty) {
+      //to do
+    }
 
     return Scaffold(
       appBar: AppBar(
