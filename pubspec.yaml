@@ -38,7 +38,7 @@ dependencies:
   firebase_core: ^2.21.0
   firebase_auth: ^4.12.1
   provider: ^6.0.5
-  cloud_firestore: ^4.12.2
+  cloud_firestore: ^4.13.1
   font_awesome_flutter: ^10.6.0
   flutter_colorpicker: ^1.0.3
   intl: ^0.18.1
@@ -58,6 +58,8 @@ dependencies:
   kommunicate_flutter: ^1.7.5
   phone_form_field: ^8.1.0
   email_validator: ^2.1.17
+  rxdart: ^0.27.7
+  # firebase_image: ^1.1.1
 
 dev_dependencies:
   flutter_test:

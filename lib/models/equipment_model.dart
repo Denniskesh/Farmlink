@@ -34,7 +34,7 @@ class EquipmentDetails {
 
   factory EquipmentDetails.fromJson(Map<String, dynamic> json) {
     return EquipmentDetails(
-        //userId: json['userId'],
+        userId: json['userId'],
         mechanizationType: json['mechanizationType'],
         equipmentType: json['equipmentType'],
         name: json['name'],
