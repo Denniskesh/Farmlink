@@ -1,5 +1,7 @@
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/checkout_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,14 @@ class EquipmentDetailsPage extends StatefulWidget {
 }
 
 class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
+  Future<String> downloadfromfirebase(String url) async {
+    // create reference
+
+    Reference ref = FirebaseStorage.instance.ref().child(url);
+    String _myurl = await ref.getDownloadURL();
+    return _myurl.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -39,7 +49,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                     child: Center(
                         child: Image.network(
                       //equipment.imageFile
-                      'https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                      downloadfromfirebase(equipment.imageUrl) as String,
                       alignment: Alignment.center,
                       height: double.infinity,
                       width: double.infinity,
