@@ -42,7 +42,7 @@ class EquipmentManager with ChangeNotifier {
         'fuelType': equipment.fuelType,
         'consumptionRate': equipment.consumptionRate,
         'description': equipment.description,
-        'package': equipment.packageType,
+        'packageType': equipment.packageType,
         'imageUrl':
             imageUrl, // You need to upload the image to storage and store the URL
       });
