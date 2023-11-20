@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/checkout_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -14,6 +15,8 @@ class EquipmentDetailsPage extends StatefulWidget {
 }
 
 class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
+  //final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -482,7 +485,10 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const InAppChatPage(),
+                  builder: (context) => InAppChatPage(
+                    receiverUserEmail: widget.equipment.userId.toString(),
+                    receiverUserId: widget.equipment.creatorId.toString(),
+                  ),
                 ),
               );
             },

@@ -40,6 +40,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
     if (_formKey.currentState!.validate()) {
       // Create EquipmentDetails object with form data
       EquipmentDetails equipment = EquipmentDetails(
+        //user: user.uid
         userId: user.email,
         mechanizationType: selectedMechanizationType,
         equipmentType: selectedEquipmentType,

@@ -1,9 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmlink/components/chat_bubble.dart';
+import 'package:farmlink/services/chat_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class InAppChatPage extends StatefulWidget {
-  const InAppChatPage({super.key});
+  final String receiverUserEmail;
+//  final String receiverUserId;
+  const InAppChatPage({
+    super.key,
+    required this.receiverUserEmail,
+    //required this.receiverUserId
+  });
 
   @override
   State<InAppChatPage> createState() => _InAppChatPageState();
@@ -12,106 +20,43 @@ class InAppChatPage extends StatefulWidget {
 class _InAppChatPageState extends State<InAppChatPage> {
   @override
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final ChatServices _chatService = ChatServices();
+  //final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _messageController = TextEditingController();
-  late User user;
-
-  @override
-  void initState() {
-    super.initState();
-    _getUser();
-  }
-
-  void _getUser() async {
-    User? user = _auth.currentUser;
-    if (user != null) {
-      setState(() {
-        user = user;
-      });
-    }
-  }
 
   void _sendMessage() async {
-    String messageText = _messageController.text.trim();
-
-    if (messageText.isNotEmpty) {
-      await _firestore.collection('messages').add({
-        'text': messageText,
-        'sender': user.email,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-
-      _messageController.clear();
+    if (_messageController.text.isNotEmpty) {
+      await _chatService.sendMessage(
+          widget.receiverUserId, _messageController.text);
     }
+    _messageController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Chat'),
-        // actions: [
-        //  IconButton(
-        //  icon: Icon(Icons.logout),
-        // onPressed: () async {
-        //   await _auth.signOut();
-        //  Navigator.pop(context);
-        // },
-        // ),
-        // ],
+        title: Text(widget.receiverUserEmail),
       ),
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: _firestore
-                  .collection('messages')
-                  .orderBy('timestamp')
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                List<DocumentSnapshot> messages =
-                    snapshot.data!.docs.reversed.toList();
-
-                List<Widget> messageWidgets = [];
-                for (var message in messages) {
-                  String text = message['text'];
-                  String sender = message['sender'];
-
-                  Widget messageWidget = ListTile(
-                    title: Text(text),
-                    subtitle: Text(sender),
-                  );
-
-                  messageWidgets.add(messageWidget);
-                }
-
-                return ListView(
-                  reverse: true,
-                  children: messageWidgets,
-                );
-              },
-            ),
+            child: _buildMessageList(),
           ),
-          Container(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Type your message...',
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                   onPressed: _sendMessage,
                 ),
               ],
@@ -119,6 +64,50 @@ class _InAppChatPageState extends State<InAppChatPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildMessageList() {
+    return StreamBuilder(
+        stream: _chatService.getMessages(
+            widget.receiverUserId, _auth.currentUser!.uid),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error ${snapshot.error}');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('waiting..');
+          }
+          return ListView(
+            children: snapshot.data!.docs
+                .map((document) => _buildMessageItem(document))
+                .toList(),
+          );
+        });
+  }
+
+  Widget _buildMessageItem(DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+    var alignment = (data['senderId'] == _auth.currentUser!.uid)
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
+
+    return Container(
+      alignment: alignment,
+      child: Column(
+          crossAxisAlignment: (data['senderId'] == _auth.currentUser!.uid)
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
+          mainAxisAlignment: (data['senderId'] == _auth.currentUser!.uid)
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.start,
+          children: [
+            Text(data['senderEmail']),
+            const SizedBox(
+              height: 5,
+            ),
+            ChatBubble(message: data['message']),
+          ]),
     );
   }
 }
