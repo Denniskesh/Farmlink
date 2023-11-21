@@ -321,7 +321,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                         scrollDirection: Axis.vertical,
                         child: DataTable(
                           // ignore: deprecated_member_use
-                          dataRowHeight: height / 4,
+                          dataRowHeight: height / 5,
 
                           columns: const [
                             DataColumn(
