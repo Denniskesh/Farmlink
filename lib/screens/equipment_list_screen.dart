@@ -94,7 +94,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                     .toString()
                     .toLowerCase()
                     .contains(value.toLowerCase()) &&
-                e['Owner Id'] == owner['email']) {
+                e['user_email'] == owner['email']) {
               eq.add(e);
             }
           });
@@ -126,7 +126,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                     .toString()
                     .toLowerCase()
                     .contains(value.toLowerCase()) &&
-                e['Owner Id'] == owner['email']) {
+                e['user_email'] == owner['email']) {
               eq.add(e);
             }
           });
