@@ -41,7 +41,7 @@ dependencies:
   cloud_firestore: ^4.13.1
   font_awesome_flutter: ^10.6.0
   flutter_colorpicker: ^1.0.3
-  intl: ^0.18.1
+  intl: ^0.17.0
   uuid: ^4.1.0
   smooth_page_indicator: ^1.0.0+2
   webview_flutter: ^4.4.0
@@ -56,9 +56,10 @@ dependencies:
   http: ^1.1.0
   flutter_rating_bar: ^4.0.1
   kommunicate_flutter: ^1.7.5
-  phone_form_field: ^8.1.0
+  phone_form_field: ^4.3.0
   email_validator: ^2.1.17
   rxdart: ^0.27.7
+  mpesa_flutter_plugin: ^1.6.1
   # firebase_image: ^1.1.1
 
 dev_dependencies:

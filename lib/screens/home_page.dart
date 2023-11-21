@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/bookings_screen.dart';
 import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 import 'package:farmlink/screens/equipment_list_screen.dart';
@@ -31,6 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   late TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
+  late GoogleMapController mapController;
   //List<APIHits> currentSearchList = [];
   int currentCount = 0;
   int currentStartPosition = 0;
@@ -65,6 +68,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<QuerySnapshot> getImages() {
+    return FirebaseFirestore.instance.collection("equipment").get();
+  }
+
   void signOut() {
     final authService = Provider.of<AuthService>(context, listen: false);
     authService.signOut();
@@ -87,8 +94,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   //set an initial location of the Map
-  final CameraPosition _initialCameraPosition =
-      const CameraPosition(target: LatLng(-1.286389, 36.817223));
+  final CameraPosition _initialCameraPosition = const CameraPosition(
+    target: LatLng(-1.286389, 36.817223),
+    zoom: 6.0,
+  );
+  void _onMapCreated(GoogleMapController controller) {
+    setState(() {
+      mapController = controller;
+    });
+  }
 
   // Add a Set to hold markers on the map
   final Set<Marker> _markers = {};
@@ -154,37 +168,122 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Expanded(
               child: GoogleMap(
-                initialCameraPosition: _initialCameraPosition,
-                myLocationEnabled: true,
-                myLocationButtonEnabled: true,
-                mapType: MapType.normal,
-                zoomGesturesEnabled: true,
-                markers: _markers,
-                zoomControlsEnabled: true,
-                onMapCreated: (GoogleMapController c) {
-                  // to control the camera position of the map
-                  googleMapController = c;
-                },
-              ),
+                  initialCameraPosition: _initialCameraPosition,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  mapType: MapType.normal,
+                  zoomGesturesEnabled: true,
+                  markers: _markers,
+                  zoomControlsEnabled: true,
+                  onCameraMove: (CameraPosition position) {
+                    // Constrain the camera position to keep the view within Kenya's boundaries
+                    if (position.target.latitude < -4.6751 ||
+                        position.target.latitude > 4.6225 ||
+                        position.target.longitude < 33.9072 ||
+                        position.target.longitude > 41.8994) {
+                      mapController.animateCamera(
+                          CameraUpdate.newLatLng(LatLng(-1.286389, 36.817223)));
+                    }
+                  },
+                  onMapCreated: _onMapCreated),
             ),
             _buildSearchCard(),
             _buildEquipmentLoader(context),
             Positioned(
-                top: 280, right: 10, left: 10, child: _buildHireButton()),
-            Positioned(
-              top: 330,
-              left: 10,
-              right: 10,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return const EquipmentListPage();
-                    }));
-                  },
-                  child: const Text('explore')),
-            )
+                bottom: MediaQuery.of(context).size.height / 3,
+                right: 10,
+                left: 10,
+                child: _buildHireButton()),
+            // Positioned(
+            //  top: 200,
+            // left: 10,
+            // right: 10,
+            // child: ElevatedButton(
+            // onPressed: () {
+            //  Navigator.of(context)
+            //     .push(MaterialPageRoute(builder: (context) {
+            //   return const EquipmentListPage();
+            //  }));
+            //},
+            // child: const Text('explore')),
+            //),
+            Positioned(bottom: 0, child: buildExploreCard()),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildExploreCard() {
+    return Container(
+      height: MediaQuery.of(context).size.height / 3,
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Explore',
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const EquipmentListPage();
+                      }));
+                    },
+                    child: const Text('View All',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w700,
+                        )),
+                  ),
+                  //const Icon(
+                  //Icons.arrow_forward,
+                  // color: Colors.blue,
+                  // )
+                ],
+              ),
+              // FutureBuilder(
+              //    future: getImages(),
+              //    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              //      if (snapshot.connectionState == ConnectionState.done) {
+              //      if (!snapshot.hasData) {
+              //        return const Center(child: CircularProgressIndicator());
+              //     } else {
+              //      final orders = snapshot.data!;
+              //     return ListView.builder(
+              //      scrollDirection: Axis.horizontal,
+              //     itemCount: snapshot.data!.docs
+              //        .length, // Replace with the actual length of your image list
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return Padding(
+              //    padding: const EdgeInsets.all(
+              //       8.0), // Adjust spacing as needed
+              //   child: Image.network(
+              //     orders.docs[index].get('imageUrl'),
+              //    fit: BoxFit
+              //        .fill, // Replace with the actual URL from Firebase for your image
+              //   width: 100, // Adjust the width as needed
+              //   height: 100, // Adjust the height as needed
+              // ),
+              //  );
+              // },
+              // );
+              // }
+              // }
+              //  return const CircularProgressIndicator();
+              //  }),
+            ],
+          ),
         ),
       ),
     );

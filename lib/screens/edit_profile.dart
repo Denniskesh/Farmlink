@@ -22,12 +22,13 @@ class EditProfile extends State<EditProfilePage> {
 
   late User _user;
   TextEditingController _nameController = TextEditingController();
-  PhoneController phoneNumber =
-      PhoneController(const PhoneNumber(isoCode: IsoCode.KE, nsn: ''));
+  //PhoneController phoneNumber =
+  //   PhoneController(const PhoneNumber(isoCode: IsoCode.KE, nsn: ''));
   TextEditingController _emailController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
   TextEditingController _categoryController = TextEditingController();
   TextEditingController _farmingTypeController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
 
   @override
   void initState() {
@@ -47,7 +48,7 @@ class EditProfile extends State<EditProfilePage> {
         _categoryController.text = userDoc['category'] ?? '';
         _farmingTypeController.text = userDoc['farmingType'] ?? '';
         _locationController.text = userDoc['location'] ?? '';
-        phoneNumber = userDoc['phonenumber'] ?? '';
+        _phoneController = userDoc['phonenumber'] ?? '';
       });
     }
   }
@@ -56,7 +57,7 @@ class EditProfile extends State<EditProfilePage> {
     try {
       await _firestore.collection('users').doc(_user.uid).update({
         'name': _nameController.text,
-        'phonenumber': phoneNumber,
+        'phonenumber': _phoneController,
         'email': _emailController.text,
         'location': _locationController.text,
         'category': _categoryController.text,
@@ -98,8 +99,8 @@ class EditProfile extends State<EditProfilePage> {
     bool isCountryChipPersistent = false;
     bool withLabel = true;
     bool useRtl = false;
-    CountrySelectorNavigator selectorNavigator =
-        const CountrySelectorNavigator.searchDelegate();
+    //CountrySelectorNavigator selectorNavigator =
+    //  const CountrySelectorNavigator.searchDelegate();
 
     final phoneKey = GlobalKey<FormFieldState<PhoneNumber>>();
 
@@ -222,41 +223,32 @@ class EditProfile extends State<EditProfilePage> {
                                 padding: const EdgeInsets.only(
                                     top: 10, left: 15, right: 15, bottom: 0),
                                 child: SizedBox(
-                                  child: PhoneFormField(
-                                    key: phoneKey,
-                                    controller: phoneNumber,
-                                    shouldFormat: shouldFormat && !useRtl,
-                                    // autofocus: true,
-                                    autofillHints: const [
-                                      AutofillHints.telephoneNumber
-                                    ],
-                                    countrySelectorNavigator: selectorNavigator,
-                                    defaultCountry: IsoCode.KE,
-                                    decoration: InputDecoration(
-                                      label: withLabel
-                                          ? const Text('Phone')
-                                          : null,
-                                      border: outlineBorder
-                                          ? const OutlineInputBorder()
-                                          : const UnderlineInputBorder(),
-                                      hintText: withLabel ? '' : 'Phone',
-                                    ),
-                                    enabled: true,
-                                    showFlagInInput: true,
-                                    validator: _getValidator(),
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    cursorColor:
-                                        Theme.of(context).colorScheme.primary,
-
-                                    onChanged: (p) {
-                                      phoneNumber = PhoneController(PhoneNumber(
-                                          isoCode: p!.isoCode, nsn: p.nsn));
-                                      //phone.text = '0${p.nsn}';
-                                      print(p.nsn);
+                                  child: TextFormField(
+                                    controller: _phoneController,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'please enter phone number';
+                                      }
+                                      return null;
                                     },
-                                    isCountryChipPersistent:
-                                        isCountryChipPersistent,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      labelText: 'Phone Number',
+                                      hintText: 'eg. 254765432333',
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 236, 197, 197)),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 202, 178, 178)),
+                                      ),
+                                    ),
                                   ),
                                 )),
                             Padding(
