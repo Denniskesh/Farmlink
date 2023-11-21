@@ -321,7 +321,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                         scrollDirection: Axis.vertical,
                         child: DataTable(
                           // ignore: deprecated_member_use
-                          dataRowHeight: height / 4,
+                          dataRowHeight: height / 5,
 
                           columns: const [
                             DataColumn(
@@ -334,7 +334,10 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                           rows: sortedEquipments
                               .map((e) => DataRow(cells: <DataCell>[
                                     DataCell(
-                                      SizedBox(
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              top: height * 0.01,
+                                              bottom: height * 0.01),
                                           width: width * 0.4,
                                           child: FutureBuilder(
                                               future: FirebaseFirestore.instance
