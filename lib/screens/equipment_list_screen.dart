@@ -349,7 +349,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                     DataCell(SizedBox(
                                         width: width * 0.4,
                                         child: Image.network(
-                                          ' https://firebasestorage.googleapis.com/v0/b/farmlink-89eb5.appspot.com/o/equipment_images/Tractor.jpg',
+                                          'https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                                           fit: BoxFit.fill,
                                         ))),
                                     DataCell(SizedBox(

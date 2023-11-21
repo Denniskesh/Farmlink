@@ -491,20 +491,17 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
           ),
           floatingActionButton: TextButton.icon(
             onPressed: () async {
-              var data = FirebaseFirestore.instance
-                  .collection('chat_rooms')
-                  .get()
-                  .then((value) => value.docs.map((e) => e.data()).toList());
-              debugPrint(data.toString());
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => InAppChatPage(
-                    receiverUserEmail: widget.equipment.user_email.toString(),
-                    receiverUserId: widget.equipment.userId.toString(),
+              if (mounted) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InAppChatPage(
+                      receiverUserEmail: widget.equipment.user_email.toString(),
+                      receiverUserId: widget.equipment.userId.toString(),
+                    ),
                   ),
-                ),
-              );
+                );
+              }
             },
             icon: Icon(
               Icons.chat_bubble_outline,
