@@ -344,14 +344,33 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                   .get(),
                                               builder: (context,
                                                   AsyncSnapshot snapshot) {
-                                                return Image.network(
-                                                  snapshot.data.docs[0]
-                                                      .get('imageUrl'),
-                                                  alignment: Alignment.center,
-                                                  height: double.infinity,
-                                                  width: double.infinity,
-                                                  fit: BoxFit.fill,
-                                                );
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.done) {
+                                                  if (!snapshot.hasData) {
+                                                    return const Center(
+                                                        child:
+                                                            CircularProgressIndicator());
+                                                  } else if (snapshot.hasData &&
+                                                      snapshot.data!.docs
+                                                              .length >
+                                                          0) {
+                                                    return Image.network(
+                                                      snapshot.data!.docs[0]
+                                                          .get('imageUrl'),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      height: double.infinity,
+                                                      width: double.infinity,
+                                                      fit: BoxFit.fill,
+                                                    );
+                                                  } else {
+                                                    return const Text(
+                                                        'Loading ...');
+                                                  }
+                                                } else {
+                                                  return const Text(
+                                                      'Loading ...');
+                                                }
                                               })),
                                     ),
                                     DataCell(SizedBox(

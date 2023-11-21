@@ -48,13 +48,17 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                                     isEqualTo: equipment.equipmentId)
                                 .get(),
                             builder: (context, AsyncSnapshot snapshot) {
-                              return Image.network(
-                                snapshot.data.docs[0].get('imageUrl'),
-                                alignment: Alignment.center,
-                                height: double.infinity,
-                                width: double.infinity,
-                                fit: BoxFit.fill,
-                              );
+                              if (!snapshot.data.docs) {
+                                return const Text('Loading ...');
+                              } else {
+                                return Image.network(
+                                  snapshot.data.docs[0].get('imageUrl'),
+                                  alignment: Alignment.center,
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  fit: BoxFit.fill,
+                                );
+                              }
                             })),
                   )),
 
@@ -286,13 +290,17 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                                   isEqualTo: equipment.equipmentId)
                               .get(),
                           builder: (context, AsyncSnapshot snapshot) {
-                            return Image.network(
-                              snapshot.data.docs[0].get('imageUrl'),
-                              alignment: Alignment.center,
-                              height: double.infinity,
-                              width: double.infinity,
-                              fit: BoxFit.fill,
-                            );
+                            if (!snapshot.data.docs) {
+                              return const Text('Loading ...');
+                            } else {
+                              return Image.network(
+                                snapshot.data.docs[0].get('imageUrl'),
+                                alignment: Alignment.center,
+                                height: double.infinity,
+                                width: double.infinity,
+                                fit: BoxFit.fill,
+                              );
+                            }
                           })),
                 ),
               ),
