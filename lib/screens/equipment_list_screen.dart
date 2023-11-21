@@ -6,7 +6,7 @@ import 'package:farmlink/models/owner_model.dart';
 import 'package:farmlink/screens/equipment_details.dart';
 import 'package:farmlink/services/equipment_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firestore_storage;
+import 'package:http/http.dart' as http;
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
@@ -346,12 +346,11 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                           ],
                           rows: sortedEquipments
                               .map((e) => DataRow(cells: <DataCell>[
-                                    DataCell(SizedBox(
+                                    DataCell(
+                                      SizedBox(
                                         width: width * 0.4,
-                                        child: Image.network(
-                                          'https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                                          fit: BoxFit.fill,
-                                        ))),
+                                      ),
+                                    ),
                                     DataCell(SizedBox(
                                         width: width * 0.45,
                                         child: Stack(children: [
