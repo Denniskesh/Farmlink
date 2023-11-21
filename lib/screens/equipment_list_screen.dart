@@ -258,18 +258,25 @@ class _EquipmentListPage extends State<EquipmentListPage> {
         50;
     if (equipments!.isEmpty) {
       return Dialog(
-        child: SizedBox(
-            height: height / 5,
-            child: const Center(
-              child: Stack(
-                alignment: FractionalOffset.center,
-                children: [
-                  CircularProgressIndicator(),
-                  Text("Loading"),
-                ],
-              ),
-            )),
-      );
+          child: MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Equipment List',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
+          body: Center(
+            child: Stack(
+              alignment: FractionalOffset.center,
+              children: [
+                CircularProgressIndicator(),
+                Text("Loading"),
+              ],
+            ),
+          ),
+        ),
+      ));
     }
 
     return MaterialApp(

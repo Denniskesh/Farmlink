@@ -287,13 +287,7 @@ class CheckOut extends State<CheckoutScreenPage> {
           ]),
         ),
         floatingActionButton: TextButton.icon(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return const InAppChatPage(
-                  //equipment: equipment,
-                  );
-            }));
-          },
+          onPressed: () {},
           icon: const Icon(
             Icons.chat_bubble_outline,
             // size: width / 10,

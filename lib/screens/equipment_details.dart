@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/checkout_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -23,6 +24,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
     String _myurl = await ref.getDownloadURL();
     return _myurl.toString();
   }
+  //final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -488,11 +490,19 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
             ]),
           ),
           floatingActionButton: TextButton.icon(
-            onPressed: () {
+            onPressed: () async {
+              var data = FirebaseFirestore.instance
+                  .collection('chat_rooms')
+                  .get()
+                  .then((value) => value.docs.map((e) => e.data()).toList());
+              debugPrint(data.toString());
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const InAppChatPage(),
+                  builder: (context) => InAppChatPage(
+                    receiverUserEmail: widget.equipment.user_email.toString(),
+                    receiverUserId: widget.equipment.userId.toString(),
+                  ),
                 ),
               );
             },

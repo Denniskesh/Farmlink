@@ -45,12 +45,19 @@ class _OwnerDetailPageState extends State<OwnerDetailPage> {
     user = _auth.currentUser!;
     DocumentSnapshot userDoc =
         await _firestore.collection('users').doc(user.uid).get();
+    await _firestore.collection('equipmentOwners').doc(user.uid).get();
 
     if (userDoc.exists) {
       setState(() {
         nameController.text = userDoc['name'];
         emailController.text = user.email!;
         phoneController.text = userDoc['phonenumber'];
+        dobController.text = userDoc['dob'];
+        idnoController.text = userDoc['idNumber'];
+        locationController.text = userDoc['location'];
+        townController.text = userDoc['town'];
+        selectedGender = userDoc['gender'];
+        imageFile = userDoc['imageUrl'];
       });
     }
   }

@@ -40,7 +40,8 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
     if (_formKey.currentState!.validate()) {
       // Create EquipmentDetails object with form data
       EquipmentDetails equipment = EquipmentDetails(
-        userId: user.email,
+        user_email: user.email,
+        userId: user.uid,
         mechanizationType: selectedMechanizationType,
         equipmentType: selectedEquipmentType,
         name: nameController.text.trim(), // Replace with actual value
@@ -129,7 +130,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
             style: Theme.of(context).textTheme.displayMedium,
           ),
           const SizedBox(height: 16),
-          Text('Owner ID: ${user.email}'),
+          Text('Owner_ID: ${user.email}'),
           Form(
             key: _formKey,
             child: Padding(
