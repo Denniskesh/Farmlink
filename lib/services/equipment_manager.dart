@@ -32,7 +32,7 @@ class EquipmentManager with ChangeNotifier {
       // Get the image URL
       String imageUrl = await storageReference1.getDownloadURL();
 
-      await _equipmentsCollection.add({
+      DocumentReference equipmentDocument = await _equipmentsCollection.add({
         'user_email': equipment.user_email,
         'Owner_Id': equipment.userId,
         'mechanizationType': equipment.mechanizationType,
@@ -47,6 +47,8 @@ class EquipmentManager with ChangeNotifier {
         'imageUrl':
             imageUrl, // You need to upload the image to storage and store the URL
       });
+      String equipmentId = equipmentDocument.id;
+      await equipmentDocument.update({'equipmentId': equipmentId});
     } catch (e) {
       print("Error saving user data: $e");
     }
