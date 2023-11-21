@@ -1,4 +1,5 @@
 import 'package:farmlink/screens/bookings_screen.dart';
+import 'package:farmlink/screens/imgs.dart';
 import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 import 'package:farmlink/screens/equipment_list_screen.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
@@ -216,8 +217,11 @@ class _HomePageState extends State<HomePage> {
       child: GestureDetector(
         onTap: () async {
           await Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return const BookingsPage();
+            return const Images();
           }));
+          // await Navigator.push(context, MaterialPageRoute(builder: (_) {
+          //   return const BookingsPage();
+          // }));
         },
         child: Container(
           width: width,

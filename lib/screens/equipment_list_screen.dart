@@ -62,19 +62,6 @@ class _EquipmentListPage extends State<EquipmentListPage> {
     });
   }
 
-  Future<String> downloadfromfirebase(String url) async {
-    // create reference
-    // debugPrint(url);
-    // Reference ref = FirebaseStorage.instance.ref('equipment_images').child(url);
-    // String _myurl = await ref.getDownloadURL();
-    Reference ref =
-        FirebaseStorage.instance.ref().child("equipment_images/Tractor.jpg");
-    String url1 = (await ref.getDownloadURL()).toString();
-
-    debugPrint(url1.toString());
-    return url1;
-  }
-
   filterResults(String filter, String value) async {
     List list = [];
     if (filter.isNotEmpty && value.isNotEmpty) {
@@ -131,7 +118,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
             .collection('equipmentOwners')
             .get()
             .then((value) => value.docs.map((e) => e.data()).toList());
-        debugPrint(data2.toString());
+
         data.forEach((e) {
           data2.forEach((element) {
             var owner = element;
@@ -348,8 +335,24 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                               .map((e) => DataRow(cells: <DataCell>[
                                     DataCell(
                                       SizedBox(
-                                        width: width * 0.4,
-                                      ),
+                                          width: width * 0.4,
+                                          child: FutureBuilder(
+                                              future: FirebaseFirestore.instance
+                                                  .collection('equipment')
+                                                  .where('equipmentId',
+                                                      isEqualTo: e.equipmentId)
+                                                  .get(),
+                                              builder: (context,
+                                                  AsyncSnapshot snapshot) {
+                                                return Image.network(
+                                                  snapshot.data.docs[0]
+                                                      .get('imageUrl'),
+                                                  alignment: Alignment.center,
+                                                  height: double.infinity,
+                                                  width: double.infinity,
+                                                  fit: BoxFit.fill,
+                                                );
+                                              })),
                                     ),
                                     DataCell(SizedBox(
                                         width: width * 0.45,

@@ -9,6 +9,7 @@ class EquipmentDetails {
   String? user_email;
   String? userId;
   String? description;
+  final String equipmentId;
   final String mechanizationType;
   final String equipmentType;
   final String name;
@@ -22,6 +23,7 @@ class EquipmentDetails {
   EquipmentDetails({
     this.user_email,
     this.userId,
+    required this.equipmentId,
     required this.mechanizationType,
     required this.equipmentType,
     required this.name,
@@ -37,6 +39,7 @@ class EquipmentDetails {
   factory EquipmentDetails.fromJson(Map<String, dynamic> json) {
     return EquipmentDetails(
         user_email: json['user_email'],
+        equipmentId: json['equipmentId'],
         userId: json['Owner Id'],
         mechanizationType: json['mechanizationType'],
         equipmentType: json['equipmentType'],

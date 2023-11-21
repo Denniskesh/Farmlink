@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/checkout_screen.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +16,6 @@ class EquipmentDetailsPage extends StatefulWidget {
 }
 
 class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
-  Future<String> downloadfromfirebase(String url) async {
-    // create reference
-
-    Reference ref = FirebaseStorage.instance.ref().child(url);
-    String _myurl = await ref.getDownloadURL();
-    return _myurl.toString();
-  }
   //final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
@@ -49,14 +41,21 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                   child: Container(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
-                        child: Image.network(
-                      //equipment.imageFile
-                      downloadfromfirebase(equipment.imageUrl) as String,
-                      alignment: Alignment.center,
-                      height: double.infinity,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                    )),
+                        child: FutureBuilder(
+                            future: FirebaseFirestore.instance
+                                .collection('equipment')
+                                .where('equipmentId',
+                                    isEqualTo: equipment.equipmentId)
+                                .get(),
+                            builder: (context, AsyncSnapshot snapshot) {
+                              return Image.network(
+                                snapshot.data.docs[0].get('imageUrl'),
+                                alignment: Alignment.center,
+                                height: double.infinity,
+                                width: double.infinity,
+                                fit: BoxFit.fill,
+                              );
+                            })),
                   )),
 
               SizedBox(
@@ -275,17 +274,28 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
             scrollDirection: Axis.vertical,
             child: Column(children: <Widget>[
               SizedBox(
-                  width: width,
-                  height: height / 2,
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                        child: Image.network(
-                      //equipment.imageFile
-                      'https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                      fit: BoxFit.fill,
-                    )),
-                  )),
+                width: width,
+                height: height / 2,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                      child: FutureBuilder(
+                          future: FirebaseFirestore.instance
+                              .collection('equipment')
+                              .where('equipmentId',
+                                  isEqualTo: equipment.equipmentId)
+                              .get(),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            return Image.network(
+                              snapshot.data.docs[0].get('imageUrl'),
+                              alignment: Alignment.center,
+                              height: double.infinity,
+                              width: double.infinity,
+                              fit: BoxFit.fill,
+                            );
+                          })),
+                ),
+              ),
 
               SizedBox(
                 height: height * 0.14,
