@@ -239,49 +239,49 @@ class _HomePageState extends State<HomePage> {
                         return const EquipmentListPage();
                       }));
                     },
-                    child: const Text('See All',
+                    child: const Text('View All',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.blue,
                           fontWeight: FontWeight.w700,
                         )),
                   ),
-                  const Icon(
-                    Icons.arrow_forward,
-                    color: Colors.blue,
-                  )
+                  //const Icon(
+                  //Icons.arrow_forward,
+                  // color: Colors.blue,
+                  // )
                 ],
               ),
-              FutureBuilder(
-                  future: getImages(),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (!snapshot.hasData) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else {
-                        final orders = snapshot.data!;
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.docs
-                              .length, // Replace with the actual length of your image list
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(
-                                  8.0), // Adjust spacing as needed
-                              child: Image.network(
-                                orders.docs[index].get('imageUrl'),
-                                fit: BoxFit
-                                    .fill, // Replace with the actual URL from Firebase for your image
-                                width: 100, // Adjust the width as needed
-                                height: 100, // Adjust the height as needed
-                              ),
-                            );
-                          },
-                        );
-                      }
-                    }
-                    return const CircularProgressIndicator();
-                  }),
+              // FutureBuilder(
+              //    future: getImages(),
+              //    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              //      if (snapshot.connectionState == ConnectionState.done) {
+              //      if (!snapshot.hasData) {
+              //        return const Center(child: CircularProgressIndicator());
+              //     } else {
+              //      final orders = snapshot.data!;
+              //     return ListView.builder(
+              //      scrollDirection: Axis.horizontal,
+              //     itemCount: snapshot.data!.docs
+              //        .length, // Replace with the actual length of your image list
+              //   itemBuilder: (BuildContext context, int index) {
+              //     return Padding(
+              //    padding: const EdgeInsets.all(
+              //       8.0), // Adjust spacing as needed
+              //   child: Image.network(
+              //     orders.docs[index].get('imageUrl'),
+              //    fit: BoxFit
+              //        .fill, // Replace with the actual URL from Firebase for your image
+              //   width: 100, // Adjust the width as needed
+              //   height: 100, // Adjust the height as needed
+              // ),
+              //  );
+              // },
+              // );
+              // }
+              // }
+              //  return const CircularProgressIndicator();
+              //  }),
             ],
           ),
         ),
