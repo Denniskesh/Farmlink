@@ -345,6 +345,10 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                               builder: (context,
                                                   AsyncSnapshot snapshot) {
                                                 if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return CircularProgressIndicator();
+                                                } else if (snapshot
+                                                        .connectionState ==
                                                     ConnectionState.done) {
                                                   if (!snapshot.hasData) {
                                                     return const Center(

@@ -9,7 +9,7 @@ class EquipmentDetails {
   String? user_email;
   String? userId;
   String? description;
-  final String equipmentId;
+  final String? equipmentId;
   final String mechanizationType;
   final String equipmentType;
   final String name;
@@ -23,7 +23,7 @@ class EquipmentDetails {
   EquipmentDetails({
     this.user_email,
     this.userId,
-    required this.equipmentId,
+    this.equipmentId,
     required this.mechanizationType,
     required this.equipmentType,
     required this.name,
