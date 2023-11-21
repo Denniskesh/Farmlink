@@ -334,7 +334,10 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                           rows: sortedEquipments
                               .map((e) => DataRow(cells: <DataCell>[
                                     DataCell(
-                                      SizedBox(
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              top: height * 0.01,
+                                              bottom: height * 0.01),
                                           width: width * 0.4,
                                           child: FutureBuilder(
                                               future: FirebaseFirestore.instance
