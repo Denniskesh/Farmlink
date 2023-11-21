@@ -54,10 +54,12 @@ class MyEquipment extends State<MyEquipmentPage> {
       } else if (filter.toLowerCase() == 'nearesttown') {
         var data = await FirebaseFirestore.instance
             .collection('equipment')
+            .where('User_id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .get()
             .then((value) => value.docs.map((e) => e.data()).toList());
         var data2 = await FirebaseFirestore.instance
             .collection('equipmentOwners')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .get()
             .then((value) => value.docs.map((e) => e.data()).toList());
 
@@ -86,10 +88,12 @@ class MyEquipment extends State<MyEquipmentPage> {
       } else if (filter.toLowerCase() == 'county') {
         var data = await FirebaseFirestore.instance
             .collection('equipment')
+            .where('User_id', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .get()
             .then((value) => value.docs.map((e) => e.data()).toList());
         var data2 = await FirebaseFirestore.instance
             .collection('equipmentOwners')
+            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .get()
             .then((value) => value.docs.map((e) => e.data()).toList());
 
