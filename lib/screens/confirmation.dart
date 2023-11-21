@@ -1,4 +1,5 @@
 import 'package:farmlink/models/equipment_model.dart';
+import 'package:farmlink/screens/home_page.dart';
 import 'package:farmlink/screens/order_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -69,7 +70,14 @@ class Confirmation extends State<ConfirmationPage> {
                               width: width * 0.60,
                               height: height / 12,
                               child: ElevatedButton(
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const HomePage(),
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius:

@@ -256,7 +256,23 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 30.0),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  if (mounted) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => InAppChatPage(
+                                          receiverUserEmail: widget
+                                              .equipment.user_email
+                                              .toString(),
+                                          receiverUserId: widget
+                                              .equipment.userId
+                                              .toString(),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
                                 style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all(Colors.blue)),
