@@ -48,16 +48,28 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                                     isEqualTo: equipment.equipmentId)
                                 .get(),
                             builder: (context, AsyncSnapshot snapshot) {
-                              if (!snapshot.data.docs) {
-                                return const Text('Loading ...');
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                      child: Text('Loading ...'));
+                                } else if (snapshot.hasData &&
+                                    snapshot.data!.docs.length > 0) {
+                                  return Image.network(
+                                    snapshot.data!.docs[0].get('imageUrl'),
+                                    alignment: Alignment.center,
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    fit: BoxFit.fill,
+                                  );
+                                } else {
+                                  return const Text('Loading ...');
+                                }
                               } else {
-                                return Image.network(
-                                  snapshot.data.docs[0].get('imageUrl'),
-                                  alignment: Alignment.center,
-                                  height: double.infinity,
-                                  width: double.infinity,
-                                  fit: BoxFit.fill,
-                                );
+                                return const Text('Loading ...');
                               }
                             })),
                   )),
@@ -290,16 +302,27 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                                   isEqualTo: equipment.equipmentId)
                               .get(),
                           builder: (context, AsyncSnapshot snapshot) {
-                            if (!snapshot.data.docs) {
-                              return const Text('Loading ...');
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              if (!snapshot.hasData) {
+                                return const Center(child: Text('Loading ...'));
+                              } else if (snapshot.hasData &&
+                                  snapshot.data!.docs.length > 0) {
+                                return Image.network(
+                                  snapshot.data!.docs[0].get('imageUrl'),
+                                  alignment: Alignment.center,
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  fit: BoxFit.fill,
+                                );
+                              } else {
+                                return const Text('Loading ...');
+                              }
                             } else {
-                              return Image.network(
-                                snapshot.data.docs[0].get('imageUrl'),
-                                alignment: Alignment.center,
-                                height: double.infinity,
-                                width: double.infinity,
-                                fit: BoxFit.fill,
-                              );
+                              return const Text('Loading ...');
                             }
                           })),
                 ),

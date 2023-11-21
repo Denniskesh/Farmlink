@@ -40,7 +40,7 @@ class EquipmentDetails {
     return EquipmentDetails(
         user_email: json['user_email'],
         equipmentId: json['equipmentId'],
-        userId: json['Owner Id'],
+        userId: json['Owner_Id'],
         mechanizationType: json['mechanizationType'],
         equipmentType: json['equipmentType'],
         name: json['name'],

@@ -352,8 +352,8 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                                                     ConnectionState.done) {
                                                   if (!snapshot.hasData) {
                                                     return const Center(
-                                                        child:
-                                                            CircularProgressIndicator());
+                                                        child: Text(
+                                                            'Loading ...'));
                                                   } else if (snapshot.hasData &&
                                                       snapshot.data!.docs
                                                               .length >
