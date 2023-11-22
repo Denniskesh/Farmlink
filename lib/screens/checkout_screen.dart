@@ -398,6 +398,7 @@ class CheckOut extends State<CheckoutScreenPage> {
                         equipmentType: widget.e.equipmentType,
                         duration: durationController.text,
                         rate: widget.e.rate,
+                        date: DateTime.now().toString(),
                       );
 
                       // Save booking details to Firebase

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/screens/add_equipment_detail_screen.dart';
 import 'package:farmlink/screens/order_expanded.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,158 +16,37 @@ class OrderPage extends StatefulWidget {
 }
 
 class Order extends State<OrderPage> {
-  List orders = [];
+  List list1 = [];
 
   @override
   void initState() {
+    debugPrint(new DateTime.now().toString());
+    getOrders();
     super.initState();
   }
 
   void getOrders() async {
-    // await FirebaseFirestore.instance.collection('').where(field).get();
-  }
+    var list2 = await FirebaseFirestore.instance
+        .collection('bookings')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
 
-  List<Map<String, dynamic>> list1 = [
-    {
-      "time": "2023-06-16T10:31:12.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message":
-          "P2 BGM-01 HV buiten materieel (Gas lekkage) Franckstraat Arnhem 073631"
-    },
-    {
-      "time": "2020-06-16T10:29:35.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message": "A1 Brahmslaan 3862TD Nijkerk 73278"
-    },
-    {
-      "time": "2020-06-16T10:29:35.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message": "A2 NS Station Rheden Dr. Langemijerweg 6991EV Rheden 73286"
-    },
-    {
-      "time": "2020-06-15T09:41:18.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message": "A2 VWS Utrechtseweg 6871DR Renkum 74636"
-    },
-    {
-      "time": "2020-06-14T09:40:58.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message":
-          "B2 5623EJ : Michelangelolaan Eindhoven Obj: ziekenhuizen 8610 Ca CATH route 522 PAAZ Rit: 66570"
-    },
-    {
-      "time": "2020-06-15T09:41:18.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message": "A2 VWS Utrechtseweg 6871DR Renkum 74636"
-    },
-    {
-      "time": "2023-06-16T10:31:12.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message":
-          "P2 BGM-01 HV buiten materieel (Gas lekkage) Franckstraat Arnhem 073631"
-    },
-    {
-      "time": "2023-11-19T10:31:12.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message":
-          "P2 BGM-01 HV buiten materieel (Gas lekkage) Franckstraat Arnhem 073631"
-    },
-    {
-      "time": "2023-11-18T10:31:12.000Z",
-      "name": "Tractor 1",
-      "Pick Up": "Juja",
-      "Drop Off": "Juja",
-      "Duration": "1 day",
-      "Package": "With Operator",
-      "Fee Rate": "2000 per Ha",
-      "Total Fee": "8000",
-      "Land Size": "4",
-      "image":
-          "https://images.unsplash.com/photo-1614977645540-7abd88ba8e56?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "message":
-          "P2 BGM-01 HV buiten materieel (Gas lekkage) Franckstraat Arnhem 073631"
-    },
-  ];
+    var list3 = await jsonDecode(jsonEncode(list2));
+    debugPrint(list3.toString());
+
+    setState(() {
+      list1 = list3;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final sorted = list1.map((e) => (e)).toList()
-      ..sort((a, b) => b['time'].compareTo(a['time']));
-    if (list1.isEmpty) {
+      ..sort((a, b) => b['date'].compareTo(a['date']));
+    if (list1.isNotEmpty) {
+      return Text(DateTime.now().toString());
       //to do
     }
 
@@ -178,13 +60,14 @@ class Order extends State<OrderPage> {
             itemCount: sorted.length,
             itemBuilder: (_, index) {
               bool isSameDate = true;
-              final String dateString = sorted.elementAt(index)['time'];
+              final String dateString = sorted.elementAt(index)['date'];
               final DateTime date = DateTime.parse(dateString);
               final item = sorted.elementAt(index);
-              final String name = sorted.elementAt(index)['name'];
-              final String dropOff = sorted.elementAt(index)['Drop Off'];
-              final String pickUp = sorted.elementAt(index)['Pick Up'];
-              final String image = sorted.elementAt(index)['image'];
+              final String name = sorted.elementAt(index)['equipmentType'];
+              final String equipmentId = sorted.elementAt(index)['equipmentId'];
+              final String dropOff = sorted.elementAt(index)['dropOff'];
+              final String pickUp = sorted.elementAt(index)['pickUp'];
+
               if (index == 0) {
                 isSameDate = false;
               } else {
@@ -214,15 +97,40 @@ class Order extends State<OrderPage> {
                           child: Row(
                             children: [
                               SizedBox(
-                                width: width * .38,
-                                child: Image.network(
-                                  image,
-                                  alignment: Alignment.center,
-                                  height: double.infinity,
-                                  width: double.infinity,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
+                                  width: width * .38,
+                                  child: FutureBuilder(
+                                      future: FirebaseFirestore.instance
+                                          .collection('equipment')
+                                          .where('equipmentId',
+                                              isEqualTo: equipmentId)
+                                          .get(),
+                                      builder:
+                                          (context, AsyncSnapshot snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return CircularProgressIndicator();
+                                        } else if (snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                          if (!snapshot.hasData) {
+                                            return const Center(
+                                                child: Text('Loading ...'));
+                                          } else if (snapshot.hasData &&
+                                              snapshot.data!.docs.length > 0) {
+                                            return Image.network(
+                                              snapshot.data!.docs[0]
+                                                  .get('imageUrl'),
+                                              alignment: Alignment.center,
+                                              height: double.infinity,
+                                              width: double.infinity,
+                                              fit: BoxFit.fill,
+                                            );
+                                          } else {
+                                            return const Text('Loading ...');
+                                          }
+                                        } else {
+                                          return const Text('Loading ...');
+                                        }
+                                      })),
                               Spacer(),
                               SizedBox(
                                   width: width * .55,
@@ -305,15 +213,39 @@ class Order extends State<OrderPage> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: width * .38,
-                              child: Image.network(
-                                image,
-                                alignment: Alignment.center,
-                                height: double.infinity,
-                                width: double.infinity,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
+                                width: width * .38,
+                                child: FutureBuilder(
+                                    future: FirebaseFirestore.instance
+                                        .collection('equipment')
+                                        .where('equipmentId',
+                                            isEqualTo: equipmentId)
+                                        .get(),
+                                    builder: (context, AsyncSnapshot snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        if (!snapshot.hasData) {
+                                          return const Center(
+                                              child: Text('Loading ...'));
+                                        } else if (snapshot.hasData &&
+                                            snapshot.data!.docs.length > 0) {
+                                          return Image.network(
+                                            snapshot.data!.docs[0]
+                                                .get('imageUrl'),
+                                            alignment: Alignment.center,
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            fit: BoxFit.fill,
+                                          );
+                                        } else {
+                                          return const Text('Loading ...');
+                                        }
+                                      } else {
+                                        return const Text('Loading ...');
+                                      }
+                                    })),
                             Spacer(),
                             SizedBox(
                               width: width * .55,
@@ -394,15 +326,43 @@ class Order extends State<OrderPage> {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                    width: width * .38,
-                                    child: Image.network(
-                                      image,
-                                      alignment: Alignment.center,
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
+                                      width: width * .38,
+                                      child: FutureBuilder(
+                                          future: FirebaseFirestore.instance
+                                              .collection('equipment')
+                                              .where('equipmentId',
+                                                  isEqualTo: equipmentId)
+                                              .get(),
+                                          builder: (context,
+                                              AsyncSnapshot snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return CircularProgressIndicator();
+                                            } else if (snapshot
+                                                    .connectionState ==
+                                                ConnectionState.done) {
+                                              if (!snapshot.hasData) {
+                                                return const Center(
+                                                    child: Text('Loading ...'));
+                                              } else if (snapshot.hasData &&
+                                                  snapshot.data!.docs.length >
+                                                      0) {
+                                                return Image.network(
+                                                  snapshot.data!.docs[0]
+                                                      .get('imageUrl'),
+                                                  alignment: Alignment.center,
+                                                  height: double.infinity,
+                                                  width: double.infinity,
+                                                  fit: BoxFit.fill,
+                                                );
+                                              } else {
+                                                return const Text(
+                                                    'Loading ...');
+                                              }
+                                            } else {
+                                              return const Text('Loading ...');
+                                            }
+                                          })),
                                   Spacer(),
                                   SizedBox(
                                     width: width * .55,
@@ -475,15 +435,39 @@ class Order extends State<OrderPage> {
                         child: Row(
                           children: [
                             SizedBox(
-                              width: width * .38,
-                              child: Image.network(
-                                image,
-                                alignment: Alignment.center,
-                                height: double.infinity,
-                                width: double.infinity,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
+                                width: width * .38,
+                                child: FutureBuilder(
+                                    future: FirebaseFirestore.instance
+                                        .collection('equipment')
+                                        .where('equipmentId',
+                                            isEqualTo: equipmentId)
+                                        .get(),
+                                    builder: (context, AsyncSnapshot snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        if (!snapshot.hasData) {
+                                          return const Center(
+                                              child: Text('Loading ...'));
+                                        } else if (snapshot.hasData &&
+                                            snapshot.data!.docs.length > 0) {
+                                          return Image.network(
+                                            snapshot.data!.docs[0]
+                                                .get('imageUrl'),
+                                            alignment: Alignment.center,
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            fit: BoxFit.fill,
+                                          );
+                                        } else {
+                                          return const Text('Loading ...');
+                                        }
+                                      } else {
+                                        return const Text('Loading ...');
+                                      }
+                                    })),
                             Spacer(),
                             Container(
                               width: width * .55,

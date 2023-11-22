@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         .get()
         .then((value) => value.docs.map((e) => e.data()).toList());
     List a = await jsonDecode(jsonEncode(data));
-    debugPrint('ffghjgfghjkhgdfghjkhgfdfgjkhgfghjkljhgfghjkjhgfghjkhgf');
+
     setState(() {
       equipment = a;
     });
