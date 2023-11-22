@@ -536,7 +536,7 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
 
   Widget _getFAB(EquipmentDetails equipment, double width) {
     if (equipment.userId == FirebaseAuth.instance.currentUser!.uid) {
-      return Container();
+      return Container(child: Text('Your Asset'));
     } else {
       return TextButton.icon(
         onPressed: () async {
