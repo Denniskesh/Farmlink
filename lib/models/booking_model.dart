@@ -1,4 +1,5 @@
 class Booking {
+  final String userId;
   final String equipmentId;
   final String package;
   final String pickUp;
@@ -10,6 +11,7 @@ class Booking {
   final String rate;
 
   Booking({
+    required this.userId,
     required this.equipmentId,
     required this.duration,
     required this.package,

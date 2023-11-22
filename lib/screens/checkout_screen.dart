@@ -6,6 +6,7 @@ import 'package:farmlink/screens/checkout_screen.dart';
 import 'package:farmlink/screens/confirmation.dart';
 import 'package:farmlink/screens/equipment_detail_screen2.dart';
 import 'package:farmlink/screens/in_app_chat_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -385,7 +386,9 @@ class CheckOut extends State<CheckoutScreenPage> {
                   //width: width * .4,
                   child: ElevatedButton(
                     onPressed: () async {
+                      User? user = FirebaseAuth.instance.currentUser;
                       Booking booking = Booking(
+                        userId: user!.uid,
                         equipmentId: widget.e.equipmentId!,
                         package: widget.e.packageType.toString(),
                         pickUp: pickupController.text,
@@ -398,7 +401,8 @@ class CheckOut extends State<CheckoutScreenPage> {
                       );
 
                       // Save booking details to Firebase
-                      await bookingManager.saveBookingDetails(booking);
+                      await bookingManager.saveBookingDetails(booking,
+                          userId: user.uid);
 
                       await Navigator.push(context,
                           MaterialPageRoute(builder: (_) {

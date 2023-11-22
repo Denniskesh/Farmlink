@@ -1,3 +1,4 @@
+import 'package:farmlink/main_screen.dart';
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/home_page.dart';
 import 'package:farmlink/screens/order_screen.dart';
@@ -74,7 +75,7 @@ class Confirmation extends State<ConfirmationPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const HomePage(),
+                                      builder: (context) => const MainScreen(),
                                     ),
                                   );
                                 },
