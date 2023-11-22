@@ -243,28 +243,6 @@ class _EquipmentListPage extends State<EquipmentListPage> {
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top -
         50;
-    if (equipments!.isEmpty) {
-      return Dialog(
-          child: MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'Equipment List',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
-          body: Center(
-            child: Stack(
-              alignment: FractionalOffset.center,
-              children: [
-                CircularProgressIndicator(),
-                Text("Loading"),
-              ],
-            ),
-          ),
-        ),
-      ));
-    }
 
     return MaterialApp(
         home: Scaffold(
@@ -274,239 +252,260 @@ class _EquipmentListPage extends State<EquipmentListPage> {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            body: Container(
-              child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: height / 25,
-                        child: Stack(
-                          alignment: Alignment.topCenter,
-                          children: <Widget>[
-                            FittedBox(
-                                fit: BoxFit.fill,
-                                child: Flexible(
-                                    fit: FlexFit.loose,
-                                    child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(head.value.text,
-                                            style: const TextStyle(
-                                                fontSize: 70))))),
-                            Align(
-                              alignment: FractionalOffset.topRight,
-                              child: SizedBox(
-                                width: width * 0.2,
-                                child: PopupMenuButton<String>(
-                                  icon: const Icon(
-                                    Icons.filter_list,
-                                    size: 30,
-                                  ),
-                                  onSelected: choiceAction,
-                                  itemBuilder: (BuildContext context) {
-                                    return choices.map((String choice) {
-                                      return PopupMenuItem<String>(
-                                        value: choice,
-                                        child: Text(choice),
-                                      );
-                                    }).toList();
-                                  },
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SingleChildScrollView(
+            body: equipments!.isEmpty
+                ? Center(
+                    child: Stack(
+                      alignment: FractionalOffset.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        Text("Loading"),
+                      ],
+                    ),
+                  )
+                : Container(
+                    child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
-                        child: DataTable(
-                          // ignore: deprecated_member_use
-                          dataRowHeight: height / 5,
-
-                          columns: const [
-                            DataColumn(
-                              label: Text(''),
-                            ),
-                            DataColumn(
-                              label: Text(''),
-                            )
-                          ],
-                          rows: sortedEquipments
-                              .map((e) => DataRow(cells: <DataCell>[
-                                    DataCell(
-                                      Container(
-                                          padding: EdgeInsets.only(
-                                              top: height * 0.01,
-                                              bottom: height * 0.01),
-                                          width: width * 0.4,
-                                          child: FutureBuilder(
-                                              future: FirebaseFirestore.instance
-                                                  .collection('equipment')
-                                                  .where('equipmentId',
-                                                      isEqualTo: e.equipmentId)
-                                                  .get(),
-                                              builder: (context,
-                                                  AsyncSnapshot snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return CircularProgressIndicator();
-                                                } else if (snapshot
-                                                        .connectionState ==
-                                                    ConnectionState.done) {
-                                                  if (!snapshot.hasData) {
-                                                    return const Center(
-                                                        child: Text(
-                                                            'Loading ...'));
-                                                  } else if (snapshot.hasData &&
-                                                      snapshot.data!.docs
-                                                              .length >
-                                                          0) {
-                                                    return Image.network(
-                                                      snapshot.data!.docs[0]
-                                                          .get('imageUrl'),
-                                                      alignment:
-                                                          Alignment.center,
-                                                      height: double.infinity,
-                                                      width: double.infinity,
-                                                      fit: BoxFit.fill,
-                                                    );
-                                                  } else {
-                                                    return const Text(
-                                                        'Loading ...');
-                                                  }
-                                                } else {
-                                                  return const Text(
-                                                      'Loading ...');
-                                                }
-                                              })),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: height / 25,
+                              child: Stack(
+                                alignment: Alignment.topCenter,
+                                children: <Widget>[
+                                  FittedBox(
+                                      fit: BoxFit.fill,
+                                      child: Flexible(
+                                          fit: FlexFit.loose,
+                                          child: Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Text(head.value.text,
+                                                  style: const TextStyle(
+                                                      fontSize: 70))))),
+                                  Align(
+                                    alignment: FractionalOffset.topRight,
+                                    child: SizedBox(
+                                      width: width * 0.2,
+                                      child: PopupMenuButton<String>(
+                                        icon: const Icon(
+                                          Icons.filter_list,
+                                          size: 30,
+                                        ),
+                                        onSelected: choiceAction,
+                                        itemBuilder: (BuildContext context) {
+                                          return choices.map((String choice) {
+                                            return PopupMenuItem<String>(
+                                              value: choice,
+                                              child: Text(choice),
+                                            );
+                                          }).toList();
+                                        },
+                                      ),
                                     ),
-                                    DataCell(SizedBox(
-                                        width: width * 0.45,
-                                        child: Stack(children: [
-                                          //align at bottom center using Align()
+                                  )
+                                ],
+                              ),
+                            ),
+                            SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: DataTable(
+                                // ignore: deprecated_member_use
+                                dataRowHeight: height / 5,
 
-                                          //Alignment at Center
-                                          Container(
-                                              alignment: Alignment.topCenter,
-                                              child: SizedBox(
-                                                  height: height * 0.038,
-                                                  width: width * 0.5,
-                                                  child: FittedBox(
-                                                      fit: BoxFit.contain,
-                                                      child: Flexible(
-                                                          fit: FlexFit.loose,
-                                                          child: Center(
-                                                            child: Text(
-                                                              e.equipmentType,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .titleLarge,
-                                                            ),
-                                                          ))))),
+                                columns: const [
+                                  DataColumn(
+                                    label: Text(''),
+                                  ),
+                                  DataColumn(
+                                    label: Text(''),
+                                  )
+                                ],
+                                rows: sortedEquipments
+                                    .map((e) => DataRow(cells: <DataCell>[
+                                          DataCell(
+                                            Container(
+                                                padding: EdgeInsets.only(
+                                                    top: height * 0.01,
+                                                    bottom: height * 0.01),
+                                                width: width * 0.4,
+                                                child: FutureBuilder(
+                                                    future: FirebaseFirestore
+                                                        .instance
+                                                        .collection('equipment')
+                                                        .where('equipmentId',
+                                                            isEqualTo:
+                                                                e.equipmentId)
+                                                        .get(),
+                                                    builder: (context,
+                                                        AsyncSnapshot
+                                                            snapshot) {
+                                                      if (snapshot
+                                                              .connectionState ==
+                                                          ConnectionState
+                                                              .waiting) {
+                                                        return CircularProgressIndicator();
+                                                      } else if (snapshot
+                                                              .connectionState ==
+                                                          ConnectionState
+                                                              .done) {
+                                                        if (!snapshot.hasData) {
+                                                          return const Center(
+                                                              child: Text(
+                                                                  'Loading ...'));
+                                                        } else if (snapshot
+                                                                .hasData &&
+                                                            snapshot.data!.docs
+                                                                    .length >
+                                                                0) {
+                                                          return Image.network(
+                                                            snapshot
+                                                                .data!.docs[0]
+                                                                .get(
+                                                                    'imageUrl'),
+                                                            alignment: Alignment
+                                                                .center,
+                                                            height:
+                                                                double.infinity,
+                                                            width:
+                                                                double.infinity,
+                                                            fit: BoxFit.fill,
+                                                          );
+                                                        } else {
+                                                          return const Text(
+                                                              'Loading ...');
+                                                        }
+                                                      } else {
+                                                        return const Text(
+                                                            'Loading ...');
+                                                      }
+                                                    })),
+                                          ),
+                                          DataCell(SizedBox(
+                                              width: width * 0.45,
+                                              child: Stack(children: [
+                                                //align at bottom center using Align()
 
-                                          //alignment at veritically center, and at left horizontally
-                                          Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: SizedBox(
-                                                  height: height * 0.2,
-                                                  width: width * 0.40,
-                                                  child: Center(
-                                                      child: FittedBox(
-                                                          fit: BoxFit.contain,
-                                                          child: SizedBox(
-                                                            width: width,
+                                                //Alignment at Center
+                                                Container(
+                                                    alignment:
+                                                        Alignment.topCenter,
+                                                    child: SizedBox(
+                                                        height: height * 0.038,
+                                                        width: width * 0.5,
+                                                        child: FittedBox(
+                                                            fit: BoxFit.contain,
                                                             child: Flexible(
                                                                 fit: FlexFit
-                                                                    .tight,
-                                                                child: Padding(
-                                                                  padding: EdgeInsets.only(
-                                                                      right:
-                                                                          width /
-                                                                              5),
+                                                                    .loose,
+                                                                child: Center(
                                                                   child: Text(
-                                                                    e.description
-                                                                        .toString(),
-                                                                    // style: Theme.of(context).textTheme.displaySmall,
+                                                                    e.equipmentType,
                                                                     style: Theme.of(
                                                                             context)
                                                                         .textTheme
-                                                                        .displaySmall,
+                                                                        .titleLarge,
                                                                   ),
-                                                                )),
-                                                          ))))),
+                                                                ))))),
 
-                                          Positioned(
-                                            // alignment:
-                                            //     FractionalOffset.bottomLeft,
-                                            bottom: 0,
-                                            left: 0,
-                                            child: FittedBox(
-                                              fit: BoxFit.contain,
-                                              child: Flexible(
-                                                  fit: FlexFit.tight,
-                                                  child: SizedBox(
-                                                      width: width * 0.45,
-                                                      height: height * 0.038,
-                                                      child: Row(
-                                                          children: <Widget>[
-                                                            SizedBox(
-                                                                width:
-                                                                    width * .18,
-                                                                child:
-                                                                    FittedBox(
-                                                                  fit: BoxFit
-                                                                      .contain,
+                                                //alignment at veritically center, and at left horizontally
+                                                Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: SizedBox(
+                                                        height: height * 0.2,
+                                                        width: width * 0.40,
+                                                        child: Center(
+                                                            child: FittedBox(
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                                child: SizedBox(
+                                                                  width: width,
                                                                   child: Flexible(
-                                                                      fit: FlexFit
-                                                                          .loose,
-                                                                      child: Text(
-                                                                          'ksh. ${e.rate.toString()}',
+                                                                      fit: FlexFit.tight,
+                                                                      child: Padding(
+                                                                        padding:
+                                                                            EdgeInsets.only(right: width / 5),
+                                                                        child:
+                                                                            Text(
+                                                                          e.description
+                                                                              .toString(),
+                                                                          // style: Theme.of(context).textTheme.displaySmall,
                                                                           style: Theme.of(context)
                                                                               .textTheme
-                                                                              .bodyLarge)),
-                                                                )),
-                                                            SizedBox(
-                                                              width:
-                                                                  width * .042,
-                                                            ),
-                                                            Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .only(),
-                                                                child: SizedBox(
-                                                                  width: width *
-                                                                      0.18,
-                                                                  child:
-                                                                      FittedBox(
-                                                                    fit: BoxFit
-                                                                        .contain,
-                                                                    child: Flexible(
-                                                                        fit: FlexFit.loose,
-                                                                        child: Container(
-                                                                          padding:
-                                                                              EdgeInsets.only(right: width / 10),
-                                                                          child: TextButton(
-                                                                              onPressed: () async {
-                                                                                await Navigator.push(context, MaterialPageRoute(builder: (_) => EquipmentDetailsPage(equipment: e)));
-                                                                              },
-                                                                              child: const Text(
-                                                                                'View details',
-                                                                                style: TextStyle(fontSize: 30),
-                                                                              )),
-                                                                        )),
+                                                                              .displaySmall,
+                                                                        ),
+                                                                      )),
+                                                                ))))),
+
+                                                Positioned(
+                                                  // alignment:
+                                                  //     FractionalOffset.bottomLeft,
+                                                  bottom: 0,
+                                                  left: 0,
+                                                  child: FittedBox(
+                                                    fit: BoxFit.contain,
+                                                    child: Flexible(
+                                                        fit: FlexFit.tight,
+                                                        child: SizedBox(
+                                                            width: width * 0.45,
+                                                            height:
+                                                                height * 0.038,
+                                                            child: Row(
+                                                                children: <Widget>[
+                                                                  SizedBox(
+                                                                      width:
+                                                                          width *
+                                                                              .18,
+                                                                      child:
+                                                                          FittedBox(
+                                                                        fit: BoxFit
+                                                                            .contain,
+                                                                        child: Flexible(
+                                                                            fit:
+                                                                                FlexFit.loose,
+                                                                            child: Text('ksh. ${e.rate.toString()}', style: Theme.of(context).textTheme.bodyLarge)),
+                                                                      )),
+                                                                  SizedBox(
+                                                                    width:
+                                                                        width *
+                                                                            .042,
                                                                   ),
-                                                                ))
-                                                          ]))),
-                                            ),
-                                          )
-                                        ])))
-                                  ]))
-                              .toList(),
-                        ),
-                      )
-                    ],
-                  )),
-            )));
+                                                                  Padding(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .only(),
+                                                                      child:
+                                                                          SizedBox(
+                                                                        width: width *
+                                                                            0.18,
+                                                                        child:
+                                                                            FittedBox(
+                                                                          fit: BoxFit
+                                                                              .contain,
+                                                                          child: Flexible(
+                                                                              fit: FlexFit.loose,
+                                                                              child: Container(
+                                                                                padding: EdgeInsets.only(right: width / 10),
+                                                                                child: TextButton(
+                                                                                    onPressed: () async {
+                                                                                      await Navigator.push(context, MaterialPageRoute(builder: (_) => EquipmentDetailsPage(equipment: e)));
+                                                                                    },
+                                                                                    child: const Text(
+                                                                                      'View details',
+                                                                                      style: TextStyle(fontSize: 30),
+                                                                                    )),
+                                                                              )),
+                                                                        ),
+                                                                      ))
+                                                                ]))),
+                                                  ),
+                                                )
+                                              ])))
+                                        ]))
+                                    .toList(),
+                              ),
+                            )
+                          ],
+                        )),
+                  )));
   }
 }
