@@ -77,7 +77,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 9,
                       ),
                       Text(
-                        order['equipmentType'],
+                        order['equipmentType'].toString(),
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -98,7 +98,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['pickUp'],
+                        order['pickUp'].toString(),
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -119,7 +119,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['dropOff'],
+                        order['dropOff'].toString(),
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -140,7 +140,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['package'],
+                        order['package'].toString(),
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -161,7 +161,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['rate'],
+                        order['rate'].toString(),
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -182,7 +182,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['totalAmount'],
+                        order['totalAmount'].toString(),
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -203,7 +203,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['landSize'],
+                        order['landSize'].toString(),
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],

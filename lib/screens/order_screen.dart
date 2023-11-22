@@ -26,10 +26,11 @@ class Order extends State<OrderPage> {
   void getOrder() async {
     var list2 = await getOrders();
 
-    var list3 = await jsonDecode(jsonEncode(list2));
+    var list3 = list2.map((e) => e.data()).toList();
+    var list4 = await jsonDecode(jsonEncode(list3));
 
     setState(() {
-      list1 = list3;
+      list1 = list4;
     });
     Future.delayed(const Duration(seconds: 1)).then((value) {
       if (mounted) {
@@ -42,6 +43,7 @@ class Order extends State<OrderPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     final sorted = list1.map((e) => (e)).toList()
       ..sort((a, b) => b['date'].compareTo(a['date']));
 
@@ -61,7 +63,7 @@ class Order extends State<OrderPage> {
                     bool isSameDate = true;
                     final String dateString = sorted.elementAt(index)['date'];
                     final DateTime date = DateTime.parse(dateString);
-                    final item = sorted.elementAt(index);
+
                     final String name =
                         sorted.elementAt(index)['equipmentType'];
                     final String equipmentId =
@@ -73,7 +75,7 @@ class Order extends State<OrderPage> {
                       isSameDate = false;
                     } else {
                       final String prevDateString =
-                          sorted.elementAt(index - 1)['time'];
+                          sorted.elementAt(index - 1)['date'];
                       final DateTime prevDate = DateTime.parse(prevDateString);
                       isSameDate = date.isSameDate(prevDate);
                     }
@@ -122,7 +124,8 @@ class Order extends State<OrderPage> {
                                                         0) {
                                                   return Image.network(
                                                     snapshot.data!.docs[0]
-                                                        .get('imageUrl'),
+                                                        .get('imageUrl')
+                                                        .toString(),
                                                     alignment: Alignment.center,
                                                     height: double.infinity,
                                                     width: double.infinity,
@@ -202,6 +205,7 @@ class Order extends State<OrderPage> {
                           DateTime.now()
                               .subtract(const Duration(days: 1))
                               .formatDate()) {
+                        debugPrint(sorted.elementAt(index).toString());
                         return Column(children: [
                           SizedBox(
                             height: height * .05,
@@ -226,7 +230,8 @@ class Order extends State<OrderPage> {
                                           future: FirebaseFirestore.instance
                                               .collection('equipment')
                                               .where('equipmentId',
-                                                  isEqualTo: equipmentId)
+                                                  isEqualTo:
+                                                      equipmentId.toString())
                                               .get(),
                                           builder: (context,
                                               AsyncSnapshot snapshot) {
@@ -244,7 +249,8 @@ class Order extends State<OrderPage> {
                                                       0) {
                                                 return Image.network(
                                                   snapshot.data!.docs[0]
-                                                      .get('imageUrl'),
+                                                      .get('imageUrl')
+                                                      .toString(),
                                                   alignment: Alignment.center,
                                                   height: double.infinity,
                                                   width: double.infinity,
@@ -265,7 +271,7 @@ class Order extends State<OrderPage> {
                                       Row(
                                         children: [
                                           Text(
-                                            name,
+                                            name.toString(),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleLarge,
@@ -312,6 +318,7 @@ class Order extends State<OrderPage> {
                           Divider(),
                         ]);
                       } else {
+                        debugPrint(sorted.elementAt(index).toString());
                         return Column(children: [
                           SizedBox(
                             height: height * .05,
@@ -345,7 +352,8 @@ class Order extends State<OrderPage> {
                                                     .instance
                                                     .collection('equipment')
                                                     .where('equipmentId',
-                                                        isEqualTo: equipmentId)
+                                                        isEqualTo: equipmentId
+                                                            .toString())
                                                     .get(),
                                                 builder: (context,
                                                     AsyncSnapshot snapshot) {
@@ -367,7 +375,8 @@ class Order extends State<OrderPage> {
                                                             0) {
                                                       return Image.network(
                                                         snapshot.data!.docs[0]
-                                                            .get('imageUrl'),
+                                                            .get('imageUrl')
+                                                            .toString(),
                                                         alignment:
                                                             Alignment.center,
                                                         height: double.infinity,
@@ -390,7 +399,7 @@ class Order extends State<OrderPage> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  name,
+                                                  name.toString(),
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .titleLarge,
@@ -441,6 +450,7 @@ class Order extends State<OrderPage> {
                       }
                     } else {
                       // return ListTile(title: Text('item $index'));
+                      debugPrint(sorted.elementAt(index).toString());
                       return Column(children: [
                         SizedBox(
                           height: height * .05,
@@ -464,7 +474,8 @@ class Order extends State<OrderPage> {
                                           future: FirebaseFirestore.instance
                                               .collection('equipment')
                                               .where('equipmentId',
-                                                  isEqualTo: equipmentId)
+                                                  isEqualTo:
+                                                      equipmentId.toString())
                                               .get(),
                                           builder: (context,
                                               AsyncSnapshot snapshot) {
@@ -482,7 +493,8 @@ class Order extends State<OrderPage> {
                                                       0) {
                                                 return Image.network(
                                                   snapshot.data!.docs[0]
-                                                      .get('imageUrl'),
+                                                      .get('imageUrl')
+                                                      .toString(),
                                                   alignment: Alignment.center,
                                                   height: double.infinity,
                                                   width: double.infinity,
@@ -503,7 +515,7 @@ class Order extends State<OrderPage> {
                                       Row(
                                         children: [
                                           Text(
-                                            name,
+                                            name.toString(),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleLarge,
@@ -516,7 +528,8 @@ class Order extends State<OrderPage> {
                                           FittedBox(
                                             child: Text(
                                               DateFormat('E, d MMM yyy h:mm a')
-                                                  .format(date),
+                                                  .format(date)
+                                                  .toString(),
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium,
