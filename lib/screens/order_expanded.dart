@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class OrderExpandedPage extends StatefulWidget {
@@ -27,15 +28,35 @@ class OrderExpanded extends State<OrderExpandedPage> {
           scrollDirection: Axis.vertical,
           child: Column(children: [
             SizedBox(
-              height: height / 2.5,
-              child: Image.network(
-                order['image'],
-                alignment: Alignment.center,
-                height: double.infinity,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-            ),
+                height: height / 2.5,
+                child: FutureBuilder(
+                    future: FirebaseFirestore.instance
+                        .collection('equipment')
+                        .where('equipmentId', isEqualTo: order['equipmentId'])
+                        .get(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        if (!snapshot.hasData) {
+                          return const Center(child: Text('Loading ...'));
+                        } else if (snapshot.hasData &&
+                            snapshot.data!.docs.length > 0) {
+                          return Image.network(
+                            snapshot.data!.docs[0].get('imageUrl'),
+                            alignment: Alignment.center,
+                            height: double.infinity,
+                            width: double.infinity,
+                            fit: BoxFit.fill,
+                          );
+                        } else {
+                          return const Text('Loading ...');
+                        }
+                      } else {
+                        return const Text('Loading ...');
+                      }
+                    })),
             SizedBox(
               height: height / 70,
             ),
@@ -56,7 +77,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 9,
                       ),
                       Text(
-                        order['name'],
+                        order['equipmentType'],
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -77,7 +98,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['Pick Up'],
+                        order['pickUp'],
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -98,7 +119,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['Drop Off'],
+                        order['dropOff'],
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -119,7 +140,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['Package'],
+                        order['package'],
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -140,7 +161,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['Fee Rate'],
+                        order['rate'],
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -161,7 +182,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['Total Fee'],
+                        order['totalAmount'],
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -182,7 +203,7 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         width: width / 7,
                       ),
                       Text(
-                        order['Land Size'],
+                        order['landSize'],
                         style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
