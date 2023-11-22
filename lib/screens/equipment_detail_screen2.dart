@@ -51,13 +51,14 @@ class _ConfirmListingPageState extends State<ConfirmListingPage> {
               amount: amount,
               partyA: phone,
               partyB: '174379',
-              callBackURL: Uri(),
-              accountReference: 'Payment',
+              callBackURL: Uri(
+                  scheme: "https", host: "1234.1234.co.ke", path: "/1234.php"),
+              accountReference: 'Farmlink',
               phoneNumber: phone,
               baseUri: Uri(scheme: 'https', host: "sandbox.safaricom.co.ke"),
-              transactionDesc: 'demo',
+              transactionDesc: 'Payment for equipment listing',
               passKey:
-                  'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919');
+                  'XFi0bhgVwtBy5LboVHugSCepSf5+Wock0fzDhc9Xr2KaD5vMIiLz9NGuylAGeHEyelfirJxLV1PWBtVGFgE8T0qB3BfbOMlpZqP+TKMTqmPfRMOb/trXpEe13K/YB9adWX+PJoRL+g8hVYF568GedaDzs2k6qJw9/lP4pqmaz1bugXRrc+Z5TYimKVzgc+UGKCHqnffONQyOg5H9dSFl6eq8HkC6EJFW4VgFpHJf7yimCiowYishZf02uS82bg1bOTQvs2izQijmarMyL0nGhMVfA/Y4aiTCN7msuWr7ZERTZOJAO9YYIhlTrNsOAruWcoLTt/LeJ3c0oMY8Zxe5zQ==');
       HashMap result = transactionInitialisation as HashMap<String, dynamic>;
       print("RESULTS:" + result.toString());
     } catch (e) {
