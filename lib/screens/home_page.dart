@@ -123,6 +123,7 @@ class _HomePageState extends State<HomePage> {
 
   // Add a Set to hold markers on the map
   final Set<Marker> _markers = {};
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +146,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Welcome Back',
+            'Welcome Back ',
             style: Theme.of(context).textTheme.titleLarge,
           ),
           actions: [
@@ -256,7 +257,7 @@ class _HomePageState extends State<HomePage> {
                 )
               ])),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 25,
+                height: MediaQuery.of(context).size.height / 40,
               ),
               if (equipment.isNotEmpty)
                 SingleChildScrollView(
@@ -267,7 +268,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                               padding: EdgeInsets.only(left: 8.0, right: 8.0),
                               height: MediaQuery.of(context).size.height / 5,
-                              width: MediaQuery.of(context).size.width / 3,
+                              width: MediaQuery.of(context).size.width / 2,
                               child: FutureBuilder(
                                   future: FirebaseFirestore.instance
                                       .collection('equipment')
