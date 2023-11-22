@@ -1,6 +1,5 @@
 import 'package:farmlink/main.dart';
 import 'package:farmlink/models/equipment_model.dart';
-import 'package:farmlink/screens/home_page.dart';
 import 'package:farmlink/screens/order_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -75,7 +74,7 @@ class Confirmation extends State<ConfirmationPage> {
                                   await Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const HomePage(),
+                                      builder: (context) => const Farmlinkapp(),
                                     ),
                                     (Route<dynamic> route) => false,
                                   );

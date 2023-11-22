@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -35,4 +36,19 @@ class BookingManager extends ChangeNotifier {
       print('Error saving booking details: $e');
     }
   }
+}
+
+Future<List> getOrders() async {
+  CollectionReference collectionRef1 =
+      FirebaseFirestore.instance.collection('bookings');
+  QuerySnapshot one = await collectionRef1
+      .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .get();
+  final allData1 = one.docs.map((doc) => doc.data()).toList();
+
+  // Get data from docs and convert map to List
+
+  debugPrint(allData1.toString());
+
+  return allData1;
 }

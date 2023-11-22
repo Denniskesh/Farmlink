@@ -61,7 +61,7 @@ Future<List> getEquipments() async {
   CollectionReference collectionRef =
       FirebaseFirestore.instance.collection('equipment');
   CollectionReference collectionRef1 =
-      FirebaseFirestore.instance.collection('equipmentowner');
+      FirebaseFirestore.instance.collection('bookings');
   QuerySnapshot one = await collectionRef1.get();
   final allData1 = one.docs.map((doc) => doc.data()).toList();
 
@@ -69,7 +69,8 @@ Future<List> getEquipments() async {
 
   // Get data from docs and convert map to List
   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-  debugPrint(allData.toString());
+
+  debugPrint(allData1.toString());
 
   return allData;
 }
