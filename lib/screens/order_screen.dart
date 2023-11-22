@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/screens/add_equipment_detail_screen.dart';
 import 'package:farmlink/screens/order_expanded.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,6 +13,17 @@ class OrderPage extends StatefulWidget {
 }
 
 class Order extends State<OrderPage> {
+  List orders = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void getOrders() async {
+    // await FirebaseFirestore.instance.collection('').where(field).get();
+  }
+
   List<Map<String, dynamic>> list1 = [
     {
       "time": "2023-06-16T10:31:12.000Z",

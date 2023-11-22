@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 List<EquipmentDetails> equipmentFromJson(String str) =>
     List<EquipmentDetails>.from(

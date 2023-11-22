@@ -21,13 +21,13 @@ class EditProfile extends State<EditProfilePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   late User _user;
-  TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   //PhoneController phoneNumber =
   //   PhoneController(const PhoneNumber(isoCode: IsoCode.KE, nsn: ''));
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _locationController = TextEditingController();
-  TextEditingController _categoryController = TextEditingController();
-  TextEditingController _farmingTypeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _farmingTypeController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
 
   @override
@@ -127,22 +127,18 @@ class EditProfile extends State<EditProfilePage> {
               child: Column(children: <Widget>[
                 SizedBox(
                     child: Container(
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  child: Row(children: <Widget>[
-                    Container(
-                      child: const Icon(Icons.account_circle_rounded),
-                    ),
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  child: const Row(children: <Widget>[
+                    Icon(Icons.account_circle_rounded),
                     Spacer(),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          //Text(
-                          // user.displayName.toString(),
-                          //  style: Theme.of(context).textTheme.displayMedium,
-                          //),
-                          //Text(user.phoneNumber.toString())
-                        ],
-                      ),
+                    Column(
+                      children: <Widget>[
+                        //Text(
+                        // user.displayName.toString(),
+                        //  style: Theme.of(context).textTheme.displayMedium,
+                        //),
+                        //Text(user.phoneNumber.toString())
+                      ],
                     )
                   ]),
                 )),
@@ -362,7 +358,7 @@ class EditProfile extends State<EditProfilePage> {
                                   children: [
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: Color.fromARGB(
+                                          backgroundColor: const Color.fromARGB(
                                               255, 203, 218, 230),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
