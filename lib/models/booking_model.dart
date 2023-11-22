@@ -9,6 +9,7 @@ class Booking {
   final String equipmentType;
   final String duration;
   final String rate;
+  final String date;
 
   Booking({
     required this.userId,
@@ -21,5 +22,6 @@ class Booking {
     required this.totalAmount,
     required this.equipmentType,
     required this.rate,
+    required this.date,
   });
 }

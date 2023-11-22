@@ -26,6 +26,7 @@ class BookingManager extends ChangeNotifier {
         'equipmentType': booking.equipmentType,
         'duration': booking.duration,
         'rate': booking.rate,
+        'date': booking.date
       });
 
       // Notify listeners that a change has occurred
