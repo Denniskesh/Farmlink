@@ -26,8 +26,7 @@ class Order extends State<OrderPage> {
   void getOrder() async {
     var list2 = await getOrders();
 
-    var list3 = list2.map((e) => e.data()).toList();
-    var list4 = await jsonDecode(jsonEncode(list3));
+    var list4 = await jsonDecode(jsonEncode(list2));
 
     setState(() {
       list1 = list4;
