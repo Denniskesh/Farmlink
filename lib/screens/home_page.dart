@@ -266,7 +266,7 @@ class _HomePageState extends State<HomePage> {
                         for (int i = 0; i < 5; i++)
                           Container(
                               padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                              height: MediaQuery.of(context).size.height / 6,
+                              height: MediaQuery.of(context).size.height / 5,
                               width: MediaQuery.of(context).size.width / 3,
                               child: FutureBuilder(
                                   future: FirebaseFirestore.instance
