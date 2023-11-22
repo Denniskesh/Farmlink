@@ -1,4 +1,4 @@
-import 'package:farmlink/main_screen.dart';
+import 'package:farmlink/main.dart';
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/home_page.dart';
 import 'package:farmlink/screens/order_screen.dart';
@@ -72,10 +72,10 @@ class Confirmation extends State<ConfirmationPage> {
                               height: height / 12,
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  Navigator.push(
+                                  await Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const MainScreen(),
+                                      builder: (context) => const HomePage(),
                                     ),
                                   );
                                 },

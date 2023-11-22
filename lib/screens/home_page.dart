@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/bookings_screen.dart';
@@ -24,6 +26,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List equipment = [];
+
   late GoogleMapController googleMapController;
   static const List<String> choices = <String>[
     'Profile',
@@ -48,6 +52,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     getPreviousSearches();
+    getEquipment();
 
     searchTextController = TextEditingController(text: '');
     _scrollController.addListener(() {
@@ -65,6 +70,18 @@ class _HomePageState extends State<HomePage> {
           });
         }
       }
+    });
+  }
+
+  getEquipment() async {
+    var data = await FirebaseFirestore.instance
+        .collection('equipment')
+        .get()
+        .then((value) => value.docs.map((e) => e.data()).toList());
+    List a = await jsonDecode(jsonEncode(data));
+    debugPrint('ffghjgfghjkhgdfghjkhgfdfgjkhgfghjkljhgfghjkjhgfghjkhgf');
+    setState(() {
+      equipment = a;
     });
   }
 
@@ -194,19 +211,6 @@ class _HomePageState extends State<HomePage> {
                 right: 10,
                 left: 10,
                 child: _buildHireButton()),
-            // Positioned(
-            //  top: 200,
-            // left: 10,
-            // right: 10,
-            // child: ElevatedButton(
-            // onPressed: () {
-            //  Navigator.of(context)
-            //     .push(MaterialPageRoute(builder: (context) {
-            //   return const EquipmentListPage();
-            //  }));
-            //},
-            // child: const Text('explore')),
-            //),
             Positioned(bottom: 0, child: buildExploreCard()),
           ],
         ),
@@ -216,77 +220,92 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildExploreCard() {
     return Container(
-      height: MediaQuery.of(context).size.height / 3,
-      width: MediaQuery.of(context).size.width,
-      child: Card(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Explore',
-                    style: Theme.of(context).textTheme.displayMedium,
+        height: MediaQuery.of(context).size.height / 3,
+        width: MediaQuery.of(context).size.width,
+        child: Card(
+          // color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              SizedBox(
+                  child: Row(children: [
+                Text(
+                  'Explore',
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+                const Spacer(),
+                SizedBox(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return const EquipmentListPage();
+                        }));
+                      },
+                      child: const Text('View All',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w700,
+                          )),
+                    ),
                   ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return const EquipmentListPage();
-                      }));
-                    },
-                    child: const Text('View All',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w700,
-                        )),
-                  ),
-                  //const Icon(
-                  //Icons.arrow_forward,
-                  // color: Colors.blue,
-                  // )
-                ],
+                )
+              ])),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 25,
               ),
-              // FutureBuilder(
-              //    future: getImages(),
-              //    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              //      if (snapshot.connectionState == ConnectionState.done) {
-              //      if (!snapshot.hasData) {
-              //        return const Center(child: CircularProgressIndicator());
-              //     } else {
-              //      final orders = snapshot.data!;
-              //     return ListView.builder(
-              //      scrollDirection: Axis.horizontal,
-              //     itemCount: snapshot.data!.docs
-              //        .length, // Replace with the actual length of your image list
-              //   itemBuilder: (BuildContext context, int index) {
-              //     return Padding(
-              //    padding: const EdgeInsets.all(
-              //       8.0), // Adjust spacing as needed
-              //   child: Image.network(
-              //     orders.docs[index].get('imageUrl'),
-              //    fit: BoxFit
-              //        .fill, // Replace with the actual URL from Firebase for your image
-              //   width: 100, // Adjust the width as needed
-              //   height: 100, // Adjust the height as needed
-              // ),
-              //  );
-              // },
-              // );
-              // }
-              // }
-              //  return const CircularProgressIndicator();
-              //  }),
-            ],
+              if (equipment.isNotEmpty)
+                SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (int i = 0; i < 5; i++)
+                          Container(
+                              padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                              height: MediaQuery.of(context).size.height / 6,
+                              width: MediaQuery.of(context).size.width / 3,
+                              child: FutureBuilder(
+                                  future: FirebaseFirestore.instance
+                                      .collection('equipment')
+                                      .where('equipmentId',
+                                          isEqualTo: equipment[i]
+                                              ['equipmentId'])
+                                      .get(),
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (!snapshot.hasData) {
+                                        return const Center(
+                                            child: Text('Loading ...'));
+                                      } else if (snapshot.hasData &&
+                                          snapshot.data!.docs.length > 0) {
+                                        return Image.network(
+                                          snapshot.data!.docs[0]
+                                              .get('imageUrl'),
+                                          alignment: Alignment.center,
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          fit: BoxFit.fill,
+                                        );
+                                      } else {
+                                        return const Text('Loading ...');
+                                      }
+                                    } else {
+                                      return const Text('Loading ...');
+                                    }
+                                  })),
+                      ],
+                    ))
+            ]),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   Widget profileButton() {
