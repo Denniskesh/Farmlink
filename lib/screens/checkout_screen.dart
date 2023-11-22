@@ -11,6 +11,9 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../models/booking_model.dart';
+import '../services/booking_manager.dart';
+
 class CheckoutScreenPage extends StatefulWidget {
   const CheckoutScreenPage({super.key, required this.e});
   final EquipmentDetails e;
@@ -19,23 +22,25 @@ class CheckoutScreenPage extends StatefulWidget {
 }
 
 class CheckOut extends State<CheckoutScreenPage> {
-  TextEditingController landSize = TextEditingController();
-  TextEditingController total = TextEditingController();
-  TextEditingController duration = TextEditingController(text: '1');
+  final BookingManager bookingManager = BookingManager();
+  TextEditingController landSizeController = TextEditingController();
+  TextEditingController totalController = TextEditingController();
+  TextEditingController pickupController = TextEditingController();
+  TextEditingController dropoffController = TextEditingController();
+  TextEditingController durationController = TextEditingController(text: '1');
 
   void set(String value, String rate, String duration) {
     if (value.isNotEmpty) {
       var str = rate.split('per Ha');
 
-      total.text = ((double.parse(duration) * double.parse(value)) *
-              double.parse(str[0]))
-          .toString();
+      totalController.text =
+          ((double.parse(value)) * double.parse(str[0])).toString();
       // setState(() {
       //   total.text = text;
       // });
-      debugPrint(total.value.text);
+      debugPrint(totalController.value.text);
     } else {
-      total.text = '';
+      totalController.text = '';
     }
   }
 
@@ -43,6 +48,8 @@ class CheckOut extends State<CheckoutScreenPage> {
   void initState() {
     super.initState();
   }
+
+  void _saveBookingInfo() {}
 
   @override
   Widget build(BuildContext context) {
@@ -158,55 +165,139 @@ class CheckOut extends State<CheckoutScreenPage> {
                             style: Theme.of(context).textTheme.titleSmall)
                       ],
                     ))),
-            // SizedBox(
-            //   height: height / 25,
-            // ),
-            // Container(
-            //     child: Padding(
-            //         padding:
-            //             EdgeInsets.only(left: width / 30, right: width / 30),
-            //         child: Row(
-            //           children: [
-            //             Text(
-            //               "Duration:",
-            //               style: Theme.of(context).textTheme.titleLarge,
-            //             ),
-            //             SizedBox(
-            //               width: width / 10,
-            //             ),
-            //             SizedBox(
-            //                 width: width / 5,
-            //                 child: Center(
-            //                   child: TextFormField(
-            //                     controller: duration,
-            //                     inputFormatters: [
-            //                       FilteringTextInputFormatter.allow(
-            //                           RegExp('[0-9]'))
-            //                     ],
-            //                     validator: (value) {
-            //                       if (value == null || value.isEmpty) {
-            //                         return 'Please enter Duration';
-            //                       }
-            //                       return null;
-            //                     },
-            //                     onChanged: (String value) {
-
-            //                       set(landSize.value.text, equipment.rate,
-            //                           value);
-            //                     },
-            //                     decoration: InputDecoration(
-            //                         contentPadding: EdgeInsets.symmetric(
-            //                             vertical: height / 70,
-            //                             horizontal: width / 30),
-            //                         border: const OutlineInputBorder(),
-            //                         labelText: 'Duration (hours)',
-            //                         hintText: 'Enter Duration in hours'),
-            //                   ),
-            //                 ))
-            //           ],
-            //         ))),
             SizedBox(
-              height: height / 25,
+              height: height / 50,
+            ),
+            Container(
+                child: Padding(
+                    padding:
+                        EdgeInsets.only(left: width / 30, right: width / 30),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Duration:",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        SizedBox(
+                          width: width / 10,
+                        ),
+                        SizedBox(
+                            width: width / 2,
+                            child: Center(
+                              child: TextFormField(
+                                controller: durationController,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[0-9]'))
+                                ],
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter Duration';
+                                  }
+                                  return null;
+                                },
+                                //onChanged: (String value) {
+                                //set(landSizeController.value.text,
+                                //    equipment.rate, value);
+                                //  },
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: height / 70,
+                                        horizontal: width / 30),
+                                    border: const OutlineInputBorder(),
+                                    //labelText: 'Duration (hours)',
+                                    hintText: 'Enter Duration in hours'),
+                              ),
+                            ))
+                      ],
+                    ))),
+            SizedBox(
+              height: height / 50,
+            ),
+            Container(
+                child: Padding(
+                    padding:
+                        EdgeInsets.only(left: width / 30, right: width / 30),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Pick-up:",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        SizedBox(
+                          width: width / 10,
+                        ),
+                        SizedBox(
+                            width: width / 2,
+                            child: Center(
+                              child: TextFormField(
+                                controller: pickupController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter a location';
+                                  }
+                                  return null;
+                                },
+                                //onChanged: (String value) {
+                                // set(value, equipment.rate,
+                                //    durationController.value.text);
+                                //  },
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: height / 70,
+                                        horizontal: width / 30),
+                                    border: const OutlineInputBorder(),
+                                    // labelText: 'Pick-up',
+                                    hintText: 'Enter a location'),
+                              ),
+                            ))
+                      ],
+                    ))),
+            SizedBox(
+              height: height / 50,
+            ),
+            Container(
+                child: Padding(
+                    padding:
+                        EdgeInsets.only(left: width / 30, right: width / 30),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Drop-off:",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        SizedBox(
+                          width: width / 10,
+                        ),
+                        SizedBox(
+                            width: width / 2,
+                            child: Center(
+                              child: TextFormField(
+                                controller: dropoffController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter a location';
+                                  }
+                                  return null;
+                                },
+                                // onChanged: (String value) {
+                                //   set(value, equipment.rate,
+                                //      durationController.value.text);
+                                //},
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: height / 70,
+                                        horizontal: width / 30),
+                                    border: const OutlineInputBorder(),
+                                    //labelText: 'Drop-off',
+                                    hintText: 'Enter a location'),
+                              ),
+                            ))
+                      ],
+                    ))),
+
+            SizedBox(
+              height: height / 50,
             ),
             Container(
                 child: Padding(
@@ -222,10 +313,10 @@ class CheckOut extends State<CheckoutScreenPage> {
                           width: width / 10,
                         ),
                         SizedBox(
-                            width: width / 5,
+                            width: width / 2,
                             child: Center(
                               child: TextFormField(
-                                controller: landSize,
+                                controller: landSizeController,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp('[0-9]'))
@@ -238,15 +329,15 @@ class CheckOut extends State<CheckoutScreenPage> {
                                 },
                                 onChanged: (String value) {
                                   set(value, equipment.rate,
-                                      duration.value.text);
+                                      durationController.value.text);
                                 },
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: height / 70,
                                         horizontal: width / 30),
                                     border: const OutlineInputBorder(),
-                                    labelText: 'Landsize',
-                                    hintText: 'Enter Land Size'),
+                                    //labelText: 'Landsize',
+                                    hintText: 'in Ha'),
                               ),
                             ))
                       ],
@@ -282,7 +373,7 @@ class CheckOut extends State<CheckoutScreenPage> {
                                   borderSide: BorderSide.none,
                                   borderRadius: BorderRadius.circular(30.0)),
                             ),
-                            controller: total,
+                            controller: totalController,
                           ),
                         )
                       ],
@@ -291,14 +382,29 @@ class CheckOut extends State<CheckoutScreenPage> {
             Positioned(
                 left: 0,
                 child: SizedBox(
-                  width: width * .4,
+                  //width: width * .4,
                   child: ElevatedButton(
                     onPressed: () async {
+                      Booking booking = Booking(
+                        equipmentId: widget.e.equipmentId!,
+                        package: widget.e.packageType.toString(),
+                        pickUp: pickupController.text,
+                        dropOff: dropoffController.text,
+                        landSize: landSizeController.text,
+                        totalAmount: totalController.text,
+                        equipmentType: widget.e.equipmentType,
+                        duration: durationController.text,
+                        rate: widget.e.rate,
+                      );
+
+                      // Save booking details to Firebase
+                      await bookingManager.saveBookingDetails(booking);
+
                       await Navigator.push(context,
                           MaterialPageRoute(builder: (_) {
                         return ConfirmationPage(
                           e: equipment,
-                          price: total.value.text,
+                          price: totalController.value.text,
                         );
                       }));
                     },
@@ -313,7 +419,19 @@ class CheckOut extends State<CheckoutScreenPage> {
           ]),
         ),
         floatingActionButton: TextButton.icon(
-          onPressed: () {},
+          onPressed: () async {
+            if (mounted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InAppChatPage(
+                    receiverUserEmail: widget.e.user_email.toString(),
+                    receiverUserId: widget.e.userId.toString(),
+                  ),
+                ),
+              );
+            }
+          },
           icon: const Icon(
             Icons.chat_bubble_outline,
             // size: width / 10,
