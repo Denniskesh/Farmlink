@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -45,10 +47,10 @@ Future<List> getOrders() async {
       .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .get();
   final allData1 = one.docs.map((doc) => doc.data()).toList();
-
+  var a = jsonEncode(allData1);
   // Get data from docs and convert map to List
 
-  debugPrint(allData1.toString());
+  debugPrint(a.toString());
 
   return allData1;
 }
