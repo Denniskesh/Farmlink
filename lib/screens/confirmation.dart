@@ -75,8 +75,8 @@ class Confirmation extends State<ConfirmationPage> {
                                   await Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const HomePage()),
-                                    (Route<dynamic> route) => false,
+                                      builder: (context) => const HomePage(),
+                                    ),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(

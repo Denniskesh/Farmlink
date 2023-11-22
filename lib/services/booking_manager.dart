@@ -9,12 +9,14 @@ class BookingManager extends ChangeNotifier {
       FirebaseFirestore.instance.collection('bookings');
   final Uuid _bookingid = const Uuid();
 
-  Future<void> saveBookingDetails(Booking booking) async {
+  Future<void> saveBookingDetails(Booking booking,
+      {required String userId}) async {
     try {
       // Generate a unique ID for the booking
       String bookingId = _bookingid.v4();
 
       await bookings.doc(bookingId).set({
+        'userId': userId,
         'equipmentId': booking.equipmentId,
         'package': booking.package,
         'pickUp': booking.pickUp,

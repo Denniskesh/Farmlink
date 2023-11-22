@@ -1,5 +1,6 @@
 import 'package:farmlink/components/my_button.dart';
 import 'package:farmlink/screens/equipment_screen.dart';
+import 'package:farmlink/screens/my_equipment_screen_empty.dart';
 import 'package:flutter/material.dart';
 import '../components/my_text_field.dart';
 
@@ -48,7 +49,7 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const EquipmentPage(),
+                    builder: (context) => const MyEquipmentPage(),
                   ),
                 );
               },
