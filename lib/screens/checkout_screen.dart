@@ -384,26 +384,27 @@ class CheckOut extends State<CheckoutScreenPage> {
                         ],
                       ))),
 
-            Positioned(
-                left: 0,
-                child: SizedBox(
-                  //width: width * .4,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      User? user = FirebaseAuth.instance.currentUser;
-                      Booking booking = Booking(
-                        userId: user!.uid,
-                        equipmentId: widget.e.equipmentId!,
-                        package: widget.e.packageType.toString(),
-                        pickUp: pickupController.text,
-                        dropOff: dropoffController.text,
-                        landSize: landSizeController.text,
-                        totalAmount: totalController.text,
-                        equipmentType: widget.e.equipmentType,
-                        duration: durationController.text,
-                        rate: widget.e.rate,
-                        date: DateTime.now().toString(),
-                      );
+              Positioned(
+                  left: 0,
+                  child: SizedBox(
+                    //width: width * .4,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          User? user = FirebaseAuth.instance.currentUser;
+                          Booking booking = Booking(
+                            userId: user!.uid,
+                            equipmentId: widget.e.equipmentId!,
+                            package: widget.e.packageType.toString(),
+                            pickUp: pickupController.text,
+                            dropOff: dropoffController.text,
+                            landSize: landSizeController.text,
+                            totalAmount: totalController.text,
+                            equipmentType: widget.e.equipmentType,
+                            duration: durationController.text,
+                            rate: widget.e.rate,
+                            date: DateTime.now().toString(),
+                          );
 
                           // Save booking details to Firebase
                           await bookingManager.saveBookingDetails(booking,
