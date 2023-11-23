@@ -40,16 +40,18 @@ class Order extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
     final sorted = list1.map((e) => (e)).toList()
       ..sort((a, b) => b['date'].compareTo(a['date']));
 
+    final appBar = AppBar(
+      title: const Text('Bookings'),
+    );
+    double width = MediaQuery.of(context).size.width;
+    double height =
+        MediaQuery.of(context).size.height - appBar.preferredSize.height;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bookings'),
-      ),
+      appBar: appBar,
       body: list1.isEmpty
           ? Center(
               child: Text('You have no orders yet'),
@@ -87,132 +89,7 @@ class Order extends State<OrderPage> {
                           // Text('Today'),
                           ListTile(title: Text('Today')),
                           SizedBox(
-                              height: height * .2,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (_) {
-                                    return OrderExpandedPage(
-                                        order: sorted.elementAt(index));
-                                  }));
-                                },
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                        width: width * .38,
-                                        child: FutureBuilder(
-                                            future: FirebaseFirestore.instance
-                                                .collection('equipment')
-                                                .where('equipmentId',
-                                                    isEqualTo: equipmentId)
-                                                .get(),
-                                            builder: (context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return CircularProgressIndicator();
-                                              } else if (snapshot
-                                                      .connectionState ==
-                                                  ConnectionState.done) {
-                                                if (!snapshot.hasData) {
-                                                  return const Center(
-                                                      child:
-                                                          Text('Loading ...'));
-                                                } else if (snapshot.hasData &&
-                                                    snapshot.data!.docs.length >
-                                                        0) {
-                                                  return Image.network(
-                                                    snapshot.data!.docs[0]
-                                                        .get('imageUrl')
-                                                        .toString(),
-                                                    alignment: Alignment.center,
-                                                    height: double.infinity,
-                                                    width: double.infinity,
-                                                    fit: BoxFit.fill,
-                                                  );
-                                                } else {
-                                                  return const Text(
-                                                      'Loading ...');
-                                                }
-                                              } else {
-                                                return const Text(
-                                                    'Loading ...');
-                                              }
-                                            })),
-                                    Spacer(),
-                                    SizedBox(
-                                        width: width * .55,
-                                        child: Container(
-                                          child: Center(
-                                            child: Column(children: [
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    name,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleLarge,
-                                                  )
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  FittedBox(
-                                                    child: Icon(Icons
-                                                        .watch_later_outlined),
-                                                  ),
-                                                  FittedBox(
-                                                    fit: BoxFit.contain,
-                                                    child: Text(
-                                                      DateFormat(
-                                                              'E, d MMM yyy h:mm a')
-                                                          .format(date),
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium,
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                      'Pick Up   ${pickUp.toString()}',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                      'Pick Up   ${dropOff.toString()}',
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium)
-                                                ],
-                                              )
-                                            ]),
-                                          ),
-                                        ))
-                                  ],
-                                ),
-                              )),
-                          Divider(),
-                        ]);
-                      } else if (date.formatDate() ==
-                          DateTime.now()
-                              .subtract(const Duration(days: 1))
-                              .formatDate()) {
-                        debugPrint(sorted.elementAt(index).toString());
-                        return Column(children: [
-                          SizedBox(
-                            height: height * .05,
-                          ),
-                          // Text('Yesterday'),
-                          ListTile(title: Text('Yesterday')),
-                          SizedBox(
-                            height: height * .2,
+                            height: height * .15,
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(context,
@@ -224,7 +101,7 @@ class Order extends State<OrderPage> {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                      width: width * .38,
+                                      width: width * .3,
                                       child: FutureBuilder(
                                           future: FirebaseFirestore.instance
                                               .collection('equipment')
@@ -264,52 +141,234 @@ class Order extends State<OrderPage> {
                                             }
                                           })),
                                   Spacer(),
+                                  FittedBox(
+                                    child: SizedBox(
+                                      width: width * .6,
+                                      child: Column(children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              child: FittedBox(
+                                                child: Text(
+                                                  name.toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          child: FittedBox(
+                                            alignment: Alignment.topLeft,
+                                            fit: BoxFit.contain,
+                                            child: Column(children: [
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.watch_later_outlined,
+                                                    size: width * .05,
+                                                  ),
+                                                  SizedBox(
+                                                    width: width * .7,
+                                                    height: height * .023,
+                                                    child: FittedBox(
+                                                      alignment:
+                                                          FractionalOffset
+                                                              .centerLeft,
+                                                      child: Text(
+                                                        DateFormat(
+                                                                'E, d MMM yyy h:mm a                ')
+                                                            .format(date),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ]),
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.only(left: 0),
+                                              child: Text(
+                                                  'Pick Up   ${pickUp.toString()}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                                child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Text(
+                                                  'Drop Off   ${dropOff.toString()}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium),
+                                            ))
+                                          ],
+                                        )
+                                      ]),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Divider(),
+                        ]);
+                      } else if (date.formatDate() ==
+                          DateTime.now()
+                              .subtract(const Duration(days: 1))
+                              .formatDate()) {
+                        debugPrint(sorted.elementAt(index).toString());
+                        return Column(children: [
+                          SizedBox(
+                            height: height * .07,
+                          ),
+                          // Text('Yesterday'),
+                          ListTile(title: Text('Yesterday')),
+                          SizedBox(
+                            height: height * .15,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (_) {
+                                  return OrderExpandedPage(
+                                      order: sorted.elementAt(index));
+                                }));
+                              },
+                              child: Row(
+                                children: [
                                   SizedBox(
-                                    width: width * .55,
-                                    child: Column(children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            name.toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge,
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.watch_later_outlined),
-                                          FittedBox(
-                                            child: Text(
-                                              DateFormat('E, d MMM yyy h:mm a')
-                                                  .format(date),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text('Pick Up   ${pickUp.toString()}',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                              'Pick Up   ${dropOff.toString()}',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium)
-                                        ],
-                                      )
-                                    ]),
-                                  )
+                                      width: width * .3,
+                                      child: FutureBuilder(
+                                          future: FirebaseFirestore.instance
+                                              .collection('equipment')
+                                              .where('equipmentId',
+                                                  isEqualTo:
+                                                      equipmentId.toString())
+                                              .get(),
+                                          builder: (context,
+                                              AsyncSnapshot snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return CircularProgressIndicator();
+                                            } else if (snapshot
+                                                    .connectionState ==
+                                                ConnectionState.done) {
+                                              if (!snapshot.hasData) {
+                                                return const Center(
+                                                    child: Text('Loading ...'));
+                                              } else if (snapshot.hasData &&
+                                                  snapshot.data!.docs.length >
+                                                      0) {
+                                                return Image.network(
+                                                  snapshot.data!.docs[0]
+                                                      .get('imageUrl')
+                                                      .toString(),
+                                                  alignment: Alignment.center,
+                                                  height: double.infinity,
+                                                  width: double.infinity,
+                                                  fit: BoxFit.fill,
+                                                );
+                                              } else {
+                                                return const Text(
+                                                    'Loading ...');
+                                              }
+                                            } else {
+                                              return const Text('Loading ...');
+                                            }
+                                          })),
+                                  Spacer(),
+                                  FittedBox(
+                                    child: SizedBox(
+                                      width: width * .6,
+                                      child: Column(children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              child: FittedBox(
+                                                child: Text(
+                                                  name.toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          child: FittedBox(
+                                            alignment: Alignment.topLeft,
+                                            fit: BoxFit.contain,
+                                            child: Column(children: [
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.watch_later_outlined,
+                                                    size: width * .05,
+                                                  ),
+                                                  SizedBox(
+                                                    width: width * .7,
+                                                    height: height * .023,
+                                                    child: FittedBox(
+                                                      alignment:
+                                                          FractionalOffset
+                                                              .centerLeft,
+                                                      child: Text(
+                                                        DateFormat(
+                                                                'E, d MMM yyy h:mm a                ')
+                                                            .format(date),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ]),
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.only(left: 0),
+                                              child: Text(
+                                                  'Pick Up   ${pickUp.toString()}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                                child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Text(
+                                                  'Drop Off   ${dropOff.toString()}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium),
+                                            ))
+                                          ],
+                                        )
+                                      ]),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -325,138 +384,7 @@ class Order extends State<OrderPage> {
                           // Text(date.formatDate()),
                           ListTile(title: Text(date.formatDate())),
                           SizedBox(
-                              height: height * .2,
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return OrderExpandedPage(
-                                          order: sorted.elementAt(index));
-                                    }));
-                                  },
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (_) {
-                                        return OrderExpandedPage(
-                                            order: sorted.elementAt(index));
-                                      }));
-                                    },
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                            width: width * .38,
-                                            child: FutureBuilder(
-                                                future: FirebaseFirestore
-                                                    .instance
-                                                    .collection('equipment')
-                                                    .where('equipmentId',
-                                                        isEqualTo: equipmentId
-                                                            .toString())
-                                                    .get(),
-                                                builder: (context,
-                                                    AsyncSnapshot snapshot) {
-                                                  if (snapshot
-                                                          .connectionState ==
-                                                      ConnectionState.waiting) {
-                                                    return CircularProgressIndicator();
-                                                  } else if (snapshot
-                                                          .connectionState ==
-                                                      ConnectionState.done) {
-                                                    if (!snapshot.hasData) {
-                                                      return const Center(
-                                                          child: Text(
-                                                              'Loading ...'));
-                                                    } else if (snapshot
-                                                            .hasData &&
-                                                        snapshot.data!.docs
-                                                                .length >
-                                                            0) {
-                                                      return Image.network(
-                                                        snapshot.data!.docs[0]
-                                                            .get('imageUrl')
-                                                            .toString(),
-                                                        alignment:
-                                                            Alignment.center,
-                                                        height: double.infinity,
-                                                        width: double.infinity,
-                                                        fit: BoxFit.fill,
-                                                      );
-                                                    } else {
-                                                      return const Text(
-                                                          'Loading ...');
-                                                    }
-                                                  } else {
-                                                    return const Text(
-                                                        'Loading ...');
-                                                  }
-                                                })),
-                                        Spacer(),
-                                        SizedBox(
-                                          width: width * .55,
-                                          child: Column(children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  name.toString(),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleLarge,
-                                                )
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                    Icons.watch_later_outlined),
-                                                FittedBox(
-                                                  child: Text(
-                                                    DateFormat(
-                                                            'E, d MMM yyy h:mm a')
-                                                        .format(date),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                    'Pick Up   ${pickUp.toString()}',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                    'Pick Up   ${dropOff.toString()}',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium)
-                                              ],
-                                            )
-                                          ]),
-                                        )
-                                      ],
-                                    ),
-                                  ))),
-                          Divider(),
-                        ]);
-                      }
-                    } else {
-                      // return ListTile(title: Text('item $index'));
-                      debugPrint(sorted.elementAt(index).toString());
-                      return Column(children: [
-                        SizedBox(
-                          height: height * .05,
-                        ),
-                        // ListTile(title: Text('item $index')),
-                        SizedBox(
-                            height: height * .2,
+                            height: height * .15,
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(context,
@@ -468,7 +396,7 @@ class Order extends State<OrderPage> {
                               child: Row(
                                 children: [
                                   SizedBox(
-                                      width: width * .38,
+                                      width: width * .3,
                                       child: FutureBuilder(
                                           future: FirebaseFirestore.instance
                                               .collection('equipment')
@@ -508,56 +436,233 @@ class Order extends State<OrderPage> {
                                             }
                                           })),
                                   Spacer(),
-                                  Container(
-                                    width: width * .55,
+                                  FittedBox(
+                                    child: SizedBox(
+                                      width: width * .6,
+                                      child: Column(children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              child: FittedBox(
+                                                child: Text(
+                                                  name.toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          child: FittedBox(
+                                            alignment: Alignment.topLeft,
+                                            fit: BoxFit.contain,
+                                            child: Column(children: [
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.watch_later_outlined,
+                                                    size: width * .05,
+                                                  ),
+                                                  SizedBox(
+                                                    width: width * .7,
+                                                    height: height * .023,
+                                                    child: FittedBox(
+                                                      alignment:
+                                                          FractionalOffset
+                                                              .centerLeft,
+                                                      child: Text(
+                                                        DateFormat(
+                                                                'E, d MMM yyy h:mm a                ')
+                                                            .format(date),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ]),
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.only(left: 0),
+                                              child: Text(
+                                                  'Pick Up   ${pickUp.toString()}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                                child: FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Text(
+                                                  'Drop Off   ${dropOff.toString()}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium),
+                                            ))
+                                          ],
+                                        )
+                                      ]),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Divider(),
+                        ]);
+                      }
+                    } else {
+                      // return ListTile(title: Text('item $index'));
+                      debugPrint(sorted.elementAt(index).toString());
+                      return Column(children: [
+                        SizedBox(
+                          height: height * .05,
+                        ),
+                        // ListTile(title: Text('item $index')),
+                        SizedBox(
+                          height: height * .15,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return OrderExpandedPage(
+                                    order: sorted.elementAt(index));
+                              }));
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                    width: width * .3,
+                                    child: FutureBuilder(
+                                        future: FirebaseFirestore.instance
+                                            .collection('equipment')
+                                            .where('equipmentId',
+                                                isEqualTo:
+                                                    equipmentId.toString())
+                                            .get(),
+                                        builder:
+                                            (context, AsyncSnapshot snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          } else if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            if (!snapshot.hasData) {
+                                              return const Center(
+                                                  child: Text('Loading ...'));
+                                            } else if (snapshot.hasData &&
+                                                snapshot.data!.docs.length >
+                                                    0) {
+                                              return Image.network(
+                                                snapshot.data!.docs[0]
+                                                    .get('imageUrl')
+                                                    .toString(),
+                                                alignment: Alignment.center,
+                                                height: double.infinity,
+                                                width: double.infinity,
+                                                fit: BoxFit.fill,
+                                              );
+                                            } else {
+                                              return const Text('Loading ...');
+                                            }
+                                          } else {
+                                            return const Text('Loading ...');
+                                          }
+                                        })),
+                                Spacer(),
+                                FittedBox(
+                                  child: SizedBox(
+                                    width: width * .6,
                                     child: Column(children: [
                                       Row(
                                         children: [
-                                          Text(
-                                            name.toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge,
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(Icons.watch_later_outlined),
-                                          FittedBox(
-                                            child: Text(
-                                              DateFormat('E, d MMM yyy h:mm a')
-                                                  .format(date)
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
+                                          SizedBox(
+                                            child: FittedBox(
+                                              child: Text(
+                                                name.toString(),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge,
+                                              ),
                                             ),
                                           )
                                         ],
                                       ),
+                                      SizedBox(
+                                        child: FittedBox(
+                                          alignment: Alignment.topLeft,
+                                          fit: BoxFit.contain,
+                                          child: Column(children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.watch_later_outlined,
+                                                  size: width * .05,
+                                                ),
+                                                SizedBox(
+                                                  width: width * .7,
+                                                  height: height * .023,
+                                                  child: FittedBox(
+                                                    alignment: FractionalOffset
+                                                        .centerLeft,
+                                                    child: Text(
+                                                      DateFormat(
+                                                              'E, d MMM yyy h:mm a                ')
+                                                          .format(date),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ]),
+                                        ),
+                                      ),
                                       Row(
                                         children: [
-                                          Text('Pick Up   ${pickUp.toString()}',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium),
+                                          Container(
+                                            padding: EdgeInsets.only(left: 0),
+                                            child: Text(
+                                                'Pick Up   ${pickUp.toString()}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium),
+                                          )
                                         ],
                                       ),
                                       Row(
                                         children: [
-                                          Text(
-                                              'Pick Up   ${dropOff.toString()}',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium)
+                                          SizedBox(
+                                              child: FittedBox(
+                                            fit: BoxFit.contain,
+                                            child: Text(
+                                                'Drop Off   ${dropOff.toString()}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium),
+                                          ))
                                         ],
                                       )
                                     ]),
-                                  )
-                                ],
-                              ),
-                            )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                         Divider(),
                       ]);
                     }
