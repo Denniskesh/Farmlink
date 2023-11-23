@@ -233,7 +233,7 @@ class Order extends State<OrderPage> {
                         debugPrint(sorted.elementAt(index).toString());
                         return Column(children: [
                           SizedBox(
-                            height: height * .07,
+                            height: height * .05,
                           ),
                           // Text('Yesterday'),
                           ListTile(title: Text('Yesterday')),
@@ -527,7 +527,7 @@ class Order extends State<OrderPage> {
                       debugPrint(sorted.elementAt(index).toString());
                       return Column(children: [
                         SizedBox(
-                          height: height * .05,
+                          height: height * .02,
                         ),
                         // ListTile(title: Text('item $index')),
                         SizedBox(
