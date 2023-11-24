@@ -1,9 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-
-import 'package:email_validator/email_validator.dart';
 import 'package:farmlink/screens/edit_profile.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
-import 'package:phone_form_field/phone_form_field.dart';
+import 'package:farmlink/services/auth/login_or_register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +28,17 @@ class ProfilePage extends State<Profile> {
   void initState() {
     super.initState();
     getUserInfo();
+  }
+
+  void signOut() {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    authService.signOut();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LoginOrRegister(),
+      ),
+    );
   }
 
   getUserInfo() async {
@@ -117,7 +126,7 @@ class ProfilePage extends State<Profile> {
                                     await Navigator.push(context,
                                         MaterialPageRoute(builder: (_) {
                                       return EditProfilePage(
-                                        user: user!,
+                                        user: user,
                                       );
                                     }));
                                   },
@@ -231,31 +240,26 @@ class ProfilePage extends State<Profile> {
                 ),
               ),
               const Divider(),
-              Container(
-                height: height / 10,
-                // padding: EdgeInsets.all(),
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Flexible(
-                      fit: FlexFit.loose,
-                      child: SizedBox(
-                        width: width * 0.50,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            final authService = Provider.of<AuthService>(
-                                context,
-                                listen: false);
-                            authService.signOut();
-                          },
-                          child: Text('Sign Out'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(
-                                255, 111, 95, 180), // Background color
-                          ),
-                        ),
-                      )),
-                ),
-              )
+              //Container(
+              //  height: height / 10,
+              // padding: EdgeInsets.all(),
+              //child: FittedBox(
+              //  fit: BoxFit.contain,
+              // child: Flexible(
+              //  fit: FlexFit.loose,
+              //  child: SizedBox(
+              //  width: width * 0.50,
+              //child: ElevatedButton(
+              //onPressed: () => signOut(),
+              //      child: Text('Sign Out'),
+              //    style: ElevatedButton.styleFrom(
+              //    backgroundColor: Color.fromARGB(
+              //      255, 111, 95, 180), // Background color
+              //      ),
+              //  ),
+              //  )),
+              // ),
+              //  )
             ],
           ),
         ),

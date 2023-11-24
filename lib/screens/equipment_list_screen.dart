@@ -2,13 +2,8 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
-import 'package:farmlink/models/owner_model.dart';
 import 'package:farmlink/screens/equipment_details.dart';
 import 'package:farmlink/services/equipment_manager.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
-import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:flutter/material.dart';
 
 class EquipmentListPage extends StatefulWidget {
@@ -63,7 +58,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
   }
 
   filterResults(String filter, String value) async {
-    List list = [];
+    //List list = [];
     if (filter.isNotEmpty && value.isNotEmpty) {
       late List<EquipmentDetails> equipmentsSorted = [];
       var eq = [];
@@ -253,7 +248,7 @@ class _EquipmentListPage extends State<EquipmentListPage> {
               ),
             ),
             body: equipments!.isEmpty
-                ? Center(
+                ? const Center(
                     child: Stack(
                       alignment: FractionalOffset.center,
                       children: [

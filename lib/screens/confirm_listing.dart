@@ -1,6 +1,5 @@
 import 'package:farmlink/components/my_button.dart';
 import 'package:farmlink/screens/equipment_screen.dart';
-import 'package:farmlink/screens/my_equipment_screen_empty.dart';
 import 'package:flutter/material.dart';
 import '../components/my_text_field.dart';
 
@@ -45,12 +44,13 @@ class _CompletePaymentPageState extends State<CompletePaymentPage> {
           ),
           const Spacer(),
           MyButton(
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                await Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MyEquipmentPage(),
+                    builder: (context) => const EquipmentPage(),
                   ),
+                  (Route<dynamic> route) => false,
                 );
               },
               text: "Complete"),

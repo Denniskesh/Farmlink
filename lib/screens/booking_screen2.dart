@@ -1,6 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'package:farmlink/screens/equipment_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -16,7 +15,6 @@ class _BookingsPage2State extends State<BookingsPage2> {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final _formKey1 = GlobalKey<FormState>();
-    late GoogleMapController googleMapController;
 
     final TextEditingController equipmentType = TextEditingController();
     final TextEditingController countyLocation = TextEditingController();
@@ -67,7 +65,7 @@ class _BookingsPage2State extends State<BookingsPage2> {
                   zoomControlsEnabled: true,
                   onMapCreated: (GoogleMapController c) {
                     // to control the camera position of the map
-                    var googleMapController = c;
+                    //var googleMapController = c;
                   },
                 ),
               ),

@@ -1,12 +1,12 @@
 import 'dart:collection';
 
 import 'package:farmlink/screens/confirm_listing.dart';
-import 'package:farmlink/screens/add_equipment_detail_screen.dart';
 import 'package:flutter/material.dart';
 import '../components/my_text_field.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
 
 import '../components/my_button.dart';
+import 'add_equipment_detail_screen.dart';
 
 class ConfirmListingPage extends StatefulWidget {
   const ConfirmListingPage({super.key});
@@ -58,10 +58,11 @@ class _ConfirmListingPageState extends State<ConfirmListingPage> {
               baseUri: Uri(scheme: 'https', host: "sandbox.safaricom.co.ke"),
               transactionDesc: 'Payment for equipment listing',
               passKey:
-                  'XFi0bhgVwtBy5LboVHugSCepSf5+Wock0fzDhc9Xr2KaD5vMIiLz9NGuylAGeHEyelfirJxLV1PWBtVGFgE8T0qB3BfbOMlpZqP+TKMTqmPfRMOb/trXpEe13K/YB9adWX+PJoRL+g8hVYF568GedaDzs2k6qJw9/lP4pqmaz1bugXRrc+Z5TYimKVzgc+UGKCHqnffONQyOg5H9dSFl6eq8HkC6EJFW4VgFpHJf7yimCiowYishZf02uS82bg1bOTQvs2izQijmarMyL0nGhMVfA/Y4aiTCN7msuWr7ZERTZOJAO9YYIhlTrNsOAruWcoLTt/LeJ3c0oMY8Zxe5zQ==');
-      HashMap result = transactionInitialisation as HashMap<String, dynamic>;
-      print("RESULTS:" + result.toString());
+                  'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919');
+      return transactionInitialisation;
     } catch (e) {
+      //For now, console might be useful
+      print("CAUGHT EXCEPTION: " + e.toString());
 //you can implement your exception handling here.
 //Network un-reachability is a sure exception.
 
@@ -127,23 +128,49 @@ class _ConfirmListingPageState extends State<ConfirmListingPage> {
               },
               title: const Text('I accept the terms and conditions'),
             ),
-            Text(
-              'Enter Mpesa Number',
-              style: Theme.of(context).textTheme.displayMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            MyTextField(
-                controller: phoneController,
-                hintText: 'eg 0712345678',
-                obscureText: false),
+            //Text(
+            // 'Enter Mpesa Number',
+            // style: Theme.of(context).textTheme.displayMedium,
+            // textAlign: TextAlign.center,
+            // ),
+            // const SizedBox(
+            //  height: 20,
+            // ),
+            //MyTextField(
+            //  controller: phoneController,
+            // hintText: 'eg 254712345678',
+            // obscureText: false),
             const SizedBox(height: 20.0),
             MyButton(
-                onTap: () {
+                onTap: () async {
+                  var providedContact = await _showTextInputDialog(context);
+
+                  if (providedContact != null) {
+                    if (providedContact.isNotEmpty) {
+                      mpesaTransaction(phone: providedContact, amount: 1.0);
+                    } else {
+                      // ignore: use_build_context_synchronously
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Empty Number!'),
+                              content: const Text(
+                                  "You did not provide a number to be charged."),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  child: const Text("Cancel"),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            );
+                          });
+                    }
+                  }
+
                   if (acceptTerms && tickMpesa) {
                     // User accepted terms, you can navigate to the next screen or perform other actions.
+                    // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -151,6 +178,7 @@ class _ConfirmListingPageState extends State<ConfirmListingPage> {
                       ),
                     );
                   } else {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text(
                             'Ensure that Mpesa is checked and Accept Terms & Conditions')));
@@ -161,17 +189,14 @@ class _ConfirmListingPageState extends State<ConfirmListingPage> {
             Align(
               alignment: Alignment.bottomLeft,
               child: ElevatedButton(
-                onPressed: () {
-                  mpesaTransaction(amount: 10.0, phone: '254793613719');
-                  //if (_formKey.currentState!.validate()) {
-                  // Navigator.push(
-                  // context,
-                  //MaterialPageRoute(
-                  //  builder: (context) => const EquipmentDetailPage(),
-                  // ),
-                  //  );
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EquipmentDetailPage(),
+                    ),
+                  );
                 },
-                // },
                 child: const Text('Previous'),
               ),
             ),
@@ -180,4 +205,31 @@ class _ConfirmListingPageState extends State<ConfirmListingPage> {
       ),
     );
   }
+}
+
+final _textFieldController = TextEditingController();
+
+Future<String?> _showTextInputDialog(BuildContext context) async {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('M-Pesa Number'),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: const InputDecoration(hintText: "+254712345678..."),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text("Cancel"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            ElevatedButton(
+              child: const Text('Proceed'),
+              onPressed: () =>
+                  Navigator.pop(context, _textFieldController.text),
+            ),
+          ],
+        );
+      });
 }

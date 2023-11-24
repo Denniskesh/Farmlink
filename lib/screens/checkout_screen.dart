@@ -1,14 +1,9 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
-import 'package:farmlink/screens/checkout_screen.dart';
 import 'package:farmlink/screens/confirmation.dart';
-import 'package:farmlink/screens/equipment_detail_screen2.dart';
 import 'package:farmlink/screens/in_app_chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -51,8 +46,6 @@ class CheckOut extends State<CheckoutScreenPage> {
     super.initState();
   }
 
-  void _saveBookingInfo() {}
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -87,7 +80,7 @@ class CheckOut extends State<CheckoutScreenPage> {
                             builder: (context, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return CircularProgressIndicator();
+                                return const CircularProgressIndicator();
                               } else if (snapshot.connectionState ==
                                   ConnectionState.done) {
                                 if (!snapshot.hasData) {
@@ -420,7 +413,8 @@ class CheckOut extends State<CheckoutScreenPage> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 111, 95, 180),
+                        backgroundColor:
+                            const Color.fromARGB(255, 111, 95, 180),
                       ),
                       child: const Text('Complete Booking'),
                     ),

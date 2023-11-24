@@ -48,16 +48,16 @@ class EditProfile extends State<EditProfilePage> {
         _categoryController.text = userDoc['category'] ?? '';
         _farmingTypeController.text = userDoc['farmingType'] ?? '';
         _locationController.text = userDoc['location'] ?? '';
-        _phoneController = userDoc['phonenumber'] ?? '';
+        _phoneController.text = userDoc['phonenumber'] ?? '';
       });
     }
   }
 
   Future<void> _updateUserProfile() async {
     try {
-      await _firestore.collection('users').doc(_user.uid).update({
+      await _firestore.collection('users').doc(_user!.uid).update({
         'name': _nameController.text,
-        'phonenumber': _phoneController,
+        'phonenumber': _phoneController.text,
         'email': _emailController.text,
         'location': _locationController.text,
         'category': _categoryController.text,
@@ -233,7 +233,7 @@ class EditProfile extends State<EditProfilePage> {
                                             BorderRadius.circular(10.0),
                                       ),
                                       labelText: 'Phone Number',
-                                      hintText: 'eg. 254765432333',
+                                      hintText: 'eg. 254712345678',
                                       enabledBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Color.fromARGB(
@@ -365,7 +365,7 @@ class EditProfile extends State<EditProfilePage> {
                                                   BorderRadius.circular(12))),
                                       onPressed: () async {
                                         if (formKey.currentState!.validate()) {
-                                          _cancelChanges;
+                                          _cancelChanges();
                                           //bool success = await updateDetails(
                                           //  displayName:
                                           // displayName.value.text);
@@ -401,7 +401,7 @@ class EditProfile extends State<EditProfilePage> {
                                                   BorderRadius.circular(12.0))),
                                       onPressed: () async {
                                         if (formKey.currentState!.validate()) {
-                                          _updateUserProfile;
+                                          _updateUserProfile();
                                           //bool success = await updateDetails(
                                           // displayName:
                                           //   displayName.value.text);

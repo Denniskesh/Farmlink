@@ -14,7 +14,7 @@ class _BookingsPageState extends State<BookingsPage> {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    late GoogleMapController googleMapController;
+    //late GoogleMapController googleMapController;
 
     final TextEditingController equipmentType = TextEditingController();
     final TextEditingController countyLocation = TextEditingController();
@@ -48,7 +48,7 @@ class _BookingsPageState extends State<BookingsPage> {
                   zoomControlsEnabled: true,
                   onMapCreated: (GoogleMapController c) {
                     // to control the camera position of the map
-                    var googleMapController = c;
+                    //var googleMapController = c;
                   },
                 ),
               ),

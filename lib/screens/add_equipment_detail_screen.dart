@@ -1,12 +1,9 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/screens/equipment_detail_screen2.dart';
 import 'package:farmlink/services/equipment_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import '../models/equipment_model.dart';
 
 class EquipmentDetailPage extends StatefulWidget {
@@ -26,8 +23,8 @@ class _EquipmentDetailPageState extends State<EquipmentDetailPage> {
   TextEditingController consumpionRateController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final EquipmentManager _equipmentProvider =
-      EquipmentManager(); // Create an instance of the provider
+  // final EquipmentManager _equipmentProvider =
+  //   EquipmentManager(); // Create an instance of the provider
   File? imageFile;
 
   @override
