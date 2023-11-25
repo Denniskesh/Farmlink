@@ -48,9 +48,13 @@ class WebChatView extends State<WebChatViewPage> {
                     setState(() async {});
                   },
                   onLoadStop: (InAppWebViewController controller, url) async {
-                    await controller.injectJavascriptFileFromAsset(
-                        assetFilePath: "assets/javs.js");
-                    setState(() async {});
+                    Future.delayed(const Duration(seconds: 6)).then((value) {
+                      setState(() {
+                        String script =
+                            """document.getElementById("WACLauncher__Button").click();""";
+                        controller.evaluateJavascript(source: script);
+                      });
+                    });
                   },
                   onProgressChanged:
                       (InAppWebViewController controller, int progress) {
