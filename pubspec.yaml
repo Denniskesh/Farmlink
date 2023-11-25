@@ -60,6 +60,7 @@ dependencies:
   email_validator: ^2.1.17
   rxdart: ^0.27.7
   mpesa_flutter_plugin: ^1.6.1
+  flutter_inappwebview: ^5.8.0
   # firebase_image: ^1.1.1
 
 dev_dependencies:

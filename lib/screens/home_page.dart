@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmlink/models/equipment_model.dart';
 import 'package:farmlink/screens/bookings_screen.dart';
+import 'package:farmlink/screens/chat.dart';
 import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 import 'package:farmlink/screens/equipment_list_screen.dart';
 import 'package:farmlink/services/auth/auth_service.dart';
@@ -170,17 +171,20 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green,
           child: const Icon(Icons.message),
-          onPressed: () {
-            dynamic conversationObject = {
-              'appId': '1fb033be681109b15377676f20730a3c9',
-            };
-            KommunicateFlutterPlugin.buildConversation(conversationObject)
-                .then((clientConversationId) {
-              print("Conversation builder success : " +
-                  clientConversationId.toString());
-            }).catchError((error) {
-              print("Conversation builder error : " + error.toString());
-            });
+          onPressed: () async {
+            await Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const WebChatViewPage()));
+
+            // dynamic conversationObject = {
+            //   'appId': '1fb033be681109b15377676f20730a3c9',
+            // };
+            // KommunicateFlutterPlugin.buildConversation(conversationObject)
+            //     .then((clientConversationId) {
+            //   print("Conversation builder success : " +
+            //       clientConversationId.toString());
+            // }).catchError((error) {
+            //   print("Conversation builder error : " + error.toString());
+            // });
           },
         ),
         body: Stack(
