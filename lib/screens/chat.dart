@@ -18,9 +18,10 @@ class WebChatView extends State<WebChatViewPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text(''),
-        ),
+        //appBar: AppBar(
+        // backgroundColor: Colors.white,
+        //  title: const Text(''),
+        // ),
         body: Container(
           child: Column(children: <Widget>[
             Container(

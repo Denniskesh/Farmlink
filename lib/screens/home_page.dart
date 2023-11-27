@@ -172,19 +172,19 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.green,
           child: const Icon(Icons.message),
           onPressed: () async {
-            await Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const WebChatViewPage()));
+            // await Navigator.push(context,
+            //  MaterialPageRoute(builder: (_) => const WebChatViewPage()));
 
-            // dynamic conversationObject = {
-            //   'appId': '1fb033be681109b15377676f20730a3c9',
-            // };
-            // KommunicateFlutterPlugin.buildConversation(conversationObject)
-            //     .then((clientConversationId) {
-            //   print("Conversation builder success : " +
-            //       clientConversationId.toString());
-            // }).catchError((error) {
-            //   print("Conversation builder error : " + error.toString());
-            // });
+            dynamic conversationObject = {
+              'appId': '330aca8423562abb02570ca15807a11d',
+            };
+            KommunicateFlutterPlugin.buildConversation(conversationObject)
+                .then((clientConversationId) {
+              print("Conversation builder success : " +
+                  clientConversationId.toString());
+            }).catchError((error) {
+              print("Conversation builder error : " + error.toString());
+            });
           },
         ),
         body: Stack(
