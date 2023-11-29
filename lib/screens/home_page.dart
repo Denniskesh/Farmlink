@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
       child: GestureDetector(
         onTap: () async {
           await Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return const BookingsPage();
+            return const EquipmentListPage();
           }));
         },
         child: Container(

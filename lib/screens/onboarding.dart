@@ -71,7 +71,7 @@ class OnboardingScreenState extends State<OnboardingScreen> {
           'Do you have an idle equipment you wish to monetize? Go to My Equipment tab and tap on the + buuton and follow the procedure to add it to the platform and share with farmers near you',
         ),
         onboardPageView(
-          const AssetImage('assets/tractor2.png'),
+          const AssetImage('assets/icon1.png'),
           'Tap on the green icon tap at Home screen to get assistance from our AI chatbot.',
         ),
       ],
