@@ -10,6 +10,20 @@ class OrderExpandedPage extends StatefulWidget {
 }
 
 class OrderExpanded extends State<OrderExpandedPage> {
+  Future<void> deleteBooking(String orderId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('bookings')
+          .doc(orderId)
+          .delete();
+      // Optional: Add any additional logic after successful deletion
+    } catch (error) {
+      // Handle errors during deletion
+      print("Error deleting booking: $error");
+      // Optional: Show a snackbar or display an error message
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final order = widget.order;
@@ -217,9 +231,23 @@ class OrderExpanded extends State<OrderExpandedPage> {
                         SizedBox(
                           width: width / 7,
                         ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.messenger_outline)),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Colors.red, // Customize the button color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                          onPressed: () async {
+                            // Call a function to delete the booking from Firestore
+                            await deleteBooking(order['orderId']);
+                            // ignore: use_build_context_synchronously
+                            Navigator.pop(
+                                context); // Navigate back after deletion
+                          },
+                          child: const Text("Delete"),
+                        ),
                         SizedBox(
                           width: width / 10,
                         ),

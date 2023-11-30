@@ -535,30 +535,30 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
   }
 
   Widget _getFAB(EquipmentDetails equipment, double width) {
-    if (equipment.userId == FirebaseAuth.instance.currentUser!.uid) {
-      return Container(child: Text('Your Asset'));
-    } else {
-      return TextButton.icon(
-        onPressed: () async {
-          if (mounted) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InAppChatPage(
-                  receiverUserEmail: widget.equipment.user_email.toString(),
-                  receiverUserId: widget.equipment.userId.toString(),
-                ),
+    //if (equipment.userId == FirebaseAuth.instance.currentUser!.uid) {
+    //  return Container(child: const Text('Your Asset'));
+    // } else {
+    return TextButton.icon(
+      onPressed: () async {
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => InAppChatPage(
+                receiverUserEmail: widget.equipment.user_email.toString(),
+                receiverUserId: widget.equipment.userId.toString(),
               ),
-            );
-          }
-        },
-        icon: Icon(
-          Icons.chat_bubble_outline,
-          size: width / 10,
-        ),
-        label: const Text('Chat'),
-        style: const ButtonStyle(),
-      );
-    }
+            ),
+          );
+        }
+      },
+      icon: Icon(
+        Icons.chat_bubble_outline,
+        size: width / 10,
+      ),
+      label: const Text('Chat'),
+      style: const ButtonStyle(),
+    );
   }
 }
+//}

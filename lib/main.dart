@@ -12,7 +12,15 @@ import 'services/tab_manager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const Farmlinkapp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => TabManager()),
+      ChangeNotifierProvider(create: (context) => AuthService()),
+      ChangeNotifierProvider(create: (context) => EquipmentManager()),
+      ChangeNotifierProvider(create: (context) => OwnerManager()),
+      ChangeNotifierProvider(create: (context) => BookingManager()),
+    ], child: const Farmlinkapp()),
+  );
 }
 
 class Farmlinkapp extends StatelessWidget {
@@ -26,16 +34,7 @@ class Farmlinkapp extends StatelessWidget {
       theme: theme,
       title: 'Farmlink',
       debugShowCheckedModeBanner: false,
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => TabManager()),
-          ChangeNotifierProvider(create: (context) => AuthService()),
-          ChangeNotifierProvider(create: (context) => EquipmentManager()),
-          ChangeNotifierProvider(create: (context) => OwnerManager()),
-          ChangeNotifierProvider(create: (context) => BookingManager()),
-        ],
-        child: const AuthGate(),
-      ),
+      home: const AuthGate(),
     );
   }
 }
