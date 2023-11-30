@@ -82,8 +82,7 @@ class ProfilePage extends State<Profile> {
                       width: width / 6,
                       child: const FittedBox(
                         fit: BoxFit.contain,
-                        child: Flexible(
-                            child: Padding(
+                        child: Padding(
                           padding: EdgeInsets.only(
                               // left: width / 70,
                               ),
@@ -91,7 +90,7 @@ class ProfilePage extends State<Profile> {
                             Icons.account_circle_rounded,
                             color: Colors.grey,
                           ),
-                        )),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -99,44 +98,39 @@ class ProfilePage extends State<Profile> {
                       height: height / 12,
                       child: FittedBox(
                         fit: BoxFit.contain,
-                        child: Flexible(
-                          fit: FlexFit.loose,
-                          child: Column(children: [
-                            Text(
-                              ' $name',
-                              style: Theme.of(context).textTheme.displaySmall,
-                            ),
-                            Text(
-                              ' $phone',
-                              style: Theme.of(context).textTheme.displaySmall,
-                            )
-                          ]),
-                        ),
+                        child: Column(children: [
+                          Text(
+                            ' $name',
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                          Text(
+                            ' $phone',
+                            style: Theme.of(context).textTheme.displaySmall,
+                          )
+                        ]),
                       ),
                     ),
                     SizedBox(
                       width: width / 6,
                       child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Flexible(
-                            child: Padding(
-                                padding: EdgeInsets.only(),
-                                child: IconButton(
-                                  onPressed: () async {
-                                    await Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return EditProfilePage(
-                                        user: user,
-                                      );
-                                    }));
-                                  },
-                                  icon: const Icon(
-                                    IconData(0xe21a,
-                                        fontFamily: 'MaterialIcons'),
-                                    color: Colors.grey,
-                                  ),
-                                )),
-                          )),
+                        fit: BoxFit.contain,
+                        child: Padding(
+                            padding: EdgeInsets.only(),
+                            child: IconButton(
+                              onPressed: () async {
+                                await Navigator.push(context,
+                                    MaterialPageRoute(builder: (_) {
+                                  return EditProfilePage(
+                                    user: user,
+                                  );
+                                }));
+                              },
+                              icon: const Icon(
+                                IconData(0xe21a, fontFamily: 'MaterialIcons'),
+                                color: Colors.grey,
+                              ),
+                            )),
+                      ),
                     )
                   ],
                 ),

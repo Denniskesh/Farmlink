@@ -247,11 +247,9 @@ class MyEquipment extends State<MyEquipmentPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(
-                child: AspectRatio(
-                  aspectRatio: 1 / 1,
-                  child: Image.asset('assets/empty_list.png'),
-                ),
+              AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Image.asset('assets/empty_list.png'),
               ),
               Text(
                 'Do you have an idle Equipment?',
@@ -289,13 +287,11 @@ class MyEquipment extends State<MyEquipmentPage> {
                             children: <Widget>[
                               FittedBox(
                                   fit: BoxFit.fill,
-                                  child: Flexible(
-                                      fit: FlexFit.loose,
-                                      child: Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(head.value.text,
-                                              style: const TextStyle(
-                                                  fontSize: 70))))),
+                                  child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(head.value.text,
+                                          style:
+                                              const TextStyle(fontSize: 70)))),
                               Align(
                                 alignment: FractionalOffset.topRight,
                                 child: SizedBox(
@@ -400,17 +396,15 @@ class MyEquipment extends State<MyEquipmentPage> {
                                                     width: width * 0.5,
                                                     child: FittedBox(
                                                         fit: BoxFit.contain,
-                                                        child: Flexible(
-                                                            fit: FlexFit.loose,
-                                                            child: Center(
-                                                              child: Text(
-                                                                e.equipmentType,
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleLarge,
-                                                              ),
-                                                            ))))),
+                                                        child: Center(
+                                                          child: Text(
+                                                            e.equipmentType,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleLarge,
+                                                          ),
+                                                        )))),
 
                                             //alignment at veritically center, and at left horizontally
                                             Align(
@@ -420,28 +414,26 @@ class MyEquipment extends State<MyEquipmentPage> {
                                                     width: width * 0.40,
                                                     child: Center(
                                                         child: FittedBox(
-                                                            fit: BoxFit.contain,
-                                                            child: SizedBox(
-                                                              width: width,
-                                                              child: Flexible(
-                                                                  fit: FlexFit
-                                                                      .tight,
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsets.only(
-                                                                        right: width /
+                                                      fit: BoxFit.contain,
+                                                      child: SizedBox(
+                                                          width: width,
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    right:
+                                                                        width /
                                                                             5),
-                                                                    child: Text(
-                                                                      e.description
-                                                                          .toString(),
-                                                                      // style: Theme.of(context).textTheme.displaySmall,
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .displaySmall,
-                                                                    ),
-                                                                  )),
-                                                            ))))),
+                                                            child: Text(
+                                                              e.description
+                                                                  .toString(),
+                                                              // style: Theme.of(context).textTheme.displaySmall,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .displaySmall,
+                                                            ),
+                                                          )),
+                                                    )))),
 
                                             Positioned(
                                               // alignment:
@@ -449,65 +441,57 @@ class MyEquipment extends State<MyEquipmentPage> {
                                               bottom: 0,
                                               left: 0,
                                               child: FittedBox(
-                                                fit: BoxFit.contain,
-                                                child: Flexible(
-                                                    fit: FlexFit.tight,
-                                                    child: SizedBox(
-                                                        width: width * 0.45,
-                                                        height: height * 0.038,
-                                                        child: Row(
-                                                            children: <Widget>[
-                                                              SizedBox(
-                                                                  width: width *
-                                                                      .18,
-                                                                  child:
-                                                                      FittedBox(
-                                                                    fit: BoxFit
-                                                                        .contain,
-                                                                    child: Flexible(
-                                                                        fit: FlexFit
-                                                                            .loose,
-                                                                        child: Text(
-                                                                            'ksh. ${e.rate.toString()}',
-                                                                            style:
-                                                                                Theme.of(context).textTheme.bodyLarge)),
-                                                                  )),
-                                                              SizedBox(
+                                                  fit: BoxFit.contain,
+                                                  child: SizedBox(
+                                                      width: width * 0.45,
+                                                      height: height * 0.038,
+                                                      child: Row(
+                                                          children: <Widget>[
+                                                            SizedBox(
+                                                              width:
+                                                                  width * .18,
+                                                              child: FittedBox(
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                  child: Text(
+                                                                      'ksh. ${e.rate.toString()}',
+                                                                      style: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .bodyLarge)),
+                                                            ),
+                                                            SizedBox(
+                                                              width:
+                                                                  width * .042,
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(),
+                                                              child: SizedBox(
                                                                 width: width *
-                                                                    .042,
+                                                                    0.18,
+                                                                child:
+                                                                    FittedBox(
+                                                                        fit: BoxFit
+                                                                            .contain,
+                                                                        child:
+                                                                            Container(
+                                                                          padding:
+                                                                              EdgeInsets.only(right: width / 10),
+                                                                          child: TextButton(
+                                                                              onPressed: () async {
+                                                                                await Navigator.push(context, MaterialPageRoute(builder: (_) => EquipmentDetailsPage(equipment: e)));
+                                                                              },
+                                                                              child: const Text(
+                                                                                'View details',
+                                                                                style: TextStyle(fontSize: 30),
+                                                                              )),
+                                                                        )),
                                                               ),
-                                                              Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .only(),
-                                                                  child:
-                                                                      SizedBox(
-                                                                    width:
-                                                                        width *
-                                                                            0.18,
-                                                                    child:
-                                                                        FittedBox(
-                                                                      fit: BoxFit
-                                                                          .contain,
-                                                                      child: Flexible(
-                                                                          fit: FlexFit.loose,
-                                                                          child: Container(
-                                                                            padding:
-                                                                                EdgeInsets.only(right: width / 10),
-                                                                            child: TextButton(
-                                                                                onPressed: () async {
-                                                                                  await Navigator.push(context, MaterialPageRoute(builder: (_) => EquipmentDetailsPage(equipment: e)));
-                                                                                },
-                                                                                child: const Text(
-                                                                                  'View details',
-                                                                                  style: TextStyle(fontSize: 30),
-                                                                                )),
-                                                                          )),
-                                                                    ),
-                                                                  ))
-                                                            ]))),
-                                              ),
-                                            )
+                                                            )
+                                                          ]))),
+                                            ),
                                           ])))
                                     ]))
                                 .toList(),

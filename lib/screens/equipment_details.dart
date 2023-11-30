@@ -235,19 +235,16 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                             width: width / 8,
                           ),
                           FittedBox(
-                              fit: BoxFit.contain,
-                              child: SizedBox(
+                            fit: BoxFit.contain,
+                            child: SizedBox(
                                 width: width / 2,
-                                child: Flexible(
-                                    fit: FlexFit.loose,
-                                    child: Text(
-                                      equipment.description.toString(),
-                                      // style: Theme.of(context).textTheme.displaySmall,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displaySmall,
-                                    )),
-                              ))
+                                child: Text(
+                                  equipment.description.toString(),
+                                  // style: Theme.of(context).textTheme.displaySmall,
+                                  style:
+                                      Theme.of(context).textTheme.displaySmall,
+                                )),
+                          )
                         ],
                       ),
                       if (equipment.userId !=
@@ -484,19 +481,16 @@ class _EquipmentDetailPageState extends State<EquipmentDetailsPage> {
                             width: width / 8,
                           ),
                           FittedBox(
-                              fit: BoxFit.contain,
-                              child: SizedBox(
+                            fit: BoxFit.contain,
+                            child: SizedBox(
                                 width: width / 2,
-                                child: Flexible(
-                                    fit: FlexFit.loose,
-                                    child: Text(
-                                      equipment.description.toString(),
-                                      // style: Theme.of(context).textTheme.displaySmall,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displaySmall,
-                                    )),
-                              ))
+                                child: Text(
+                                  equipment.description.toString(),
+                                  // style: Theme.of(context).textTheme.displaySmall,
+                                  style:
+                                      Theme.of(context).textTheme.displaySmall,
+                                )),
+                          )
                         ],
                       ),
                       if (equipment.userId !=

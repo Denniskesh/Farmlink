@@ -13,6 +13,19 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  int _selectedIndex = 0;
+
+  @override
+  initState() {
+    super.initState();
+  }
+
+  void onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   static List<Widget> pages = <Widget>[
     const HomePage(),
     const OrderPage(),
@@ -22,17 +35,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Consumer<TabManager>(builder: (context, tabManager, child) {
       return Scaffold(
-        body: IndexedStack(
-          index: tabManager.selectedTab,
-          children: pages,
-        ),
+        body: pages.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor:
               Theme.of(context).textSelectionTheme.selectionColor,
           currentIndex: tabManager.selectedTab,
-          onTap: (index) {
-            tabManager.goToTab(index);
-          },
+          onTap: onItemTapped,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.explore),
