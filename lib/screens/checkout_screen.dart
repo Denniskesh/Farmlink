@@ -35,7 +35,6 @@ class CheckOut extends State<CheckoutScreenPage> {
       // setState(() {
       //   total.text = text;
       // });
-      debugPrint(totalController.value.text);
     } else {
       totalController.text = '';
     }

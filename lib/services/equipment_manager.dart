@@ -70,7 +70,5 @@ Future<List> getEquipments() async {
   // Get data from docs and convert map to List
   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
-  debugPrint(allData1.toString());
-
   return allData;
 }

@@ -38,9 +38,7 @@ class WebChatView extends State<WebChatViewPage> {
                       url: Uri.parse(
                           'https://web-chat.global.assistant.watson.appdomain.cloud/preview.html?backgroundImageURL=https%3A%2F%2Fau-syd.assistant.watson.cloud.ibm.com%2Fpublic%2Fimages%2Fupx-1fd51635-0096-4cf6-aef9-266726a665f6%3A%3Ae27eeec2-8d01-4057-9b05-27b324228d03&integrationID=a65a0d88-634f-4be5-a881-638569a01d4c&region=au-syd&serviceInstanceID=1fd51635-0096-4cf6-aef9-266726a665f6')),
                   initialOptions: InAppWebViewGroupOptions(
-                      crossPlatform: InAppWebViewOptions(
-                          // debuggingEnabled: true,
-                          )),
+                      crossPlatform: InAppWebViewOptions()),
                   onWebViewCreated: (InAppWebViewController controller) {
                     _webViewController = controller;
                   },

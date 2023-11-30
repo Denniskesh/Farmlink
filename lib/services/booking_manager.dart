@@ -47,10 +47,6 @@ Future<List> getOrders() async {
       .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .get();
   final allData1 = one.docs.map((doc) => doc.data()).toList();
-  var a = jsonEncode(allData1);
-  // Get data from docs and convert map to List
-
-  debugPrint(a.toString());
 
   return allData1;
 }

@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
     'Logout',
   ];
   static const String prefSearchKey = 'previousSearches';
+  int counter = 1;
 
   late TextEditingController searchTextController;
   final ScrollController _scrollController = ScrollController();
@@ -55,6 +56,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getPreviousSearches();
     getEquipment();
+    getMessages();
 
     searchTextController = TextEditingController(text: '');
     _scrollController.addListener(() {
@@ -123,6 +125,26 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  IconData iconData = Icons.notifications;
+
+  getMessages() async {
+    var messges = await FirebaseFirestore.instance
+        .collection('chat_rooms')
+        .doc()
+        .collection('collectionPath')
+        .where('receiverId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    var mappedMessage = messges.docs.map((e) => e.data()).toList();
+    var jsonObj = jsonEncode(mappedMessage);
+
+    if (mappedMessage.isNotEmpty) {
+      debugPrint('no of messages${mappedMessage.length.toString()}');
+      setState(() {
+        counter += mappedMessage.length;
+      });
+    }
+  }
+
   // Add a Set to hold markers on the map
   final Set<Marker> _markers = {};
   User? user = FirebaseAuth.instance.currentUser;
@@ -151,22 +173,7 @@ class _HomePageState extends State<HomePage> {
             'Welcome Back ',
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          actions: [
-            PopupMenuButton<String>(
-                icon: const Icon(
-                  Icons.account_circle_rounded,
-                  size: 30,
-                ),
-                onSelected: choiceAction,
-                itemBuilder: (BuildContext context) {
-                  return choices.map((String choice) {
-                    return PopupMenuItem<String>(
-                      value: choice,
-                      child: Text(choice),
-                    );
-                  }).toList();
-                })
-          ],
+          actions: NotificationIcon,
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.green,
@@ -189,7 +196,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Stack(
           children: <Widget>[
-            Expanded(
+            SizedBox(
               child: GoogleMap(
                   initialCameraPosition: _initialCameraPosition,
                   myLocationEnabled: true,
@@ -222,6 +229,62 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  List<Widget> get NotificationIcon {
+    return [
+      Stack(children: [
+        IconButton(
+            icon: Icon(
+              Icons.notifications,
+              size: 32,
+            ),
+            onPressed: () {
+              setState(() {
+                counter++;
+              });
+            }),
+        counter != 0
+            ? Positioned(
+                right: 5,
+                top: 11,
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 16,
+                    minHeight: 16,
+                  ),
+                  child: Text(
+                    '$counter',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            : Container(),
+      ]),
+      PopupMenuButton<String>(
+          icon: const Icon(
+            Icons.account_circle_rounded,
+            size: 30,
+          ),
+          onSelected: choiceAction,
+          itemBuilder: (BuildContext context) {
+            return choices.map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(choice),
+              );
+            }).toList();
+          })
+    ];
   }
 
   Widget buildExploreCard() {

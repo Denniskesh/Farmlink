@@ -230,7 +230,6 @@ class Order extends State<OrderPage> {
                           DateTime.now()
                               .subtract(const Duration(days: 1))
                               .formatDate()) {
-                        debugPrint(sorted.elementAt(index).toString());
                         return Column(children: [
                           SizedBox(
                             height: height * .05,
@@ -376,7 +375,6 @@ class Order extends State<OrderPage> {
                           Divider(),
                         ]);
                       } else {
-                        debugPrint(sorted.elementAt(index).toString());
                         return Column(children: [
                           SizedBox(
                             height: height * .05,
@@ -524,7 +522,7 @@ class Order extends State<OrderPage> {
                       }
                     } else {
                       // return ListTile(title: Text('item $index'));
-                      debugPrint(sorted.elementAt(index).toString());
+
                       return Column(children: [
                         SizedBox(
                           height: height * .02,
